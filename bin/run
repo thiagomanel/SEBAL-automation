@@ -1,0 +1,24 @@
+#!/bin/bash
+
+#TODO check parameters
+
+n_samples=$1
+n_images=$2
+n_workers=$3
+
+# data/input diretorio com as imagens de entrada
+
+#TODO assumindo que a infra eh levantado por outro meio
+#TODO no inicio do experimento:
+#	copiar data/input para um diretorio do crawler
+
+#TODO antes de cada sample:
+#	ter certeza que sebal-engine estah idle
+#	ter certeza que o crawler, o fetcher e o scheduler estao up and running
+#	criar os fake dirs baseado com crawler:/path/data/input (eh preciso dar um nome para esse diretorio)
+#	pre-allocar o numero de workers corretos no pool
+#	criar as entradas correspondentes no BD, no estado correto. isso deve engatilhar a execucao
+#	monitorar ate que todas estejam no estado final (fetched?).
+#	gather os dados dos experimento para a maquina local
+
+#TODO: output precisa de um padrao. n_sample + random (stamp?)
