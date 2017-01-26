@@ -1,22 +1,123 @@
 #!/bin/bash
 
-#TODO check parameters
+# Checking params
+if [[ $# -ne 3 ]]; then
+  echo "Usage:" $0 "number_of_samples number_of_images number_of_workers"
+  exit 1
+fi
 
+# Entry params
 n_samples=$1
 n_images=$2
 n_workers=$3
+
+# Clobal variables
+###################
+user_name=
+federation_member=
+
+crawler_ip=
+crawler_port=
+crawler_nfs_port=
+crawler_debug_port=
+
+scheduler_ip=
+scheduler_port=
+scheduler_db_port=
+scheduler_debug_port=
+
+fetcher_ip=
+fetcher_port=
+fetcher_debug_port=
+
+private_key_path=
+###################
+
+# This function checks parameters consistency
+function checkParamsConsistency {
+  if [ $n_samples -le 0 ]
+  then
+    echo $n_samples "is not a valid number of samples"
+    exit 1
+  fi
+
+  if [ $n_images -le 0 ]
+  then
+    echo $n_images "is not a valid number of samples"
+    exit 1
+  fi
+
+  if [ $n_workers -le 0 ]
+  then
+    echo $n_workers "is not a valid number of samples"
+    exit 1
+  fi
+}
+
+# This function transfers image input files to Crawler VM
+function copyImagesToCrawler {
+  echo "Copying input data to $inputs_dir in Crawler"
+  scp -i $private_key_path -P $crawler_port $user_name@$crawler_ip:$inputs_dir
+}
+
+# This function checks if components (Crawler, Scheduler and Fetcher) are responding
+function checkComponentsResponse {
+  if ! ping -c 5 $crawler_ip &> /dev/null
+  then
+    echo "Crawler is down, please establish infrastructure first"
+    exit 1
+  fi
+
+  if ! ping -c 5 $scheduler_ip &> /dev/null
+  then
+    echo "Scheduler is down, please establish infrastructure first"
+    exit 1
+  fi
+
+  if ! ping -c 5 $fetcher_ip &> /dev/null
+  then
+    echo "Fetcher is down, please establish infrastructure first"
+    exit 1
+  fi
+}
+
+# This function activates Scheduler component
+function activateScheduler {
+  run_scheduler_cmd="sudo java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=$scheduler_debug_port,suspend=n -Dlog4j.configuration=file:/home/$user_name/sebal-engine/config/log4j.properties -Djava.library.path=/usr/local/lib/ -cp target/sebal-scheduler-0.0.1-SNAPSHOT.jar:target/lib/* org.fogbowcloud.sebal.engine.scheduler.SebalMain /home/$user_name/sebal-engine/config/sebal.conf $scheduler_ip $scheduler_db_port &"
+  ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $scheduler_port -i $private_key_path  $user_name@$scheduler_ip ${run_scheduler_cmd}
+}
+
+# This function activates Crawler component
+function activateCrawler {
+  run_crawler_cmd="sudo java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=$crawler_debug_port,suspend=n -Dlog4j.configuration=file:/home/$user_name/sebal-engine/config/log4j.properties -Djava.library.path=/usr/local/lib/ -cp target/sebal-scheduler-0.0.1-SNAPSHOT.jar:target/lib/* org.fogbowcloud.sebal.engine.sebal.crawler.CrawlerMain /home/$user_name/sebal-engine/config/sebal.conf $scheduler_ip $scheduler_db_port $crawler_ip $crawler_nfs_port $federation_member &"
+  ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $crawler_port -i $private_key_path  $user_name@$crawler_ip ${run_crawler_cmd}
+}
+
+# This function activates Fetcher component
+function activateFetcher {
+  run_fetcher_cmd="sudo java -Dlog4j.configuration=file:/home/$user_name/sebal-engine/config/log4j.properties -cp target/sebal-scheduler-0.0.1-SNAPSHOT.jar:target/lib/* org.fogbowcloud.sebal.engine.sebal.fetcher.FetcherMain /home/$user_name/sebal-engine/config/sebal.conf $scheduler_ip $scheduler_db_port $crawler_ip $crawler_port &"
+  ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $fetcher_port -i $private_key_path  $user_name@$fetcher_ip ${run_fetcher_cmd}
+}
+
+function checkIfComponentsAreRunning {
+  #TODO
+}
+
+function submitImagesIntoDB {
+
+}
 
 # data/input diretorio com as imagens de entrada
 
 #TODO assumindo que a infra eh levantado por outro meio
 #TODO no inicio do experimento:
-#	copiar data/input para um diretorio do crawler
+#	copiar data/input para um diretorio do crawler (feito)
 
 #TODO antes de cada sample:
-#	ter certeza que sebal-engine estah idle
-#	ter certeza que o crawler, o fetcher e o scheduler estao up and running
-#	criar os fake dirs baseado com crawler:/path/data/input (eh preciso dar um nome para esse diretorio)
-#	pre-allocar o numero de workers corretos no pool
+#	ter certeza que sebal-engine estah idle (pendente)
+#	ter certeza que o crawler, o fetcher e o scheduler estao up and running (50%)
+#	criar os fake dirs baseado com crawler:/path/data/input (eh preciso dar um nome para esse diretorio) (?)
+#	pre-allocar o numero de workers corretos no pool (feito)
 #	criar as entradas correspondentes no BD, no estado correto. isso deve engatilhar a execucao
 #	monitorar ate que todas estejam no estado final (fetched?).
 #	gather os dados dos experimento para a maquina local
