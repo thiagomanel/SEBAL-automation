@@ -11,6 +11,7 @@ n_samples=$1
 n_images=$2
 n_workers=$3
 
+#TODO: see if some of these variables will be put in a configuration file
 # Clobal variables
 ####################
 images_dir_path=
@@ -87,7 +88,7 @@ function checkComponentsResponse {
 
 # This function activates Scheduler component
 function activateScheduler {
-  run_scheduler_cmd="sudo java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=$scheduler_debug_port,suspend=n -Dlog4j.configuration=file:/home/$scheduler_user_name/sebal-engine/config/log4j.properties -Djava.library.path=/usr/local/lib/ -cp target/sebal-scheduler-0.0.1-SNAPSHOT.jar:target/lib/* org.fogbowcloud.sebal.engine.scheduler.SebalMain /home/$scheduler_user_name/sebal-engine/config/sebal.conf $scheduler_ip $scheduler_db_port &"
+  run_scheduler_cmd="sudo java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=$scheduler_debug_port,suspend=n -Dlog4j.configuration=file:/home/$scheduler_user_name/sebal-engine/config/log4j.properties -Djava.library.path=/usr/local/lib/ -cp target/sebal-scheduler-0.0.1-SNAPSHOT.jar:target/lib/* org.fogbowcloud.sebal.engine.scheduler.SebalMain /home/$scheduler_user_name/sebal-engine/config/sebal.conf $scheduler_ip $scheduler_db_port $n_workers &"
   ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $scheduler_port -i $private_key_path  $scheduler_user_name@$scheduler_ip ${run_scheduler_cmd}
 }
 
@@ -99,7 +100,7 @@ function activateCrawler {
 
 # This function activates Fetcher component
 function activateFetcher {
-  run_fetcher_cmd="sudo java -Dlog4j.configuration=file:/home/$fetcher_user_name/sebal-engine/config/log4j.properties -cp target/sebal-scheduler-0.0.1-SNAPSHOT.jar:target/lib/* org.fogbowcloud.sebal.engine.sebal.fetcher.FetcherMain /home/$fetcher_user_name/sebal-engine/config/sebal.conf $scheduler_ip $scheduler_db_port $crawler_ip $crawler_port &"
+  run_fetcher_cmd="sudo java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=$fetcher_debug_port,suspend=n -Dlog4j.configuration=file:/home/$fetcher_user_name/sebal-engine/config/log4j.properties -cp target/sebal-scheduler-0.0.1-SNAPSHOT.jar:target/lib/* org.fogbowcloud.sebal.engine.sebal.fetcher.FetcherMain /home/$fetcher_user_name/sebal-engine/config/sebal.conf $scheduler_ip $scheduler_db_port $crawler_ip $crawler_port &"
   ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $fetcher_port -i $private_key_path  $fetcher_user_name@$fetcher_ip ${run_fetcher_cmd}
 }
 
