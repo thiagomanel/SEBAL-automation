@@ -12,26 +12,36 @@ n_images=$2
 n_workers=$3
 
 # Clobal variables
-###################
-user_name=
+####################
+images_dir_path=
+private_key_path=
 federation_member=
+
+original_image_name=
+original_image_path=
 
 crawler_ip=
 crawler_port=
 crawler_nfs_port=
+crawler_user_name=
 crawler_debug_port=
 
 scheduler_ip=
 scheduler_port=
 scheduler_db_port=
+scheduler_user_name=
 scheduler_debug_port=
 
 fetcher_ip=
 fetcher_port=
+fetcher_user_name=
 fetcher_debug_port=
 
-private_key_path=
-###################
+sebal_db_name=
+sebal_db_user=
+sebal_db_password=
+sebal_db_table_name=
+####################
 
 # This function checks parameters consistency
 function checkParamsConsistency {
@@ -52,12 +62,6 @@ function checkParamsConsistency {
     echo $n_workers "is not a valid number of samples"
     exit 1
   fi
-}
-
-# This function transfers image input files to Crawler VM
-function copyImagesToCrawler {
-  echo "Copying input data to $inputs_dir in Crawler"
-  scp -i $private_key_path -P $crawler_port $user_name@$crawler_ip:$inputs_dir
 }
 
 # This function checks if components (Crawler, Scheduler and Fetcher) are responding
@@ -83,29 +87,129 @@ function checkComponentsResponse {
 
 # This function activates Scheduler component
 function activateScheduler {
-  run_scheduler_cmd="sudo java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=$scheduler_debug_port,suspend=n -Dlog4j.configuration=file:/home/$user_name/sebal-engine/config/log4j.properties -Djava.library.path=/usr/local/lib/ -cp target/sebal-scheduler-0.0.1-SNAPSHOT.jar:target/lib/* org.fogbowcloud.sebal.engine.scheduler.SebalMain /home/$user_name/sebal-engine/config/sebal.conf $scheduler_ip $scheduler_db_port &"
-  ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $scheduler_port -i $private_key_path  $user_name@$scheduler_ip ${run_scheduler_cmd}
+  run_scheduler_cmd="sudo java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=$scheduler_debug_port,suspend=n -Dlog4j.configuration=file:/home/$scheduler_user_name/sebal-engine/config/log4j.properties -Djava.library.path=/usr/local/lib/ -cp target/sebal-scheduler-0.0.1-SNAPSHOT.jar:target/lib/* org.fogbowcloud.sebal.engine.scheduler.SebalMain /home/$scheduler_user_name/sebal-engine/config/sebal.conf $scheduler_ip $scheduler_db_port &"
+  ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $scheduler_port -i $private_key_path  $scheduler_user_name@$scheduler_ip ${run_scheduler_cmd}
 }
 
 # This function activates Crawler component
 function activateCrawler {
-  run_crawler_cmd="sudo java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=$crawler_debug_port,suspend=n -Dlog4j.configuration=file:/home/$user_name/sebal-engine/config/log4j.properties -Djava.library.path=/usr/local/lib/ -cp target/sebal-scheduler-0.0.1-SNAPSHOT.jar:target/lib/* org.fogbowcloud.sebal.engine.sebal.crawler.CrawlerMain /home/$user_name/sebal-engine/config/sebal.conf $scheduler_ip $scheduler_db_port $crawler_ip $crawler_nfs_port $federation_member &"
-  ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $crawler_port -i $private_key_path  $user_name@$crawler_ip ${run_crawler_cmd}
+  run_crawler_cmd="sudo java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=$crawler_debug_port,suspend=n -Dlog4j.configuration=file:/home/$crawler_user_name/sebal-engine/config/log4j.properties -Djava.library.path=/usr/local/lib/ -cp target/sebal-scheduler-0.0.1-SNAPSHOT.jar:target/lib/* org.fogbowcloud.sebal.engine.sebal.crawler.CrawlerMain /home/$crawler_user_name/sebal-engine/config/sebal.conf $scheduler_ip $scheduler_db_port $crawler_ip $crawler_nfs_port $federation_member &"
+  ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $crawler_port -i $private_key_path  $crawler_user_name@$crawler_ip ${run_crawler_cmd}
 }
 
 # This function activates Fetcher component
 function activateFetcher {
-  run_fetcher_cmd="sudo java -Dlog4j.configuration=file:/home/$user_name/sebal-engine/config/log4j.properties -cp target/sebal-scheduler-0.0.1-SNAPSHOT.jar:target/lib/* org.fogbowcloud.sebal.engine.sebal.fetcher.FetcherMain /home/$user_name/sebal-engine/config/sebal.conf $scheduler_ip $scheduler_db_port $crawler_ip $crawler_port &"
-  ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $fetcher_port -i $private_key_path  $user_name@$fetcher_ip ${run_fetcher_cmd}
+  run_fetcher_cmd="sudo java -Dlog4j.configuration=file:/home/$fetcher_user_name/sebal-engine/config/log4j.properties -cp target/sebal-scheduler-0.0.1-SNAPSHOT.jar:target/lib/* org.fogbowcloud.sebal.engine.sebal.fetcher.FetcherMain /home/$fetcher_user_name/sebal-engine/config/sebal.conf $scheduler_ip $scheduler_db_port $crawler_ip $crawler_port &"
+  ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $fetcher_port -i $private_key_path  $fetcher_user_name@$fetcher_ip ${run_fetcher_cmd}
 }
 
+# This function will verify if all components (Scheduler, Crawler and Fetcher) are running
 function checkIfComponentsAreRunning {
   #TODO
 }
 
-function submitImagesIntoDB {
-
+# This function makes n_images copies from the same image in images_dir_path
+function createImageCopies {
+  #TODO: see if i will be present at the end of file names too, and not only in image directory name
+  for i in $n_images
+  do
+    for j in $n_samples
+    do
+      cp -r $original_image_path $images_dir_path/$original_image_name"_"$i"_sample_$j"
+    done
+  done
 }
+
+# This function transfers image input files to Crawler VM
+function copyImagesToCrawler {
+  echo "Copying input data to $inputs_dir in Crawler"
+  scp -r -i $private_key_path -P $crawler_port $images_dir_path $crawler_user_name@$crawler_ip:$inputs_dir
+}
+
+function submitImagesIntoDB {
+  #TODO: maybe we will have a file with image data, so we can get it and use here
+  for i in $n_images
+  do
+    for j in $n_samples
+    do
+      #TODO: priority will follow j?
+      submit_images_cmd="sudo su postgres -c \"echo -e \"$sebal_db_password\n\" | psql -d $sebal_db_name -U $sebal_db_user -c \"INSERT INTO $sebal_db_table_name VALUES($original_image_name"_"$i"_sample_$j", 'downloadLink', 'downloaded', '$federation_member', priority, 'stationId', 'sebal_version', 'sebal_tag', 'crawler_version', 'fetcher_version', 'blowout_version', now(), now(), 'image_status', 'error_msg');\"\""
+      ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $scheduler_port -i $private_key_path  $scheduler_user_name@$scheduler_ip ${submit_images_cmd}
+    done
+  done
+}
+
+# This function verifies the state of a given image
+function stateVerifier {
+  local image_name=$1
+
+  execution_monitor_cmd="sudo su postgres -c \"echo -e \"$sebal_db_password\n\" | psql -d $sebal_db_name -U $sebal_db_user -c \"SELECT state FROM nasa_images WHERE image_name = '$image_name';\"\""
+  state=$(ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $scheduler_port -i $private_key_path  $scheduler_user_name@$scheduler_ip ${execution_monitor_cmd})
+  sed -i '1d' $state
+  sed -i '1d' $state
+  sed -i '$d' $state
+  return $state
+}
+
+# This function monitors if images have reached a "fetched" state
+function executionMonitor {
+  #TODO: insert here a loop through image names in directory  
+  images_count=0
+
+  while true
+  do
+    for i in $n_images
+    do
+      for j in $n_samples
+      do
+        state=`stateVerifier $original_image_name"_"$i"_sample_$j"`
+        if [ "$state" == "fetched" ]
+        then
+          echo "Image $original_image_name"_"$i"_sample_$j" was fetched!"
+          images_count=$(($images_count+1))
+        fi
+    
+        if [ $images_count -ge $(($n_images * $n_samples)) ]
+        then
+          echo "All images were processed!"
+          return 0
+        fi
+      done
+    done
+  done
+}
+
+# This function gets all output data
+function gatherOutputData {
+#TODO
+}
+
+# This function checks the output from previous process
+function checkProcessOutput {
+  process_output=$?
+
+  if [ $process_output -ne 0 ]
+  then
+    finally
+  fi
+}
+
+# This function ends the script
+function finally {
+  exit $process_output
+}
+
+checkParamsConsistency
+checkComponentsResponse
+activateScheduler
+activateCrawler
+activateFetcher
+checkIfComponentsAreRunning
+createImageCopies
+copyImagesToCrawler
+submitImagesIntoDB
+executionMonitor
+gatherOutputData
 
 # data/input diretorio com as imagens de entrada
 
@@ -114,12 +218,12 @@ function submitImagesIntoDB {
 #	copiar data/input para um diretorio do crawler (feito)
 
 #TODO antes de cada sample:
-#	ter certeza que sebal-engine estah idle (pendente)
+#	ter certeza que sebal-engine estah idle
 #	ter certeza que o crawler, o fetcher e o scheduler estao up and running (50%)
 #	criar os fake dirs baseado com crawler:/path/data/input (eh preciso dar um nome para esse diretorio) (?)
 #	pre-allocar o numero de workers corretos no pool (feito)
-#	criar as entradas correspondentes no BD, no estado correto. isso deve engatilhar a execucao
-#	monitorar ate que todas estejam no estado final (fetched?).
+#	criar as entradas correspondentes no BD, no estado correto. isso deve engatilhar a execucao (feito)
+#	monitorar ate que todas estejam no estado final (fetched?). (feito)
 #	gather os dados dos experimento para a maquina local
 
 #TODO: output precisa de um padrao. n_sample + random (stamp?)
