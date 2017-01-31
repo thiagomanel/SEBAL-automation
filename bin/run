@@ -187,7 +187,7 @@ function stateVerifier {
 }
 
 # This function monitors if images have reached a "fetched" state
-function executionMonitor {
+function monitorExecution {
   images_count=0
 
   while true
@@ -252,7 +252,7 @@ checkIfComponentsAreRunning
 createImageCopies
 copyImagesToCrawler
 submitImagesIntoDB
-executionMonitor
+monitorExecution
 gatherOutputData
 
 # data/input diretorio com as imagens de entrada
