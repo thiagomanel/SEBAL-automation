@@ -42,6 +42,11 @@ sebal_db_name=
 sebal_db_user=
 sebal_db_password=
 sebal_db_table_name=
+
+swift_auth_token=
+swift_storage_url=
+swift_pseudo_folder=
+swift_container_name=
 ####################
 
 # This function checks parameters consistency
@@ -106,7 +111,33 @@ function activateFetcher {
 
 # This function will verify if all components (Scheduler, Crawler and Fetcher) are running
 function checkIfComponentsAreRunning {
-  #TODO
+  check_running_app_cmd="sudo bash scripts/check-running-app.sh"
+  ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $scheduler_port -i $private_key_path  $scheduler_user_name@$scheduler_ip ${check_running_app_cmd}
+  process_output=$?
+  
+  if [ $process_output -ne 0 ]
+  then
+    echo "Scheduler is not running! Trying to activate it again..."
+    activateScheduler
+  fi
+
+  ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $crawler_port -i $private_key_path  $crawler_user_name@$crawler_ip ${check_running_app_cmd}
+  process_output=$?
+
+  if [ $process_output -ne 0 ]
+  then
+    echo "Crawler is not running! Trying to activate it again..."
+    activateCrawler
+  fi
+
+  ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $fetcher_port -i $private_key_path  $fetcher_user_name@$fetcher_ip ${check_running_app_cmd}
+  process_output=$?
+
+  if [ $process_output -ne 0 ]
+  then
+    echo "Fetcher is not running! Trying to activate it again..."
+    activateFetcher
+  fi
 }
 
 # This function makes n_images copies from the same image in images_dir_path
@@ -154,7 +185,6 @@ function stateVerifier {
 
 # This function monitors if images have reached a "fetched" state
 function executionMonitor {
-  #TODO: insert here a loop through image names in directory  
   images_count=0
 
   while true
@@ -183,21 +213,30 @@ function executionMonitor {
 # This function gets all output data
 function gatherOutputData {
 #TODO
+  for i in $n_images
+  do
+    for j in $n_samples
+    do
+      downloadFile $i $j
+    done
+  done
 }
 
-# This function checks the output from previous process
-function checkProcessOutput {
-  process_output=$?
+function downloadFile {
+  local i=$1
+  local j=$2
 
-  if [ $process_output -ne 0 ]
-  then
-    finally
-  fi
-}
-
-# This function ends the script
-function finally {
-  exit $process_output
+  before_image_file_path=
+  for complete_image_file_path in `swift --os-auth-token $swift_auth_token --os-storage-url $swift_storage_url list $swift_container_name | grep -o $original_image_name"_"$i"_sample_$j"`
+  do
+    if [ "$complete_image_file_path" != "$before_image_file_path" ]
+    then
+      echo "Downloading file $complete_image_file_path"
+      filename=${complete_image_file_path##*/}
+      swift --os-auth-token $swift_auth_token --os-storage-url $swift_storage_url download $swift_container_name $swift_pseudo_folder/$complete_image_file_path -o $outputs_dir_path/$filename
+      before_image_file_path="$complete_image_file_path"
+    fi
+  done
 }
 
 checkParamsConsistency
