@@ -15,6 +15,8 @@ n_workers=$3
 # Clobal variables
 ####################
 images_dir_path=
+outputs_dir_path=
+
 private_key_path=
 federation_member=
 
@@ -158,6 +160,7 @@ function copyImagesToCrawler {
   scp -r -i $private_key_path -P $crawler_port $images_dir_path $crawler_user_name@$crawler_ip:$inputs_dir
 }
 
+# This function sumits n_samples of n_images to Scheduler database
 function submitImagesIntoDB {
   #TODO: maybe we will have a file with image data, so we can get it and use here
   for i in $n_images
@@ -210,7 +213,7 @@ function executionMonitor {
   done
 }
 
-# This function gets all output data
+# This function gathers all output data
 function gatherOutputData {
 #TODO
   for i in $n_images
@@ -222,6 +225,7 @@ function gatherOutputData {
   done
 }
 
+# This function lists all files from a given image in swift and download them 
 function downloadFile {
   local i=$1
   local j=$2
