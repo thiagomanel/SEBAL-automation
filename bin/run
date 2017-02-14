@@ -12,7 +12,7 @@ n_images=$2
 n_workers=$3
 
 #TODO: see if some of these variables will be put in a configuration file
-# Clobal variables
+# Global variables
 ####################
 images_dir_path=
 outputs_dir_path=
