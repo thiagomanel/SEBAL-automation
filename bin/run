@@ -11,51 +11,8 @@ n_samples=$1
 n_images=$2
 n_workers=$3
 
-#TODO: see if some of these variables will be put in a configuration file
-# Clobal variables
-####################
-images_dir_path=
-outputs_dir_path=
-
-private_key_path=
-federation_member=
-
-original_image_name=
-original_image_path=
-
-crawler_ip=
-crawler_port=
-crawler_nfs_port=
-crawler_user_name=
-crawler_debug_port=
-
-scheduler_ip=
-scheduler_port=
-scheduler_db_port=
-scheduler_user_name=
-scheduler_debug_port=
-
-fetcher_ip=
-fetcher_port=
-fetcher_user_name=
-fetcher_debug_port=
-
-sebal_db_name=
-sebal_db_user=
-sebal_db_password=
-sebal_db_table_name=
-
-user_id=
-password=
-auth_url=
-project_id=
-token_type=
-
-swift_auth_token=
-swift_storage_url=
-swift_pseudo_folder=
-swift_container_name=
-####################
+DIRNAME=`dirname $0`
+. "$DIRNAME/sebal-automation.conf"
 
 # This function checks parameters consistency
 function checkParamsConsistency {
