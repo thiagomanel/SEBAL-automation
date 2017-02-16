@@ -51,6 +51,7 @@ function createImageCopies {
 
 # This function transfers image input files to Crawler VM
 function copyImagesToCrawler {
+#TODO note that the destination directory should be empty before running this
   echo "Copying input data to $inputs_dir in Crawler"
   scp -r -i $private_key_path -P $crawler_port $images_dir_path $crawler_user_name@$crawler_ip:$inputs_dir
 }
@@ -58,9 +59,9 @@ function copyImagesToCrawler {
 # This function sumits n_samples of n_images to Scheduler database
 function submitImagesIntoDB {
   #TODO: maybe we will have a file with image data, so we can get it and use here
-  for i in $n_images
+  for i in `seq 1 $n_images`
   do
-    for j in $n_samples
+    for j in `seq 1 $n_samples`
     do
       #TODO: priority will follow j?
       submit_images_cmd="sudo su postgres -c \"echo -e \"$sebal_db_password\n\" | psql -d $sebal_db_name -U $sebal_db_user -c \"INSERT INTO $sebal_db_table_name VALUES($original_image_name"_"$i"_sample_$j", 'downloadLink', 'downloaded', '$federation_member', priority, 'stationId', 'sebal_version', 'sebal_tag', 'crawler_version', 'fetcher_version', 'blowout_version', now(), now(), 'image_status', 'error_msg');\"\""
