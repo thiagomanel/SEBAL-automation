@@ -40,9 +40,9 @@ function checkParams {
 # This function makes n_images copies from the same image in images_dir_path
 function createImageCopies {
   #TODO: see if i will be present at the end of file names too, and not only in image directory name
-  for i in $n_images
+  for i in `seq 1 $n_images`
   do
-    for j in $n_samples
+    for j in `seq 1 $n_samples`
     do
       cp -r $original_image_path $images_dir_path/$original_image_name"_"$i"_sample_$j"
     done
