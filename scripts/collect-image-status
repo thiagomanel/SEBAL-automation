@@ -36,27 +36,22 @@ psql -h $ip -U$db_username -c "COPY (SELECT image_name, state, utime, federation
 psql -h $ip -U$db_username -c "COPY (SELECT image_name, state, utime, federation_member FROM nasa_images WHERE state = 'running') TO STDOUT WITH CSV" $db_name >> running.csv
 psql -h $ip -U$db_username -c "COPY (SELECT image_name, state, utime, federation_member FROM nasa_images) TO STDOUT WITH CSV" $db_name >> all_images_status.csv
 
-
 #Variables that are going to be checked after query in the database
 running=$(cat running.csv | sed '/^\s*#/d;/^\s*$/d' | wc -l)
 finished=$(cat finished.csv | sed '/^\s*#/d;/^\s*$/d' | wc -l)
 queued=$(cat queued.csv | sed '/^\s*#/d;/^\s*$/d' | wc -l)
 all_images=$(cat all_images_status.csv | sed '/^\s*#/d;/^\s*$/d' | wc -l)
 
-
 #Condition to give status of the images
 if [ $all_images == 0 ]
 then
-    echo "Idle"
-    
+    echo "Idle"  
 elif [[ $running > 0 || $queued > 0 ]]
 then
-    echo "Running"
-    
+    echo "Running" 
 elif [[ $finished > 0 && $all_images == $finished ]]
 then
-    echo "Done"
-    
+    echo "Done"  
 else
     echo "ERROR: Not possible to provide the state of the images"
 fi
@@ -66,4 +61,3 @@ rm running.csv
 rm finished.csv
 rm queued.csv
 rm all_images_status.csv
-
