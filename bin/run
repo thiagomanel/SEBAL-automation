@@ -109,36 +109,7 @@ function monitorExecution {
   done
 }
 
-# This function gathers all output data
-function gatherOutputData {
-  swift_auth_token=$(bash $fogbow_cli_path/bin/fogbow-cli token --create -DprojectId=$project_id -DuserId=$user_id -Dpassword=$password -DauthUrl=$auth_url --type $token_type)
-
-  for i in $n_images
-  do
-    for j in $n_samples
-    do
-      downloadFile $i $j
-    done
-  done
-}
-
-# This function lists all files from a given image in swift and download them
-function downloadFile {
-  local i=$1
-  local j=$2
-
-  before_image_file_path=
-  for complete_image_file_path in `swift --os-auth-token $swift_auth_token --os-storage-url $swift_storage_url list $swift_container_name | grep -o $original_image_name"_"$i"_sample_$j"`
-  do
-    if [ "$complete_image_file_path" != "$before_image_file_path" ]
-    then
-      echo "Downloading file $complete_image_file_path"
-      filename=${complete_image_file_path##*/}
-      swift --os-auth-token $swift_auth_token --os-storage-url $swift_storage_url download $swift_container_name $swift_pseudo_folder/$complete_image_file_path -o $outputs_dir_path/$filename
-      before_image_file_path="$complete_image_file_path"
-    fi
-  done
-}
+#TODO we need to abort execution if a command fails
 
 checkParams
 checkComponentsResponse
