@@ -25,32 +25,45 @@ echo "$ip:$port:$db_name:$db_username:$db_password" >> $file
 chmod 0600 "$HOME/.pgpass"
 
 #Erasing files that are not required anymore (it is safer to clean before use)
-rm running.csv
-rm finished.csv
-rm queued.csv
+rm running.csv 
+rm finished.csv 
+rm queued.csv 
+rm all_images_status.csv
 
 # Generating CSV files for result of the queries
-psql -h $ip -U$db_username -c "COPY (SELECT image_name, state, utime, federation_member FROM nasa_images WHERE state = 'queued') TO STDOUT WITH CSV" sebal >> queued.csv
-psql -h $ip -U$db_username -c "COPY (SELECT image_name, state, utime, federation_member FROM nasa_images WHERE state = 'finished') TO STDOUT WITH CSV" sebal >> finished.csv
-psql -h $ip -U$db_username -c "COPY (SELECT image_name, state, utime, federation_member FROM nasa_images WHERE state = 'running') TO STDOUT WITH CSV" sebal >> running.csv
+psql -h $ip -U$db_username -c "COPY (SELECT image_name, state, utime, federation_member FROM nasa_images WHERE state = 'queued') TO STDOUT WITH CSV" $db_name >> queued.csv
+psql -h $ip -U$db_username -c "COPY (SELECT image_name, state, utime, federation_member FROM nasa_images WHERE state = 'finished') TO STDOUT WITH CSV" $db_name >> finished.csv
+psql -h $ip -U$db_username -c "COPY (SELECT image_name, state, utime, federation_member FROM nasa_images WHERE state = 'running') TO STDOUT WITH CSV" $db_name >> running.csv
+psql -h $ip -U$db_username -c "COPY (SELECT image_name, state, utime, federation_member FROM nasa_images) TO STDOUT WITH CSV" $db_name >> all_images_status.csv
+
 
 #Variables that are going to be checked after query in the database
-running=$(cat running.csv | xargs -l echo | wc -l)
-finished=$(cat finished.csv | xargs -l echo | wc -l)
-queued=$(cat queued.csv | xargs -l echo | wc -l)
+running=$(cat running.csv | sed '/^\s*#/d;/^\s*$/d' | wc -l)
+finished=$(cat finished.csv | sed '/^\s*#/d;/^\s*$/d' | wc -l)
+queued=$(cat queued.csv | sed '/^\s*#/d;/^\s*$/d' | wc -l)
+all_images=$(cat all_images_status.csv | sed '/^\s*#/d;/^\s*$/d' | wc -l)
+
 
 #Condition to give status of the images
-if [[ $running > 0 || $queued > 0 ]]
+if [ $all_images == 0 ]
+then
+    echo "Idle"
+    
+elif [[ $running > 0 || $queued > 0 ]]
 then
     echo "Running"
-elif [ $finished > 0]
+    
+elif [[ $finished > 0 && $all_images == $finished ]]
 then
     echo "Done"
+    
 else
-    echo "Idle"
+    echo "ERROR: Not possible to provide the state of the images"
 fi
 
 #Erasing files that are not required anymore
 rm running.csv
 rm finished.csv
 rm queued.csv
+rm all_images_status.csv
+
