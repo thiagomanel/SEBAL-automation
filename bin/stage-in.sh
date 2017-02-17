@@ -2,11 +2,11 @@
 
 DIRNAME=`dirname $0`
 CURRENT_SAMPLE=$1
+n_images=$2
 . "$DIRNAME/sebal-automation.conf"
 
 # This function makes n_images copies from the same image in images_dir_path
 function createImageCopies {
-  #TODO: see if i will be present at the end of file names too, and not only in image directory name
   for i in `seq 1 $n_images`
   do
     cp -r $original_image_path $images_dir_path/$original_image_name"_"$i"_$CURRENT_SAMPLE"
@@ -15,19 +15,36 @@ function createImageCopies {
 
 # This function transfers image input files to Crawler VM
 function copyImagesToCrawler {
-#TODO note that the destination directory should be empty before running this
-  echo "Copying input data to $inputs_dir in Crawler"
-  scp -r -i $private_key_path -P $crawler_port $images_dir_path $crawler_user_name@$crawler_ip:$inputs_dir
+  echo "Copying input data to Crawler temporary folder"
+  scp -r -i $private_key_path -P $crawler_port $images_dir_path/* $crawler_user_name@$crawler_ip:/tmp
+  
+  echo "Moving images to $crawler_inputs_dir"
+  move_files_cmd="sudo mv /tmp/$original_image_name* $crawler_inputs_dir"
+  ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $crawler_port -i $private_key_path  $crawler_user_name@$crawler_ip ${move_files_cmd}
 }
 
-# This function sumits n_samples of n_images to Scheduler database
+# This function submits n_images from CURRENT_SAMPLE to Scheduler database
 function submitImagesIntoDB {
-  #TODO: maybe we will have a file with image data, so we can get it and use here
+  # Setting password to access db
+  file="$HOME/.pgpass"
+  if [ -f "$file" ]
+  then
+      echo "Replacing $file now."
+      rm -f $file
+  else
+      echo "$file not found. Creating one now"
+  fi
+
+  # Writing password in .pgpass and changing permissions
+  echo "$scheduler_ip:$scheduler_db_port:$sebal_db_name:$sebal_db_user:$sebal_db_password" >> $file
+  chmod 0600 "$file"
+
   for i in `seq 1 $n_images`
   do
-    echo "Submitting image $original_image_name"_"$i"_$CURRENT_SAMPLE" to catalog"
-    submit_images_cmd="sudo su postgres -c \"echo -e \"$sebal_db_password\n\" | psql -d $sebal_db_name -U $sebal_db_user -c \"INSERT INTO $sebal_db_table_name VALUES($original_image_name"_"$i"_$CURRENT_SAMPLE", 'downloadLink', 'downloaded', '$federation_member', 0, 'NE', '$sebal_version', '$sebal_tag', '$crawler_version', 'NE', 'NE', now(), now(), 'available', 'no_errors');\"\""
-    ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $scheduler_port -i $private_key_path  $scheduler_user_name@$scheduler_ip ${submit_images_cmd}
+    image_name="$original_image_name"_"$i"_$CURRENT_SAMPLE""
+    echo "Submitting image $image_name to catalog"
+    psql_cmd="INSERT INTO $sebal_db_table_name VALUES('$image_name', 'downloadLink', 'downloaded', '$federation_member', 0, 'NE', '$sebal_version', '$sebal_tag', '$crawler_version', 'NE', 'NE', 'NE', now(), now(), 'available', 'no_errors');"
+    psql -h $scheduler_ip -U $sebal_db_user -c "$psql_cmd"
   done
 }
 
