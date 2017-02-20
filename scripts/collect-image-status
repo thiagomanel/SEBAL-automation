@@ -1,63 +1,62 @@
 #!/bin/bash
 
-#Souce config file
-. "../bin/sebal-automation.conf"
+function getImageStatus {
+	#Geting info about db
+	ip=$scheduler_ip
+	port=$scheduler_port
+	db_name=$sebal_db_name
+	db_username=$sebal_db_user
+	db_password=$sebal_db_password
 
-#Geting info about db
-ip=$scheduler_ip
-port=$scheduler_port
-db_name=$sebal_db_name
-db_username=$sebal_db_user
-db_password=$sebal_db_password
+	# Setting password to access db
+	file="$HOME/.pgpass"
+	if [ -f "$file" ]
+	then
+	    echo "Replacing $file now."
+	    rm -f $file
+	else
+	    echo "$file not found. Creating one now"
+	fi
 
-# Setting password to access db
-file="$HOME/.pgpass"
-if [ -f "$file" ]
-then
-    echo "Replacing $file now."
-    rm -f $file
-else
-    echo "$file not found. Creating one now"
-fi
+	#Writing password in .pgpass and changing permissions
+	echo "$ip:$port:$db_name:$db_username:$db_password" >> $file
+	chmod 0600 "$HOME/.pgpass"
 
-#Writing password in .pgpass and changing permissions
-echo "$ip:$port:$db_name:$db_username:$db_password" >> $file
-chmod 0600 "$HOME/.pgpass"
+	#Erasing files that are not required anymore (it is safer to clean before use)
+	rm running.csv 
+	rm finished.csv 
+	rm queued.csv 
+	rm all_images_status.csv
 
-#Erasing files that are not required anymore (it is safer to clean before use)
-rm running.csv 
-rm finished.csv 
-rm queued.csv 
-rm all_images_status.csv
+	# Generating CSV files for result of the queries
+	psql -h $ip -U$db_username -c "COPY (SELECT image_name, state, utime, federation_member FROM nasa_images WHERE state = 'queued') TO STDOUT WITH CSV" $db_name >> queued.csv
+	psql -h $ip -U$db_username -c "COPY (SELECT image_name, state, utime, federation_member FROM nasa_images WHERE state = 'finished') TO STDOUT WITH CSV" $db_name >> finished.csv
+	psql -h $ip -U$db_username -c "COPY (SELECT image_name, state, utime, federation_member FROM nasa_images WHERE state = 'running') TO STDOUT WITH CSV" $db_name >> running.csv
+	psql -h $ip -U$db_username -c "COPY (SELECT image_name, state, utime, federation_member FROM nasa_images) TO STDOUT WITH CSV" $db_name >> all_images_status.csv
 
-# Generating CSV files for result of the queries
-psql -h $ip -U$db_username -c "COPY (SELECT image_name, state, utime, federation_member FROM nasa_images WHERE state = 'queued') TO STDOUT WITH CSV" $db_name >> queued.csv
-psql -h $ip -U$db_username -c "COPY (SELECT image_name, state, utime, federation_member FROM nasa_images WHERE state = 'finished') TO STDOUT WITH CSV" $db_name >> finished.csv
-psql -h $ip -U$db_username -c "COPY (SELECT image_name, state, utime, federation_member FROM nasa_images WHERE state = 'running') TO STDOUT WITH CSV" $db_name >> running.csv
-psql -h $ip -U$db_username -c "COPY (SELECT image_name, state, utime, federation_member FROM nasa_images) TO STDOUT WITH CSV" $db_name >> all_images_status.csv
+	#Variables that are going to be checked after query in the database
+	running=$(cat running.csv | sed '/^\s*#/d;/^\s*$/d' | wc -l)
+	finished=$(cat finished.csv | sed '/^\s*#/d;/^\s*$/d' | wc -l)
+	queued=$(cat queued.csv | sed '/^\s*#/d;/^\s*$/d' | wc -l)
+	all_images=$(cat all_images_status.csv | sed '/^\s*#/d;/^\s*$/d' | wc -l)
 
-#Variables that are going to be checked after query in the database
-running=$(cat running.csv | sed '/^\s*#/d;/^\s*$/d' | wc -l)
-finished=$(cat finished.csv | sed '/^\s*#/d;/^\s*$/d' | wc -l)
-queued=$(cat queued.csv | sed '/^\s*#/d;/^\s*$/d' | wc -l)
-all_images=$(cat all_images_status.csv | sed '/^\s*#/d;/^\s*$/d' | wc -l)
+	#Condition to give status of the images
+	if [ $all_images == 0 ]
+	then
+	    echo "Idle"  
+	elif [[ $running > 0 || $queued > 0 ]]
+	then
+	    echo "Running" 
+	elif [[ $finished > 0 && $all_images == $finished ]]
+	then
+	    echo "Done"  
+	else
+	    echo "ERROR: Not possible to provide the state of the images"
+	fi
 
-#Condition to give status of the images
-if [ $all_images == 0 ]
-then
-    echo "Idle"  
-elif [[ $running > 0 || $queued > 0 ]]
-then
-    echo "Running" 
-elif [[ $finished > 0 && $all_images == $finished ]]
-then
-    echo "Done"  
-else
-    echo "ERROR: Not possible to provide the state of the images"
-fi
-
-#Erasing files that are not required anymore
-rm running.csv
-rm finished.csv
-rm queued.csv
-rm all_images_status.csv
+	#Erasing files that are not required anymore
+	rm running.csv
+	rm finished.csv
+	rm queued.csv
+	rm all_images_status.csv
+}

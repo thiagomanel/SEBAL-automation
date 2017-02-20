@@ -1,9 +1,7 @@
 #!/bin/bash
 
-DIRNAME=`dirname $0`
 CURRENT_SAMPLE=$1
 n_images=$2
-. "$DIRNAME/sebal-automation.conf"
 
 # This function makes n_images copies from the same image in images_dir_path
 function createImageCopies {
@@ -58,9 +56,11 @@ function checkProcessOutput {
   fi
 }
 
-createImageCopies
-checkProcessOutput
-copyImagesToCrawler
-checkProcessOutput
-submitImagesIntoDB
-checkProcessOutput
+function doStageIn {
+  createImageCopies
+  checkProcessOutput
+  copyImagesToCrawler
+  checkProcessOutput
+  submitImagesIntoDB
+  checkProcessOutput
+}
