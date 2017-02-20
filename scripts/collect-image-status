@@ -23,16 +23,16 @@ function getImagesStatus {
 	chmod 0600 "$HOME/.pgpass"
 
 	#Erasing files that are not required anymore (it is safer to clean before use)
-	rm running.csv 
-	rm finished.csv 
-	rm queued.csv 
-	rm all_images_status.csv
+	rm running.csv 2> /dev/null
+	rm finished.csv 2> /dev/null
+	rm queued.csv 2> /dev/null
+	rm all_images_status.csv 2> /dev/null
 
 	# Generating CSV files for result of the queries
-	psql -h $ip -U$db_username -c "COPY (SELECT image_name, state, utime, federation_member FROM nasa_images WHERE state = 'queued') TO STDOUT WITH CSV" $db_name >> queued.csv
-	psql -h $ip -U$db_username -c "COPY (SELECT image_name, state, utime, federation_member FROM nasa_images WHERE state = 'finished') TO STDOUT WITH CSV" $db_name >> finished.csv
-	psql -h $ip -U$db_username -c "COPY (SELECT image_name, state, utime, federation_member FROM nasa_images WHERE state = 'running') TO STDOUT WITH CSV" $db_name >> running.csv
-	psql -h $ip -U$db_username -c "COPY (SELECT image_name, state, utime, federation_member FROM nasa_images) TO STDOUT WITH CSV" $db_name >> all_images_status.csv
+	psql -h $ip -U $db_username -c "COPY (SELECT image_name, state, utime, federation_member FROM nasa_images WHERE state = 'queued') TO STDOUT WITH CSV" $db_name >> queued.csv
+	psql -h $ip -U $db_username -c "COPY (SELECT image_name, state, utime, federation_member FROM nasa_images WHERE state = 'finished') TO STDOUT WITH CSV" $db_name >> finished.csv
+	psql -h $ip -U $db_username -c "COPY (SELECT image_name, state, utime, federation_member FROM nasa_images WHERE state = 'running') TO STDOUT WITH CSV" $db_name >> running.csv
+	psql -h $ip -U $db_username -c "COPY (SELECT image_name, state, utime, federation_member FROM nasa_images) TO STDOUT WITH CSV" $db_name >> all_images_status.csv
 
 	#Variables that are going to be checked after query in the database
 	running=$(cat running.csv | sed '/^\s*#/d;/^\s*$/d' | wc -l)
