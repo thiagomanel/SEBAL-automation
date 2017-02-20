@@ -9,14 +9,14 @@ n_images=$2
 function createImageCopies {
   for i in `seq 1 $n_images`
   do
-    cp -r $original_image_path $images_dir_path/$original_image_name"_"$i"_$CURRENT_SAMPLE"
+    sudo cp -r $original_image_path $images_dir_path/$original_image_name"_"$i"_$CURRENT_SAMPLE"
   done
 }
 
 # This function transfers image input files to Crawler VM
 function copyImagesToCrawler {
   echo "Copying input data to Crawler temporary folder"
-  scp -r -i $private_key_path -P $crawler_port $images_dir_path/* $crawler_user_name@$crawler_ip:/tmp
+  sudo scp -r -i $private_key_path -P $crawler_port $images_dir_path/* $crawler_user_name@$crawler_ip:/tmp
   
   echo "Moving images to $crawler_inputs_dir"
   move_files_cmd="sudo mv /tmp/$original_image_name* $crawler_inputs_dir"
