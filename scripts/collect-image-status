@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function getImageStatus {
+function getImagesStatus {
 	#Geting info about db
 	ip=$scheduler_ip
 	port=$scheduler_port

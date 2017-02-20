@@ -1,8 +1,5 @@
 #!/bin/bash
 
-CURRENT_SAMPLE=$1
-n_images=$2
-
 # This function makes n_images copies from the same image in images_dir_path
 function createImageCopies {
   for i in `seq 1 $n_images`
@@ -57,6 +54,8 @@ function checkProcessOutput {
 }
 
 function doStageIn {
+  CURRENT_SAMPLE=$1
+  n_images=$2
   createImageCopies
   checkProcessOutput
   copyImagesToCrawler
