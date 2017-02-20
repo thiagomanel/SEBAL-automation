@@ -17,25 +17,7 @@ source "$DIRNAME/infra.sh"
 source "$DIRNAME/collect-log-dump-db.sh"
 source "$DIRNAME/sebal_clean.sh"
 source "$DIRNAME/stage-in.sh"
-
-checkParams
-
-# run scheduler_port
-# run crawler
-
-for i in $n_samples ; do
-   echo item: $i
-   # clean
-   sebalCleanup
-   # stage in
-   doStageIn
-   # monitorExecution
-   ## getData
-   monitorExecution
-   # finish
-   
-done
-
+source "$DIRNAME/../scripts/collect-image-status"
 
 # This function checks parameters consistency
 function checkParams {
@@ -58,28 +40,38 @@ function checkParams {
  fi
 }
 
-# This function verifies the state of a given image
-function stateVerifier {
- local image_name=$1
-
- execution_monitor_cmd="sudo su postgres -c \"echo -e \"$sebal_db_password\n\" | psql -d $sebal_db_name -U $sebal_db_user -c \"SELECT state FROM nasa_images WHERE image_name = '$image_name';\"\""
- state=$(ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $scheduler_port -i $private_key_path  $scheduler_user_name@$scheduler_ip ${execution_monitor_cmd})
- sed -i '1d' $state
- sed -i '1d' $state
- sed -i '$d' $state
- return $state
-}
-
 # This function monitors if images have reached a "fetched" state
 function monitorExecution {
- images_count=0
+ CURRENT_SAMPLE=$1
 
  # !isDone 
- statusCondition=false
+
  while true
    #getData
-   ## function defined in get_result_data.sh
-   getResultExecution
+   IMAGES_STATUS=$(getImagesStatus)
+   if [ "$IMAGES_STATUS" = "Done" ]; then
+      collectLogDumpDB $CURRENT_SAMPLE $n_images
+   elif [ "$IMAGES_STATUS" != "Idle" && "$IMAGES_STATUS" != "Running" ]
+      break
+   fi
    # sleep ?
  done
 }
+
+checkParams
+
+# run scheduler_port
+# run crawler
+
+for i in $n_samples ; do
+   echo item: $i
+   # clean
+   sebalCleanup
+   # stage in
+   doStageIn $i $n_images
+   # monitorExecution
+   ## getData
+   monitorExecution $i
+   # finish
+
+done

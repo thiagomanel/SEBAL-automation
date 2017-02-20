@@ -1,8 +1,4 @@
 #!/bin/bash
-DIRNAME=`dirname $0`
-CURRENT_SAMPLE=$1
-n_images=$2
-source "$DIRNAME/sebal-automation.conf"
 
 # This function get result execution
 function getResultExecution {
@@ -58,7 +54,11 @@ function checkProcessOutput {
   fi
 }
 
-getResultExecution
-checkProcessOutput
-getDatabaseDump
-checkProcessOutput
+function collectLogDumpDB {
+  CURRENT_SAMPLE=$1
+  n_images=$2
+  getResultExecution
+  checkProcessOutput
+  getDatabaseDump
+  checkProcessOutput
+}
