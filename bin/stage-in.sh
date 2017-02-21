@@ -2,20 +2,23 @@
 
 # This function makes n_images copies from the same image in images_dir_path
 function createImageCopies {
+  echo "Creating image copies"
   for i in `seq 1 $n_images`
   do
+    echo "Executing command: sudo cp -r "$original_image_path $images_dir_path"/"$original_image_name"_"$i"_"$CURRENT_SAMPLE
     sudo cp -r $original_image_path $images_dir_path/$original_image_name"_"$i"_$CURRENT_SAMPLE"
   done
 }
 
 # This function transfers image input files to Crawler VM
 function copyImagesToCrawler {
+  SSH_OPTIONS="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
   echo "Copying input data to Crawler temporary folder"
-  sudo scp -r -i $private_key_path -P $crawler_port $images_dir_path/* $crawler_user_name@$crawler_ip:/tmp
+  sudo scp -r $SSH_OPTIONS -i $private_key_path -P $crawler_port $images_dir_path/* $crawler_user_name@$crawler_ip:/tmp
   
   echo "Moving images to $crawler_inputs_dir"
   move_files_cmd="sudo mv /tmp/$original_image_name* $crawler_inputs_dir"
-  ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $crawler_port -i $private_key_path  $crawler_user_name@$crawler_ip ${move_files_cmd}
+  ssh -v $SSH_OPTIONS -p $crawler_port -i $private_key_path  $crawler_user_name@$crawler_ip ${move_files_cmd}
 }
 
 # This function submits n_images from CURRENT_SAMPLE to Scheduler database

@@ -46,12 +46,12 @@ function monitorExecution {
 
  # !isDone 
 
- while true
+ while true; do
    #getData
    IMAGES_STATUS=$(getImagesStatus)
    if [ "$IMAGES_STATUS" = "Done" ]; then
       collectLogDumpDB $CURRENT_SAMPLE $n_images
-   elif [ "$IMAGES_STATUS" != "Idle" && "$IMAGES_STATUS" != "Running" ]
+   elif [ "$IMAGES_STATUS" != "Idle" && "$IMAGES_STATUS" != "Running" ]; then
       break
    fi
    # sleep ?
@@ -63,7 +63,7 @@ checkParams
 # run scheduler_port
 # run crawler
 
-for i in $n_samples ; do
+for i in $(seq 1 $n_samples); do
    echo item: $i
    # clean
    sebalCleanup
