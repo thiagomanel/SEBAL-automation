@@ -7,7 +7,7 @@ function sebalCleanup {
 	echo $pgpass_string >> "$pgpass_file"
 	chmod 600 "$pgpass_file"
 
-	SSH_OPTIONS="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
+	# SSH_OPTIONS="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 	# truncate table NASA_IMAGES
 	#COMMAND_TRUNCATE_NASA_IMAGES="psql -U $sebal_db_user \"TRUNCATE NASA_IMAGES\" $sebal_db_name"
 	#ssh $SSH_OPTIONS -i $private_key_path $scheduler_user_name@$scheduler_ip "$COMMAND_TRUNCATE_NASA_IMAGES"
