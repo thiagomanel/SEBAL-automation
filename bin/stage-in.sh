@@ -18,7 +18,7 @@ function copyImagesToCrawler {
   
   echo "Moving images to $crawler_inputs_dir"
   move_files_cmd="sudo mv /tmp/$original_image_name* $crawler_inputs_dir"
-  ssh -v $SSH_OPTIONS -p $crawler_port -i $private_key_path  $crawler_user_name@$crawler_ip ${move_files_cmd}
+  ssh -v $SSH_OPTIONS -p $crawler_port -i $private_key_path  $crawler_user_name@$crawler_ip "sudo mv /tmp/$original_image_name* $crawler_inputs_dir"
 }
 
 # This function submits n_images from CURRENT_SAMPLE to Scheduler database

@@ -1,9 +1,17 @@
 #!/bin/bash
 
+function calculateMakespan {
+	queued_lastupdate_file="min_queued_lastupdate.txt"
+	finished_lastupdate_file="max_finished_lastupdate"
+	MIN_QUEUED_LASTUPDATE=`cat "$queued_lastupdate_file"`
+	MAX_FINISHED_LASTUPDATE=`cat "$finished_lastupdate_file"`
+	expr $MAX_FINISHED_LASTUPDATE - $MIN_QUEUED_LASTUPDATE
+}
+
 function getImagesStatus {
 	#Geting info about db
 	ip=$scheduler_ip
-	port=$scheduler_port
+	port=$scheduler_db_port
 	db_name=$sebal_db_name
 	db_username=$sebal_db_user
 	db_password=$sebal_db_password
@@ -12,10 +20,8 @@ function getImagesStatus {
 	file="$HOME/.pgpass"
 	if [ -f "$file" ]
 	then
-	    echo "Replacing $file now."
+	    ## echo "File $file already exists. Replacing deleting now."
 	    rm -f $file
-	else
-	    echo "$file not found. Creating one now"
 	fi
 
 	#Writing password in .pgpass and changing permissions
@@ -40,6 +46,13 @@ function getImagesStatus {
 	queued=$(cat queued.csv | sed '/^\s*#/d;/^\s*$/d' | wc -l)
 	all_images=$(cat all_images_status.csv | sed '/^\s*#/d;/^\s*$/d' | wc -l)
 
+	if [[ $all_images == $queued ]]; then
+		queued_lastupdate_file="min_queued_lastupdate.txt"
+		rm "$queued_lastupdate_file" 2> /dev/null
+		MIN_QUEUED_LASTUPDATE=`psql -h $ip -U $db_username -c "COPY (SELECT MIN(utime) FROM nasa_images WHERE state = 'queued') TO STDOUT" $db_name`
+		date --date="$MIN_QUEUED_LASTUPDATE" +"%s" > "$queued_lastupdate_file"
+	fi
+
 	#Condition to give status of the images
 	if [ $all_images == 0 ]
 	then
@@ -49,7 +62,11 @@ function getImagesStatus {
 	    echo "Running" 
 	elif [[ $finished > 0 && $all_images == $finished ]]
 	then
-	    echo "Done"  
+	    echo "Done"
+	    finished_lastupdate_file="max_finished_lastupdate.txt"
+		rm "$finished_lastupdate_file" 2> /dev/null
+		MAX_FINISHED_LASTUPDATE=`psql -h $ip -U $db_username -c "COPY (SELECT MAX(utime) FROM nasa_images WHERE state = 'finished') TO STDOUT" $db_name` 
+		date --date="$MAX_FINISHED_LASTUPDATE" +"%s" > "$finished_lastupdate_file"
 	else
 	    echo "ERROR: Not possible to provide the state of the images"
 	fi

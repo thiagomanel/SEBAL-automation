@@ -11,6 +11,11 @@ n_samples=$1
 n_images=$2
 n_workers=$3
 
+EXECUTION_UUID=`uuidgen`
+
+echo "Preparing execution ID: $EXECUTION_UUID"
+execution_samples_makespan_file="$outputs_dir_path/execution_"$EXECUTION_UUID".txt"
+
 DIRNAME=`dirname $0`
 source "$DIRNAME/sebal-automation.conf"
 source "$DIRNAME/infra.sh"
@@ -49,12 +54,17 @@ function monitorExecution {
  while true; do
    #getData
    IMAGES_STATUS=$(getImagesStatus)
-   if [ "$IMAGES_STATUS" = "Done" ]; then
+   echo "IMAGES_STATUS = $IMAGES_STATUS"
+   if [[ "$IMAGES_STATUS" = "Done" ]]; then
+      MAKESPAN=$(calculateMakespan)
+      echo "Sample: $CURRENT_SAMPLE - Execution time in seconds: $MAKESPAN" >> $execution_samples_makespan_file
       collectLogDumpDB $CURRENT_SAMPLE $n_images
-   elif [ "$IMAGES_STATUS" != "Idle" && "$IMAGES_STATUS" != "Running" ]; then
+   elif [ "$IMAGES_STATUS" != "Idle" ] && [ "$IMAGES_STATUS" != "Running" ]; then
+      echo "Breaking now!"
       break
    fi
    # sleep ?
+   sleep 5
  done
 }
 
@@ -62,16 +72,17 @@ checkParams
 
 # run scheduler_port
 # run crawler
-
 for i in $(seq 1 $n_samples); do
    echo item: $i
    # clean
+   echo "Starting clean sample $i and n_images = $n_images"
    sebalCleanup
    # stage in
+   echo "Starting stagein sample $i and n_images = $n_images"
    doStageIn $i $n_images
    # monitorExecution
    ## getData
+   echo "Starting monitoring sample $i and n_images = $n_images"
    monitorExecution $i
    # finish
-
 done
