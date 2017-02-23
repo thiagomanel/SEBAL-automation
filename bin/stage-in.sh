@@ -41,7 +41,15 @@ function submitImagesIntoDB {
   do
     image_name="$original_image_name"_"$i"_$CURRENT_SAMPLE""
     echo "Submitting image $image_name to catalog"
-    psql_cmd="INSERT INTO $sebal_db_table_name VALUES('$image_name', 'downloadLink', 'downloaded', '$federation_member', 0, 'NE', '$sebal_version', '$sebal_tag', '$crawler_version', 'NE', 'NE', 'NE', now(), now(), 'available', 'no_errors');"
+    
+    psql_cmd=
+    if [ $CURRENT_SAMPLE -eq 1 ]
+    then
+      psql_cmd="INSERT INTO $sebal_db_table_name VALUES('$image_name', 'downloadLink', 'downloaded', '$federation_member', 0, 'NE', '$fake_sebal_version', '$fake_sebal_tag', '$crawler_version', 'NE', 'NE', 'NE', now(), now(), 'available', 'no_errors');"
+    else
+      psql_cmd="INSERT INTO $sebal_db_table_name VALUES('$image_name', 'downloadLink', 'downloaded', '$federation_member', 0, 'NE', '$sebal_version', '$sebal_tag', '$crawler_version', 'NE', 'NE', 'NE', now(), now(), 'available', 'no_errors');"
+    fi
+
     psql -h $scheduler_ip -U $sebal_db_user -c "$psql_cmd"
   done
 }
