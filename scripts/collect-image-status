@@ -2,7 +2,7 @@
 
 function calculateMakespan {
 	queued_lastupdate_file="min_queued_lastupdate.txt"
-	finished_lastupdate_file="max_finished_lastupdate"
+	finished_lastupdate_file="max_finished_lastupdate.txt"
 	MIN_QUEUED_LASTUPDATE=`cat "$queued_lastupdate_file"`
 	MAX_FINISHED_LASTUPDATE=`cat "$finished_lastupdate_file"`
 	expr $MAX_FINISHED_LASTUPDATE - $MIN_QUEUED_LASTUPDATE

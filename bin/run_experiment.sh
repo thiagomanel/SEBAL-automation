@@ -7,7 +7,7 @@ if [[ $# -ne 3 ]]; then
 fi
 
 # Entry params
-n_samples=$1
+n_samples=`expr 2 + $1`
 n_images=$2
 n_workers=$3
 
@@ -59,6 +59,7 @@ function monitorExecution {
       MAKESPAN=$(calculateMakespan)
       echo "Sample: $CURRENT_SAMPLE - Execution time in seconds: $MAKESPAN" >> $execution_samples_makespan_file
       collectLogDumpDB $CURRENT_SAMPLE $n_images
+      break
    elif [ "$IMAGES_STATUS" != "Idle" ] && [ "$IMAGES_STATUS" != "Running" ]; then
       echo "Breaking now!"
       break

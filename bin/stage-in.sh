@@ -13,12 +13,16 @@ function createImageCopies {
 # This function transfers image input files to Crawler VM
 function copyImagesToCrawler {
   SSH_OPTIONS="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
-  echo "Copying input data to Crawler temporary folder"
-  sudo scp -r $SSH_OPTIONS -i $private_key_path -P $crawler_port $images_dir_path/* $crawler_user_name@$crawler_ip:/tmp
-  
-  echo "Moving images to $crawler_inputs_dir"
-  move_files_cmd="sudo mv /tmp/$original_image_name* $crawler_inputs_dir"
-  ssh $SSH_OPTIONS -p $crawler_port -i $private_key_path  $crawler_user_name@$crawler_ip "sudo mv /tmp/$original_image_name* $crawler_inputs_dir"
+  for current_image_to_copy in `seq 1 $n_images`
+  do
+    image_name="$original_image_name"_"$current_image_to_copy"_$CURRENT_SAMPLE""
+    echo "Copying input data to Crawler temporary folder"
+    sudo scp -r $SSH_OPTIONS -i $private_key_path -P "$crawler_port $images_dir_path/$image_name" $crawler_user_name@$crawler_ip:/tmp
+    
+    echo "Moving images to $crawler_inputs_dir"
+    move_files_cmd="sudo mv /tmp/$original_image_name* $crawler_inputs_dir"
+    ssh $SSH_OPTIONS -p $crawler_port -i $private_key_path  $crawler_user_name@$crawler_ip "sudo mv /tmp/$image_name $crawler_inputs_dir"
+  done
 }
 
 # This function submits n_images from CURRENT_SAMPLE to Scheduler database
@@ -43,7 +47,7 @@ function submitImagesIntoDB {
     echo "Submitting image $image_name to catalog"
     
     psql_cmd=
-    if [ $CURRENT_SAMPLE -eq 1 ]
+    if [[ $CURRENT_SAMPLE -eq 1 || $CURRENT_SAMPLE -eq 2 ]]
     then
       psql_cmd="INSERT INTO $sebal_db_table_name VALUES('$image_name', 'downloadLink', 'downloaded', '$federation_member', 0, 'NE', '$fake_sebal_version', '$fake_sebal_tag', '$crawler_version', 'NE', 'NE', 'NE', now(), now(), 'available', 'no_errors');"
     else
