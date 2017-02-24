@@ -72,17 +72,17 @@ checkParams
 
 # run scheduler_port
 # run crawler
-for i in `seq 1 $n_samples`; do
-   echo item: $i
+for each_sample in `seq 1 $n_samples`; do
+   echo item: $each_sample
    # clean
-   echo "Starting clean sample $i and n_images = $n_images"
+   echo "Starting clean sample $each_sample and n_images = $n_images"
    sebalCleanup
    # stage in
-   echo "Starting stagein sample $i and n_images = $n_images"
+   echo "Starting stagein sample $each_sample and n_images = $n_images"
    doStageIn $i $n_images
    # monitorExecution
    ## getData
-   echo "Starting monitoring sample $i and n_images = $n_images"
+   echo "Starting monitoring sample $each_sample and n_images = $n_images"
    monitorExecution $i
    # finish
 done

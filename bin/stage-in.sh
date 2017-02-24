@@ -3,10 +3,10 @@
 # This function makes n_images copies from the same image in images_dir_path
 function createImageCopies {
   echo "Creating image copies"
-  for i in `seq 1 $n_images`
+  for current_image_to_create in `seq 1 $n_images`
   do
     echo "Executing command: sudo cp -r "$original_image_path $images_dir_path"/"$original_image_name"_"$i"_"$CURRENT_SAMPLE
-    sudo cp -r $original_image_path $images_dir_path/$original_image_name"_"$i"_$CURRENT_SAMPLE"
+    sudo cp -r $original_image_path $images_dir_path/$original_image_name"_"$current_image_to_create"_$CURRENT_SAMPLE"
   done
 }
 
@@ -37,9 +37,9 @@ function submitImagesIntoDB {
   echo "$scheduler_ip:$scheduler_db_port:$sebal_db_name:$sebal_db_user:$sebal_db_password" >> $file
   chmod 0600 "$file"
 
-  for i in `seq 1 $n_images`
+  for current_image_to_submit in `seq 1 $n_images`
   do
-    image_name="$original_image_name"_"$i"_$CURRENT_SAMPLE""
+    image_name="$original_image_name"_"$current_image_to_submit"_$CURRENT_SAMPLE""
     echo "Submitting image $image_name to catalog"
     
     psql_cmd=
