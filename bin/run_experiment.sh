@@ -79,10 +79,10 @@ for each_sample in `seq 1 $n_samples`; do
    sebalCleanup
    # stage in
    echo "Starting stagein sample $each_sample and n_images = $n_images"
-   doStageIn $i $n_images
+   doStageIn $each_sample $n_images
    # monitorExecution
    ## getData
    echo "Starting monitoring sample $each_sample and n_images = $n_images"
-   monitorExecution $i
+   monitorExecution $each_sample
    # finish
 done

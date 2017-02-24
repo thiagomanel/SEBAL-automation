@@ -5,7 +5,7 @@ function createImageCopies {
   echo "Creating image copies"
   for current_image_to_create in `seq 1 $n_images`
   do
-    echo "Executing command: sudo cp -r "$original_image_path $images_dir_path"/"$original_image_name"_"$i"_"$CURRENT_SAMPLE
+    echo "Executing command: sudo cp -r "$original_image_path $images_dir_path"/"$original_image_name"_"$current_image_to_create"_"$CURRENT_SAMPLE
     sudo cp -r $original_image_path $images_dir_path/$original_image_name"_"$current_image_to_create"_$CURRENT_SAMPLE"
   done
 }
@@ -18,7 +18,7 @@ function copyImagesToCrawler {
   
   echo "Moving images to $crawler_inputs_dir"
   move_files_cmd="sudo mv /tmp/$original_image_name* $crawler_inputs_dir"
-  ssh -v $SSH_OPTIONS -p $crawler_port -i $private_key_path  $crawler_user_name@$crawler_ip "sudo mv /tmp/$original_image_name* $crawler_inputs_dir"
+  ssh $SSH_OPTIONS -p $crawler_port -i $private_key_path  $crawler_user_name@$crawler_ip "sudo mv /tmp/$original_image_name* $crawler_inputs_dir"
 }
 
 # This function submits n_images from CURRENT_SAMPLE to Scheduler database
