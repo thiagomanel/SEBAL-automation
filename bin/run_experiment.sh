@@ -11,11 +11,6 @@ n_samples=`expr 2 + $1`
 n_images=$2
 n_workers=$3
 
-EXECUTION_UUID=`uuidgen`
-
-echo "Preparing execution ID: $EXECUTION_UUID"
-execution_samples_makespan_file="$outputs_dir_path/execution_"$EXECUTION_UUID".txt"
-
 DIRNAME=`dirname $0`
 source "$DIRNAME/sebal-automation.conf"
 source "$DIRNAME/infra.sh"
@@ -23,6 +18,11 @@ source "$DIRNAME/collect-log-dump-db.sh"
 source "$DIRNAME/sebal_clean.sh"
 source "$DIRNAME/stage-in.sh"
 source "$DIRNAME/../scripts/collect-image-status"
+
+EXECUTION_UUID=`uuidgen`
+
+echo "Preparing execution ID: $EXECUTION_UUID"
+execution_samples_makespan_file="$outputs_dir_path/execution_"$EXECUTION_UUID".txt"
 
 # This function checks parameters consistency
 function checkParams {

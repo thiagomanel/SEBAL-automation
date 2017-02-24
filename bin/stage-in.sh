@@ -17,7 +17,7 @@ function copyImagesToCrawler {
   do
     image_name="$original_image_name"_"$current_image_to_copy"_$CURRENT_SAMPLE""
     echo "Copying input data to Crawler temporary folder"
-    sudo scp -r $SSH_OPTIONS -i $private_key_path -P "$crawler_port $images_dir_path/$image_name" $crawler_user_name@$crawler_ip:/tmp
+    sudo scp -r $SSH_OPTIONS -i $private_key_path -P $crawler_port "$images_dir_path/$image_name" $crawler_user_name@$crawler_ip:/tmp
     
     echo "Moving images to $crawler_inputs_dir"
     move_files_cmd="sudo mv /tmp/$original_image_name* $crawler_inputs_dir"
