@@ -49,8 +49,7 @@ function submitImagesIntoDB {
     else
       psql_cmd="INSERT INTO $sebal_db_table_name VALUES('$image_name', 'downloadLink', 'downloaded', '$federation_member', 0, 'NE', '$sebal_version', '$sebal_tag', '$crawler_version', 'NE', 'NE', 'NE', now(), now(), 'available', 'no_errors');"
     fi
-
-    psql -h $scheduler_ip -U $sebal_db_user -c "$psql_cmd"
+    psql -h $scheduler_ip -U $sebal_db_user -c "$psql_cmd" $sebal_db_name
   done
 }
 
@@ -69,7 +68,7 @@ function doStageIn {
   n_images=$2
   createImageCopies
   checkProcessOutput
-  copyImagesToCrawler
+  #copyImagesToCrawler
   checkProcessOutput
   submitImagesIntoDB
   checkProcessOutput

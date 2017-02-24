@@ -72,7 +72,7 @@ checkParams
 
 # run scheduler_port
 # run crawler
-for i in $(seq 1 $n_samples); do
+for i in `seq 1 $n_samples`; do
    echo item: $i
    # clean
    echo "Starting clean sample $i and n_images = $n_images"

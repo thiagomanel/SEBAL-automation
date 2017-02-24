@@ -1,8 +1,5 @@
 #!/bin/bash
 
-DIRNAME=`dirname $0`
-. "$DIRNAME/sebal-automation.conf"
-
 # This function checks if components (Crawler, Scheduler and Fetcher) are responding
 function checkComponentsResponse {
 #TODO we may extract ping to a function
