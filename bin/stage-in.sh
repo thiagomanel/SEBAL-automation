@@ -68,7 +68,7 @@ function doStageIn {
   n_images=$2
   createImageCopies
   checkProcessOutput
-  #copyImagesToCrawler
+  copyImagesToCrawler
   checkProcessOutput
   submitImagesIntoDB
   checkProcessOutput
