@@ -2,6 +2,7 @@
 
 # This function get result execution
 function getResultExecution {
+  EXECUTION_UUID=$1
 
   for i in $n_images
   do
@@ -13,12 +14,14 @@ function getResultExecution {
     fi
 
     echo "Getting $image_name result files"
-    scp -r $crawler_user_name@$crawler_ip:$crawler_outputs_dir/$image_name $outputs_dir_path
+    scp -r $crawler_user_name@$crawler_ip:$crawler_outputs_dir/$image_name $outputs_dir_path/$EXECUTION_UUID"_"$image_name
   done
 }
 
 # This function do a pg_dump of catalog database
 function getDatabaseDump {
+  EXECUTION_UUID=$1
+
   # Setting password to access db
   file="$HOME/.pgpass"
   if [ -f "$file" ]
@@ -33,7 +36,7 @@ function getDatabaseDump {
   echo "$scheduler_ip:$scheduler_db_port:$sebal_db_name:$sebal_db_user:$sebal_db_password" >> $file
   chmod 0600 "$file"
 
-  sample_dir_path=$outputs_dir_path/sample_$CURRENT_SAMPLE
+  sample_dir_path=$outputs_dir_path/$EXECUTION_UUID"_sample_"$CURRENT_SAMPLE
   if [ ! -d $sample_dir_path ]
   then
     mkdir -p $sample_dir_path
@@ -57,8 +60,9 @@ function checkProcessOutput {
 function collectLogDumpDB {
   CURRENT_SAMPLE=$1
   n_images=$2
-  getResultExecution
+  EXECUTION_UUID=$3
+  getResultExecution $EXECUTION_UUID
   checkProcessOutput
-  getDatabaseDump
+  getDatabaseDump $EXECUTION_UUID
   checkProcessOutput
 }

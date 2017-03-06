@@ -1,12 +1,68 @@
 #!/bin/bash
 
+# this function rename all files in the path
+function renaming {
+  path_to_renaming=$1
+  echo "Starting to renaming ($path_to_renaming)."  
+
+  tar_file=""
+
+  for f in $path_to_renaming/*
+  do       
+    file_name=$(basename "$f")
+    file_path=$path_to_renaming/$file_name
+    echo "Renaming $file_path"
+
+    current_image_file_name=$(echo "$file_name" | sed -r "s/$original_image_name/$current_image_name/g")
+    echo "Renaming $file_path to $path_to_renaming/$current_image_file_name"
+    if [[ "$file_name" != *README.GTF ]];
+    then
+      mv $file_path $path_to_renaming/$current_image_file_name
+    fi
+  done
+}
+
+# this funcion rename all file tar.gz
+function renaming_tar_gz {
+  path_to_renaming_tar_gz=$1
+
+  for f in $path_to_renaming_tar_gz/*
+  do       
+    file_name=$(basename "$f")
+    file_path=$path_to_renaming_tar_gz/$file_name
+
+    if [[ "$file_name" == *tar.gz ]];
+    then
+      tar_file_name=$file_name
+      path_tar=$path_to_renaming_tar_gz/tar
+      mkdir $path_tar
+    fi
+
+  done  
+
+  echo "Untar $file_name to $path_tar"
+  tar -zxvf $file_path -C $path_tar
+  renaming $path_tar
+  rm $path_to_renaming_tar_gz/$tar_file_name
+  echo "tar ($path_to_renaming_tar_gz/$tar_file_name) of ($path_tar)"
+  cd $path_tar
+  tar -czvf $path_to_renaming_tar_gz/$tar_file_name *
+  rm -r $path_tar
+  echo "Tar.gz ($path_to_renaming_tar_gz) renamed."
+}
+
 # This function makes n_images copies from the same image in images_dir_path
 function createImageCopies {
   echo "Creating image copies"
   for current_image_to_create in `seq 1 $n_images`
   do
-    echo "Executing command: sudo cp -r "$original_image_path $images_dir_path"/"$original_image_name"_"$current_image_to_create"_"$CURRENT_SAMPLE
-    sudo cp -r $original_image_path $images_dir_path/$original_image_name"_"$current_image_to_create"_$CURRENT_SAMPLE"
+    current_image_name=$original_image_name"_"$current_image_to_create"_$CURRENT_SAMPLE"
+    path_sample=$images_dir_path/$current_image_name
+    echo "Executing command: cp -r "$original_image_path $path_sample
+    cp -r "$original_image_path" "$path_sample"
+
+    renaming $path_sample
+    renaming_tar_gz $path_sample 
   done
 }
 
@@ -17,10 +73,9 @@ function copyImagesToCrawler {
   do
     image_name="$original_image_name"_"$current_image_to_copy"_$CURRENT_SAMPLE""
     echo "Copying input data to Crawler temporary folder"
-    sudo scp -r $SSH_OPTIONS -i $private_key_path -P $crawler_port "$images_dir_path/$image_name" $crawler_user_name@$crawler_ip:/tmp
+    scp -r $SSH_OPTIONS -i $private_key_path -P $crawler_port "$images_dir_path/$image_name" $crawler_user_name@$crawler_ip:/tmp
     
     echo "Moving images to $crawler_inputs_dir"
-    move_files_cmd="sudo mv /tmp/$original_image_name* $crawler_inputs_dir"
     ssh $SSH_OPTIONS -p $crawler_port -i $private_key_path  $crawler_user_name@$crawler_ip "sudo mv /tmp/$image_name $crawler_inputs_dir"
   done
 }
@@ -47,7 +102,8 @@ function submitImagesIntoDB {
     echo "Submitting image $image_name to catalog"
     
     psql_cmd=
-    if [[ $CURRENT_SAMPLE -eq 1 || $CURRENT_SAMPLE -eq 2 ]]
+#    if [[ $CURRENT_SAMPLE -eq 1 || $CURRENT_SAMPLE -eq 2 ]]
+    if [[ $CURRENT_SAMPLE -eq 10 || $CURRENT_SAMPLE -eq 20 ]]
     then
       psql_cmd="INSERT INTO $sebal_db_table_name VALUES('$image_name', 'downloadLink', 'downloaded', '$federation_member', 0, 'NE', '$fake_sebal_version', '$fake_sebal_tag', '$crawler_version', 'NE', 'NE', 'NE', now(), now(), 'available', 'no_errors');"
     else

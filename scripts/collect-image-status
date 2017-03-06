@@ -1,8 +1,8 @@
 #!/bin/bash
 
 function calculateMakespan {
-	queued_lastupdate_file="min_queued_lastupdate.txt"
-	finished_lastupdate_file="max_finished_lastupdate.txt"
+	queued_lastupdate_file="/tmp/min_queued_lastupdate.txt"
+	finished_lastupdate_file="/tmp/max_finished_lastupdate.txt"
 	MIN_QUEUED_LASTUPDATE=`cat "$queued_lastupdate_file"`
 	MAX_FINISHED_LASTUPDATE=`cat "$finished_lastupdate_file"`
 	expr $MAX_FINISHED_LASTUPDATE - $MIN_QUEUED_LASTUPDATE
@@ -36,7 +36,7 @@ function getImagesStatus {
 	all_images=`psql -h $ip -U $db_username -c "COPY (SELECT COUNT(*) FROM nasa_images) TO STDOUT" $db_name`
 
 	if [[ $all_images == $queued ]]; then
-		queued_lastupdate_file="min_queued_lastupdate.txt"
+		queued_lastupdate_file="/tmp/min_queued_lastupdate.txt"
 		rm "$queued_lastupdate_file" 2> /dev/null
 		MIN_QUEUED_LASTUPDATE=`psql -h $ip -U $db_username -c "COPY (SELECT MIN(utime) FROM nasa_images WHERE state = 'queued') TO STDOUT" $db_name`
 		date --date="$MIN_QUEUED_LASTUPDATE" +"%s" > "$queued_lastupdate_file"
@@ -52,7 +52,7 @@ function getImagesStatus {
 	elif [[ $all_images == $finished ]]
 	then
 	    echo "Done"
-	    finished_lastupdate_file="max_finished_lastupdate.txt"
+	    finished_lastupdate_file="/tmp/max_finished_lastupdate.txt"
 		rm "$finished_lastupdate_file" 2> /dev/null
 		MAX_FINISHED_LASTUPDATE=`psql -h $ip -U $db_username -c "COPY (SELECT MAX(utime) FROM nasa_images WHERE state = 'finished') TO STDOUT" $db_name` 
 		date --date="$MAX_FINISHED_LASTUPDATE" +"%s" > "$finished_lastupdate_file"

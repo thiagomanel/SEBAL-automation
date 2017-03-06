@@ -1,5 +1,7 @@
 #!/bin/bash
 
+## Deprecated
+
 # Checking params
 if [[ $# -ne 3 ]]; then
   echo "Usage:" $0 "number_of_samples number_of_images number_of_workers"

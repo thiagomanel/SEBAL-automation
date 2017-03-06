@@ -1,4 +1,5 @@
 #!/bin/bash
+echo "Starting script."
 
 # Checking params
 if [[ $# -ne 3 ]]; then
@@ -7,7 +8,8 @@ if [[ $# -ne 3 ]]; then
 fi
 
 # Entry params
-n_samples=`expr 2 + $1`
+# n_samples=`expr 2 + $1`
+n_samples=`expr 1 + $1`
 n_images=$2
 n_workers=$3
 
@@ -49,8 +51,6 @@ function checkParams {
 function monitorExecution {
  CURRENT_SAMPLE=$1
 
- # !isDone 
-
  while true; do
    #getData
    IMAGES_STATUS=$(getImagesStatus)
@@ -58,7 +58,7 @@ function monitorExecution {
    if [[ "$IMAGES_STATUS" = "Done" ]]; then
       MAKESPAN=$(calculateMakespan)
       echo "Sample: $CURRENT_SAMPLE - Execution time in seconds: $MAKESPAN" >> $execution_samples_makespan_file
-      collectLogDumpDB $CURRENT_SAMPLE $n_images
+      collectLogDumpDB $CURRENT_SAMPLE $n_images $EXECUTION_UUID
       break
    elif [ "$IMAGES_STATUS" != "Idle" ] && [ "$IMAGES_STATUS" != "Running" ]; then
       echo "Breaking now!"
@@ -73,8 +73,9 @@ checkParams
 
 # run scheduler_port
 # run crawler
-for each_sample in `seq 1 $n_samples`; do
+for each_sample in `seq 1 $n_samples`; do   
    echo item: $each_sample
+   echo "Starting sample $each_sample"
    # clean
    echo "Starting clean sample $each_sample and n_images = $n_images"
    sebalCleanup
@@ -87,3 +88,5 @@ for each_sample in `seq 1 $n_samples`; do
    monitorExecution $each_sample
    # finish
 done
+
+echo "Ending script."
