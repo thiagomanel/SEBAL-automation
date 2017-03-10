@@ -8,10 +8,37 @@ outputs_dir_path=
 private_key_path=
 ## federation member to submit tasks
 federation_member=
+
 ## image name to process
+### deprecated
 original_image_name=
-## Path to original image directory
+## Path to original image directory 
+### deprecated
 original_image_path=
+
+## path images
+image_path=
+## image one
+image_one=
+## image two
+image_two=
+## image three
+image_three=
+## image four
+image_four=
+## image five
+image_five=
+## image six
+image_six=
+## image seven
+image_seven=
+## image eight
+image_eight=
+## image nine
+image_nine=
+## image ten
+image_ten=
+
 ## version os sebal to run
 sebal_version=
 ## tag of sebal to fetch from git repositry

@@ -6,7 +6,7 @@ function getResultExecution {
 
   for i in $n_images
   do
-    image_name=$original_image_name"_"$i"_"$CURRENT_SAMPLE
+    image_name=$(echo | getImageName $i $CURRENT_SAMPLE)
 
     if [ ! -d $outputs_dir_path/$image_name ]
     then
@@ -14,7 +14,10 @@ function getResultExecution {
     fi
 
     echo "Getting $image_name result files"
-    scp -r $crawler_user_name@$crawler_ip:$crawler_outputs_dir/$image_name $outputs_dir_path/$EXECUTION_UUID"_"$image_name
+    path_output_logs=$outputs_dir_path/$EXECUTION_UUID"_"$image_name"_sample_"$CURRENT_SAMPLE
+    mkdir $path_output_logs
+    scp -r $crawler_user_name@$crawler_ip:$crawler_outputs_dir/$image_name"/temp-worker*" $path_output_logs
+    echo "Finished $image_name result files"
   done
 }
 
@@ -36,7 +39,7 @@ function getDatabaseDump {
   echo "$scheduler_ip:$scheduler_db_port:$sebal_db_name:$sebal_db_user:$sebal_db_password" >> $file
   chmod 0600 "$file"
 
-  sample_dir_path=$outputs_dir_path/$EXECUTION_UUID"_sample_"$CURRENT_SAMPLE
+  sample_dir_path=$outputs_dir_path/$EXECUTION_UUID"_"$image_name"_sample_"$CURRENT_SAMPLE
   if [ ! -d $sample_dir_path ]
   then
     mkdir -p $sample_dir_path

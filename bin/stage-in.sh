@@ -17,7 +17,8 @@ function renaming {
     echo "Renaming $file_path to $path_to_renaming/$current_image_file_name"
     if [[ "$file_name" != *README.GTF ]];
     then
-      mv $file_path $path_to_renaming/$current_image_file_name
+      cp $file_path $path_to_renaming/$current_image_file_name
+
     fi
   done
 }
@@ -25,13 +26,14 @@ function renaming {
 # this funcion rename all file tar.gz
 function renaming_tar_gz {
   path_to_renaming_tar_gz=$1
+  current_image_name=$2
 
   for f in $path_to_renaming_tar_gz/*
   do       
     file_name=$(basename "$f")
     file_path=$path_to_renaming_tar_gz/$file_name
 
-    if [[ "$file_name" == *tar.gz ]];
+    if [[ "$file_name" == *"$current_image_name".tar.gz ]];
     then
       tar_file_name=$file_name
       path_tar=$path_to_renaming_tar_gz/tar
@@ -56,13 +58,10 @@ function createImageCopies {
   echo "Creating image copies"
   for current_image_to_create in `seq 1 $n_images`
   do
-    current_image_name=$original_image_name"_"$current_image_to_create"_$CURRENT_SAMPLE"
+    current_image_name=$(echo | getImageName $current_image_to_create $CURRENT_SAMPLE)
     path_sample=$images_dir_path/$current_image_name
-    echo "Executing command: cp -r "$original_image_path $path_sample
-    cp -r "$original_image_path" "$path_sample"
-
-    renaming $path_sample
-    renaming_tar_gz $path_sample 
+    echo "Executing command: cp -r "$image_path $path_sample
+     cp -r "$image_path/$current_image_name" "$path_sample"
   done
 }
 
@@ -71,7 +70,7 @@ function copyImagesToCrawler {
   SSH_OPTIONS="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
   for current_image_to_copy in `seq 1 $n_images`
   do
-    image_name="$original_image_name"_"$current_image_to_copy"_$CURRENT_SAMPLE""
+    image_name=$(echo | getImageName $current_image_to_copy)
     echo "Copying input data to Crawler temporary folder"
     scp -r $SSH_OPTIONS -i $private_key_path -P $crawler_port "$images_dir_path/$image_name" $crawler_user_name@$crawler_ip:/tmp
     
@@ -82,6 +81,7 @@ function copyImagesToCrawler {
 
 # This function submits n_images from CURRENT_SAMPLE to Scheduler database
 function submitImagesIntoDB {
+  CURRENT_SAMPLE=$1
   # Setting password to access db
   file="$HOME/.pgpass"
   if [ -f "$file" ]
@@ -98,12 +98,11 @@ function submitImagesIntoDB {
 
   for current_image_to_submit in `seq 1 $n_images`
   do
-    image_name="$original_image_name"_"$current_image_to_submit"_$CURRENT_SAMPLE""
+    image_name=$(echo | getImageName $current_image_to_submit)
     echo "Submitting image $image_name to catalog"
     
     psql_cmd=
-#    if [[ $CURRENT_SAMPLE -eq 1 || $CURRENT_SAMPLE -eq 2 ]]
-    if [[ $CURRENT_SAMPLE -eq 10 || $CURRENT_SAMPLE -eq 20 ]]
+    if [[ $CURRENT_SAMPLE -eq 1 || $CURRENT_SAMPLE -eq 2 ]]
     then
       psql_cmd="INSERT INTO $sebal_db_table_name VALUES('$image_name', 'downloadLink', 'downloaded', '$federation_member', 0, 'NE', '$fake_sebal_version', '$fake_sebal_tag', '$crawler_version', 'NE', 'NE', 'NE', now(), now(), 'available', 'no_errors');"
     else
@@ -124,12 +123,9 @@ function checkProcessOutput {
 }
 
 function doStageIn {
-  CURRENT_SAMPLE=$1
-  n_images=$2
+  n_images=$1
   createImageCopies
   checkProcessOutput
   copyImagesToCrawler
-  checkProcessOutput
-  submitImagesIntoDB
   checkProcessOutput
 }

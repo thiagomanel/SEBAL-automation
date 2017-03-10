@@ -8,8 +8,7 @@ if [[ $# -ne 3 ]]; then
 fi
 
 # Entry params
-# n_samples=`expr 2 + $1`
-n_samples=`expr 1 + $1`
+n_samples=`expr 2 + $1`
 n_images=$2
 n_workers=$3
 
@@ -20,11 +19,11 @@ source "$DIRNAME/collect-log-dump-db.sh"
 source "$DIRNAME/sebal_clean.sh"
 source "$DIRNAME/stage-in.sh"
 source "$DIRNAME/../scripts/collect-image-status"
+source "$DIRNAME/image_util.sh"
 
 EXECUTION_UUID=`uuidgen`
 
 echo "Preparing execution ID: $EXECUTION_UUID"
-execution_samples_makespan_file="$outputs_dir_path/execution_"$EXECUTION_UUID".txt"
 
 # This function checks parameters consistency
 function checkParams {
@@ -64,29 +63,33 @@ function monitorExecution {
       echo "Breaking now!"
       break
    fi
-   # sleep ?
    sleep 5
  done
 }
 
 checkParams
 
-# run scheduler_port
-# run crawler
+echo "Starting stagein n_images = $n_images"
+doStageIn $n_images
+
 for each_sample in `seq 1 $n_samples`; do   
    echo item: $each_sample
    echo "Starting sample $each_sample"
-   # clean
+   execution_samples_makespan_file=$outputs_dir_path"/execution_"$EXECUTION_UUID"_sample_"$each_sample.txt
+   echo $execution_samples_makespan_file
+
    echo "Starting clean sample $each_sample and n_images = $n_images"
    sebalCleanup
-   # stage in
-   echo "Starting stagein sample $each_sample and n_images = $n_images"
-   doStageIn $each_sample $n_images
-   # monitorExecution
-   ## getData
+   clearOlderLogs
+
+   echo "Submiting into BD sample $each_sample and n_images = $n_images"
+   submitImagesIntoDB $each_sample
+   checkProcessOutput
+
    echo "Starting monitoring sample $each_sample and n_images = $n_images"
    monitorExecution $each_sample
-   # finish
+
+   echo "Sample "$each_sample" time result in "$execution_samples_makespan_file" ."
 done
 
 echo "Ending script."

@@ -9,6 +9,7 @@ function calculateMakespan {
 }
 
 function getImagesStatus {
+
 	#Geting info about db
 	ip=$scheduler_ip
 	port=$scheduler_db_port
