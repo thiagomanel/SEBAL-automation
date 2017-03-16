@@ -1,0 +1,92 @@
+sudo: unable to resolve host fogbow35243
+sudo: unable to resolve host fogbow35243
+sudo: unable to resolve host fogbow35243
+Cloning into 'SEBAL'...
+Note: checking out '340ccca2b0cf14101c0449b038c792489ee2a0ef'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b new_branch_name
+
+HEAD is now at 340ccca... Increasing timeouts for each R script block
++ LOG4J_FILE_PATH=/var/log/sebal/sebal.log
+++ pwd
++ SEBAL_DIR_PATH=/tmp/sandbox/0f078735-2e38-442f-b801-b191f531dea0
++ TEMP_DIR_PATH=/mnt
++ SEBAL_SNAPSHOT_M2_PATH=/home/fogbow/.m2/repository/org/fogbowcloud/SEBAL/0.0.1-SNAPSHOT/
++ gettingSebalSnapshot
++ cd /tmp/sandbox/0f078735-2e38-442f-b801-b191f531dea0/SEBAL
++ sudo tar -xvzf target.tar.gz
+sudo: unable to resolve host fogbow35243
++ rm target.tar.gz
++ sudo mkdir -p /home/fogbow/.m2/repository/org/fogbowcloud/SEBAL/0.0.1-SNAPSHOT/
+sudo: unable to resolve host fogbow35243
++ sudo cp /tmp/sandbox/0f078735-2e38-442f-b801-b191f531dea0/SEBAL/target/SEBAL-0.0.1-SNAPSHOT.jar /home/fogbow/.m2/repository/org/fogbowcloud/SEBAL/0.0.1-SNAPSHOT/
+sudo: unable to resolve host fogbow35243
++ sudo mkdir -p /var/log/sebal/sebal.log
+sudo: unable to resolve host fogbow35243
++ cd ..
++ verifyRScript
++ echo 'Verifying dependencies for R script'
++ bash -x /tmp/sandbox/0f078735-2e38-442f-b801-b191f531dea0/SEBAL/scripts/verify-dependencies.sh /tmp/sandbox/0f078735-2e38-442f-b801-b191f531dea0/SEBAL/scripts
++ SEBAL_SCRIPTS_PATH=/tmp/sandbox/0f078735-2e38-442f-b801-b191f531dea0/SEBAL/scripts
++ MISSING_DEPENDENCIES_FILE=missing_dependencies
++ Rscript /tmp/sandbox/0f078735-2e38-442f-b801-b191f531dea0/SEBAL/scripts/check-R-dependency.R raster
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
++ PROCESS_OUTPUT=0
++ '[' 0 -ne 0 ']'
++ echo 'raster is installed'
++ Rscript /tmp/sandbox/0f078735-2e38-442f-b801-b191f531dea0/SEBAL/scripts/check-R-dependency.R rgeos
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
++ PROCESS_OUTPUT=0
++ '[' 0 -ne 0 ']'
++ echo 'rgeos is installed'
++ Rscript /tmp/sandbox/0f078735-2e38-442f-b801-b191f531dea0/SEBAL/scripts/check-R-dependency.R rgdal
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
++ PROCESS_OUTPUT=0
++ '[' 0 -ne 0 ']'
++ echo 'rgdal is installed'
++ Rscript /tmp/sandbox/0f078735-2e38-442f-b801-b191f531dea0/SEBAL/scripts/check-R-dependency.R maptools
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
++ PROCESS_OUTPUT=0
++ '[' 0 -ne 0 ']'
++ echo 'maptools is installed'
++ Rscript /tmp/sandbox/0f078735-2e38-442f-b801-b191f531dea0/SEBAL/scripts/check-R-dependency.R ncdf4
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
++ PROCESS_OUTPUT=0
++ '[' 0 -ne 0 ']'
++ echo 'ncdf4 is installed'
++ Rscript /tmp/sandbox/0f078735-2e38-442f-b801-b191f531dea0/SEBAL/scripts/check-R-dependency.R sp
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
++ PROCESS_OUTPUT=0
++ '[' 0 -ne 0 ']'
++ echo 'sp is installed'

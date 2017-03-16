@@ -1,56 +1,35 @@
 # Global variables
 ####################
-## directory to save images copies
+
 images_dir_path=
-## directory to store images after processing
 outputs_dir_path=
-## privat to key run ssh commands
+
 private_key_path=
-## federation member to submit tasks
 federation_member=
 
-## path images
 image_path=
-## image one
 image_one=
-## image two
 image_two=
-## image three
 image_three=
-## image four
 image_four=
-## image five
 image_five=
-## image six
 image_six=
-## image seven
 image_seven=
-## image eight
 image_eight=
-## image nine
 image_nine=
-## image ten
 image_ten=
 
-## version os sebal to run
-sebal_version=
-## tag of sebal to fetch from git repositry
-sebal_tag=
-## IP of crawler VM
+sebal_version=https://github.com/ufcg-lsd/SEBAL.git
+sebal_tag=340ccca2b0cf14101c0449b038c792489ee2a0ef
+
 crawler_ip=
-## SSH port of crawler VM
 crawler_port=
-## port of NFS running in the crawler
 crawler_nfs_port=
-## Unix username in crawler
 crawler_user_name=
 crawler_debug_port=
-## directory to copy images in remote crawler
 crawler_inputs_dir=
-## directory to sabe results in remote crawler
 crawler_outputs_dir=
-## version of crawler to run
-crawler_version=
+crawler_version=3e2bd162f03d496d021818d23838a3140f313119
 
 scheduler_ip=
 scheduler_port=
@@ -79,8 +58,8 @@ swift_storage_url=
 swift_pseudo_folder=
 swift_container_name=
 
-fake_sebal_version=
-fake_sebal_tag=
+fake_sebal_version=https://github.com/EsdrasVP/SEBAL-static-worker.git
+fake_sebal_tag=a9d4c53fd41a357866235d1e98c74dbff8d5fc03
 
 ## string to create pgpass file
 pgpass_string="$scheduler_ip:$scheduler_db_port:$sebal_db_name:$sebal_db_user:$sebal_db_password"

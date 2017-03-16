@@ -1,0 +1,13 @@
++ IMAGE_NAME=LT52170641984247CUB00
++ IMAGES_DIR_PATH=/nfs/images/
++ RESULTS_DIR_PATH=/nfs/results/
++ OUTPUT_IMAGE_DIR=/nfs/results/LT52170641984247CUB00
++ IMAGE_MTL_PATH=/nfs/images/LT52170641984247CUB00/LT52170641984247CUB00_MTL.txt
++ IMAGE_MTL_FMASK_PATH=/nfs/images/LT52170641984247CUB00/LT52170641984247CUB00_MTLFmask
++ IMAGE_STATION_FILE_PATH=/nfs/results/LT52170641984247CUB00/LT52170641984247CUB00_station.csv
++ echo 'Fake run worker script sleep'
++ sleep 2m
++ exit 0
+sudo: unable to resolve host fogbow1608
+sudo: unable to resolve host fogbow1608
+sudo: unable to resolve host fogbow1608

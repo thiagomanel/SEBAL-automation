@@ -1,0 +1,398 @@
++ IMAGE_NAME=LT52170641986204CUB00
++ IMAGES_DIR_PATH=/nfs/images/
++ RESULTS_DIR_PATH=/nfs/results/
++ OUTPUT_IMAGE_DIR=/nfs/results/LT52170641986204CUB00
++ IMAGE_MTL_PATH=/nfs/images/LT52170641986204CUB00/LT52170641986204CUB00_MTL.txt
++ IMAGE_MTL_FMASK_PATH=/nfs/images/LT52170641986204CUB00/LT52170641986204CUB00_MTLFmask
++ IMAGE_STATION_FILE_PATH=/nfs/results/LT52170641986204CUB00/LT52170641986204CUB00_station.csv
+++ pwd
++ SANDBOX=/tmp/sandbox/80e585a9-72eb-4888-b5cf-1b669ca89822
++ CONF_FILE=sebal.conf
++ LIBRARY_PATH=/usr/local/lib
++ BOUNDING_BOX_PATH=example/boundingbox_vertices
++ TMP_DIR_PATH=/mnt
++ R_EXEC_DIR=
++ R_ALGORITHM_VERSION=AlgoritmoFinal-f1-v02122016.R
++ R_RASTER_TMP_DIR=/mnt/rasterTmp
++ MAX_TRIES=2
++ OUTPUT_IMAGE_DIR=/nfs/results//LT52170641986204CUB00
++ SCRIPTS_DIR=scripts
++ SEBAL_DIR_PATH=
++ LOG4J_PATH=
++ untarImageAndPrepareDirs
++ cd /nfs/images/
++ echo 'Image file name is LT52170641986204CUB00'
++ echo 'Untaring image LT52170641986204CUB00'
++ cd /nfs/images//LT52170641986204CUB00
++ sudo tar -xvzf LT52170641986204CUB00.tar.gz
+sudo: unable to resolve host fogbow19345
++ echo 'Creating image output directory'
++ sudo mkdir -p /nfs/results//LT52170641986204CUB00
+sudo: unable to resolve host fogbow19345
++ cd /tmp/sandbox/80e585a9-72eb-4888-b5cf-1b669ca89822
++ checkProcessOutput
++ PROCESS_OUTPUT=0
++ '[' 0 -ne 0 ']'
++ preProcessImage
++ SEBAL_DIR_PATH=/tmp/sandbox/80e585a9-72eb-4888-b5cf-1b669ca89822/SEBAL
++ R_EXEC_DIR=/tmp/sandbox/80e585a9-72eb-4888-b5cf-1b669ca89822/SEBAL/workspace/R
++ LOG4J_PATH=/tmp/sandbox/80e585a9-72eb-4888-b5cf-1b669ca89822/SEBAL/log4j.properties
++ cd /tmp/sandbox/80e585a9-72eb-4888-b5cf-1b669ca89822/SEBAL
++ sudo java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=4000,suspend=n -Dlog4j.configuration=file:/tmp/sandbox/80e585a9-72eb-4888-b5cf-1b669ca89822/SEBAL/log4j.properties -Djava.library.path=/usr/local/lib -cp 'target/SEBAL-0.0.1-SNAPSHOT.jar:target/lib/*' org.fogbowcloud.sebal.PreProcessMain /nfs/images// /nfs/images/LT52170641986204CUB00/LT52170641986204CUB00_MTL.txt /nfs/results// 0 0 9000 9000 1 1 /tmp/sandbox/80e585a9-72eb-4888-b5cf-1b669ca89822/SEBAL/example/boundingbox_vertices /tmp/sandbox/80e585a9-72eb-4888-b5cf-1b669ca89822/SEBAL/sebal.conf /nfs/images/LT52170641986204CUB00/LT52170641986204CUB00_MTLFmask
+sudo: unable to resolve host fogbow19345
+Mar 11, 2017 5:44:24 AM org.geotools.referencing.factory.epsg.ThreadedHsqlEpsgFactory createDataSource
+INFO: Building new data source for org.geotools.referencing.factory.epsg.ThreadedHsqlEpsgFactory
+Mar 11, 2017 5:44:24 AM org.geotools.referencing.factory.epsg.ThreadedHsqlEpsgFactory createBackingStore
+INFO: Building backing store for org.geotools.referencing.factory.epsg.ThreadedHsqlEpsgFactory
++ sudo chmod 777 /nfs/results/LT52170641986204CUB00/LT52170641986204CUB00_station.csv
+sudo: unable to resolve host fogbow19345
++ echo -e '\n'
++ cd ..
++ checkProcessOutput
++ PROCESS_OUTPUT=0
++ '[' 0 -ne 0 ']'
++ creatingDadosCSV
++ echo 'Creating dados.csv for image LT52170641986204CUB00'
++ cd /tmp/sandbox/80e585a9-72eb-4888-b5cf-1b669ca89822/SEBAL/workspace/R
++ echo 'File images;MTL;File Station Weather;File Fmask;Path Output'
++ echo '/nfs/images//LT52170641986204CUB00;/nfs/images/LT52170641986204CUB00/LT52170641986204CUB00_MTL.txt;/nfs/results/LT52170641986204CUB00/LT52170641986204CUB00_station.csv;/nfs/images/LT52170641986204CUB00/LT52170641986204CUB00_MTLFmask;/nfs/results//LT52170641986204CUB00'
++ checkProcessOutput
++ PROCESS_OUTPUT=0
++ '[' 0 -ne 0 ']'
++ prepareEnvAndCollectUsage
++ '[' '!' -d /mnt/rasterTmp ']'
+++ wc -l
+++ ls -1 /mnt/rasterTmp/r_tmp_2017-03-11_030216_9259_54295.grd /mnt/rasterTmp/r_tmp_2017-03-11_030216_9259_54295.gri /mnt/rasterTmp/r_tmp_2017-03-11_030511_9259_69717.grd /mnt/rasterTmp/r_tmp_2017-03-11_030511_9259_69717.gri /mnt/rasterTmp/r_tmp_2017-03-11_030607_9259_07123.grd /mnt/rasterTmp/r_tmp_2017-03-11_030607_9259_07123.gri /mnt/rasterTmp/r_tmp_2017-03-11_030638_9259_75352.grd /mnt/rasterTmp/r_tmp_2017-03-11_030638_9259_75352.gri /mnt/rasterTmp/r_tmp_2017-03-11_032636_9259_77173.grd /mnt/rasterTmp/r_tmp_2017-03-11_032636_9259_77173.gri /mnt/rasterTmp/r_tmp_2017-03-11_032930_9259_85104.grd /mnt/rasterTmp/r_tmp_2017-03-11_032930_9259_85104.gri /mnt/rasterTmp/r_tmp_2017-03-11_032945_9259_07974.grd /mnt/rasterTmp/r_tmp_2017-03-11_032945_9259_07974.gri /mnt/rasterTmp/r_tmp_2017-03-11_032955_9259_33591.grd /mnt/rasterTmp/r_tmp_2017-03-11_032955_9259_33591.gri /mnt/rasterTmp/r_tmp_2017-03-11_033008_9259_54370.grd /mnt/rasterTmp/r_tmp_2017-03-11_033008_9259_54370.gri /mnt/rasterTmp/r_tmp_2017-03-11_033017_9259_96684.grd /mnt/rasterTmp/r_tmp_2017-03-11_033017_9259_96684.gri /mnt/rasterTmp/r_tmp_2017-03-11_033037_9259_80820.grd /mnt/rasterTmp/r_tmp_2017-03-11_033037_9259_80820.gri /mnt/rasterTmp/r_tmp_2017-03-11_033046_9259_94059.grd /mnt/rasterTmp/r_tmp_2017-03-11_033046_9259_94059.gri /mnt/rasterTmp/r_tmp_2017-03-11_033056_9259_12301.grd /mnt/rasterTmp/r_tmp_2017-03-11_033056_9259_12301.gri /mnt/rasterTmp/r_tmp_2017-03-11_033105_9259_41410.grd /mnt/rasterTmp/r_tmp_2017-03-11_033105_9259_41410.gri /mnt/rasterTmp/r_tmp_2017-03-11_033122_9259_90894.grd /mnt/rasterTmp/r_tmp_2017-03-11_033122_9259_90894.gri /mnt/rasterTmp/r_tmp_2017-03-11_033131_9259_08749.grd /mnt/rasterTmp/r_tmp_2017-03-11_033131_9259_08749.gri /mnt/rasterTmp/r_tmp_2017-03-11_033142_9259_23279.grd /mnt/rasterTmp/r_tmp_2017-03-11_033142_9259_23279.gri /mnt/rasterTmp/r_tmp_2017-03-11_033150_9259_38914.grd /mnt/rasterTmp/r_tmp_2017-03-11_033150_9259_38914.gri /mnt/rasterTmp/r_tmp_2017-03-11_033207_9259_12347.grd /mnt/rasterTmp/r_tmp_2017-03-11_033207_9259_12347.gri /mnt/rasterTmp/r_tmp_2017-03-11_033216_9259_56207.grd /mnt/rasterTmp/r_tmp_2017-03-11_033216_9259_56207.gri /mnt/rasterTmp/r_tmp_2017-03-11_033227_9259_09953.grd /mnt/rasterTmp/r_tmp_2017-03-11_033227_9259_09953.gri /mnt/rasterTmp/r_tmp_2017-03-11_033236_9259_61788.grd /mnt/rasterTmp/r_tmp_2017-03-11_033236_9259_61788.gri /mnt/rasterTmp/r_tmp_2017-03-11_033255_9259_70794.grd /mnt/rasterTmp/r_tmp_2017-03-11_033255_9259_70794.gri /mnt/rasterTmp/r_tmp_2017-03-11_033304_9259_19213.grd /mnt/rasterTmp/r_tmp_2017-03-11_033304_9259_19213.gri /mnt/rasterTmp/r_tmp_2017-03-11_033315_9259_70556.grd /mnt/rasterTmp/r_tmp_2017-03-11_033315_9259_70556.gri /mnt/rasterTmp/r_tmp_2017-03-11_033324_9259_39686.grd /mnt/rasterTmp/r_tmp_2017-03-11_033324_9259_39686.gri /mnt/rasterTmp/r_tmp_2017-03-11_033342_9259_31737.grd /mnt/rasterTmp/r_tmp_2017-03-11_033342_9259_31737.gri /mnt/rasterTmp/r_tmp_2017-03-11_033350_9259_73208.grd /mnt/rasterTmp/r_tmp_2017-03-11_033350_9259_73208.gri /mnt/rasterTmp/r_tmp_2017-03-11_033401_9259_61042.grd /mnt/rasterTmp/r_tmp_2017-03-11_033401_9259_61042.gri /mnt/rasterTmp/r_tmp_2017-03-11_033410_9259_98080.grd /mnt/rasterTmp/r_tmp_2017-03-11_033410_9259_98080.gri /mnt/rasterTmp/r_tmp_2017-03-11_033427_9259_07285.grd /mnt/rasterTmp/r_tmp_2017-03-11_033427_9259_07285.gri /mnt/rasterTmp/r_tmp_2017-03-11_033434_9259_57296.grd /mnt/rasterTmp/r_tmp_2017-03-11_033434_9259_57296.gri /mnt/rasterTmp/r_tmp_2017-03-11_033444_9259_18053.grd /mnt/rasterTmp/r_tmp_2017-03-11_033444_9259_18053.gri /mnt/rasterTmp/r_tmp_2017-03-11_033453_9259_71612.grd /mnt/rasterTmp/r_tmp_2017-03-11_033453_9259_71612.gri /mnt/rasterTmp/r_tmp_2017-03-11_033511_9259_27795.grd /mnt/rasterTmp/r_tmp_2017-03-11_033511_9259_27795.gri /mnt/rasterTmp/r_tmp_2017-03-11_033520_9259_38557.grd /mnt/rasterTmp/r_tmp_2017-03-11_033520_9259_38557.gri /mnt/rasterTmp/r_tmp_2017-03-11_033528_9259_41087.grd /mnt/rasterTmp/r_tmp_2017-03-11_033528_9259_41087.gri /mnt/rasterTmp/r_tmp_2017-03-11_033538_9259_53573.grd /mnt/rasterTmp/r_tmp_2017-03-11_033538_9259_53573.gri /mnt/rasterTmp/r_tmp_2017-03-11_033547_9259_78729.grd /mnt/rasterTmp/r_tmp_2017-03-11_033547_9259_78729.gri /mnt/rasterTmp/r_tmp_2017-03-11_033556_9259_75547.grd /mnt/rasterTmp/r_tmp_2017-03-11_033556_9259_75547.gri /mnt/rasterTmp/r_tmp_2017-03-11_033606_9259_14363.grd /mnt/rasterTmp/r_tmp_2017-03-11_033606_9259_14363.gri /mnt/rasterTmp/r_tmp_2017-03-11_033617_9259_08393.grd /mnt/rasterTmp/r_tmp_2017-03-11_033617_9259_08393.gri /mnt/rasterTmp/r_tmp_2017-03-11_033628_9259_27165.grd /mnt/rasterTmp/r_tmp_2017-03-11_033628_9259_27165.gri /mnt/rasterTmp/r_tmp_2017-03-11_033639_9259_77580.grd /mnt/rasterTmp/r_tmp_2017-03-11_033639_9259_77580.gri /mnt/rasterTmp/r_tmp_2017-03-11_033649_9259_54537.grd /mnt/rasterTmp/r_tmp_2017-03-11_033649_9259_54537.gri /mnt/rasterTmp/r_tmp_2017-03-11_033700_9259_43765.grd /mnt/rasterTmp/r_tmp_2017-03-11_033700_9259_43765.gri /mnt/rasterTmp/r_tmp_2017-03-11_033711_9259_88333.grd /mnt/rasterTmp/r_tmp_2017-03-11_033711_9259_88333.gri /mnt/rasterTmp/r_tmp_2017-03-11_033720_9259_32425.grd /mnt/rasterTmp/r_tmp_2017-03-11_033720_9259_32425.gri /mnt/rasterTmp/r_tmp_2017-03-11_033731_9259_46379.grd /mnt/rasterTmp/r_tmp_2017-03-11_033731_9259_46379.gri /mnt/rasterTmp/r_tmp_2017-03-11_033741_9259_20669.grd /mnt/rasterTmp/r_tmp_2017-03-11_033741_9259_20669.gri /mnt/rasterTmp/r_tmp_2017-03-11_033750_9259_76728.grd /mnt/rasterTmp/r_tmp_2017-03-11_033750_9259_76728.gri /mnt/rasterTmp/r_tmp_2017-03-11_033759_9259_81445.grd /mnt/rasterTmp/r_tmp_2017-03-11_033759_9259_81445.gri /mnt/rasterTmp/r_tmp_2017-03-11_033808_9259_58126.grd /mnt/rasterTmp/r_tmp_2017-03-11_033808_9259_58126.gri /mnt/rasterTmp/r_tmp_2017-03-11_033821_9259_30462.grd /mnt/rasterTmp/r_tmp_2017-03-11_033821_9259_30462.gri /mnt/rasterTmp/r_tmp_2017-03-11_033831_9259_10776.grd /mnt/rasterTmp/r_tmp_2017-03-11_033831_9259_10776.gri /mnt/rasterTmp/r_tmp_2017-03-11_033842_9259_78066.grd /mnt/rasterTmp/r_tmp_2017-03-11_033842_9259_78066.gri /mnt/rasterTmp/r_tmp_2017-03-11_033852_9259_18184.grd /mnt/rasterTmp/r_tmp_2017-03-11_033852_9259_18184.gri /mnt/rasterTmp/r_tmp_2017-03-11_033903_9259_18005.grd /mnt/rasterTmp/r_tmp_2017-03-11_033903_9259_18005.gri /mnt/rasterTmp/r_tmp_2017-03-11_033914_9259_11113.grd /mnt/rasterTmp/r_tmp_2017-03-11_033914_9259_11113.gri /mnt/rasterTmp/r_tmp_2017-03-11_033926_9259_78449.grd /mnt/rasterTmp/r_tmp_2017-03-11_033926_9259_78449.gri /mnt/rasterTmp/r_tmp_2017-03-11_033935_9259_32439.grd /mnt/rasterTmp/r_tmp_2017-03-11_033935_9259_32439.gri /mnt/rasterTmp/r_tmp_2017-03-11_033947_9259_99489.grd /mnt/rasterTmp/r_tmp_2017-03-11_033947_9259_99489.gri /mnt/rasterTmp/r_tmp_2017-03-11_033956_9259_56014.grd /mnt/rasterTmp/r_tmp_2017-03-11_033956_9259_56014.gri /mnt/rasterTmp/r_tmp_2017-03-11_034008_9259_46170.grd /mnt/rasterTmp/r_tmp_2017-03-11_034008_9259_46170.gri /mnt/rasterTmp/r_tmp_2017-03-11_034017_9259_04514.grd /mnt/rasterTmp/r_tmp_2017-03-11_034017_9259_04514.gri /mnt/rasterTmp/r_tmp_2017-03-11_034029_9259_83813.grd /mnt/rasterTmp/r_tmp_2017-03-11_034029_9259_83813.gri /mnt/rasterTmp/r_tmp_2017-03-11_034038_9259_28701.grd /mnt/rasterTmp/r_tmp_2017-03-11_034038_9259_28701.gri /mnt/rasterTmp/r_tmp_2017-03-11_034050_9259_92245.grd /mnt/rasterTmp/r_tmp_2017-03-11_034050_9259_92245.gri /mnt/rasterTmp/r_tmp_2017-03-11_034059_9259_05026.grd /mnt/rasterTmp/r_tmp_2017-03-11_034059_9259_05026.gri /mnt/rasterTmp/r_tmp_2017-03-11_034108_9259_21154.grd /mnt/rasterTmp/r_tmp_2017-03-11_034108_9259_21154.gri /mnt/rasterTmp/r_tmp_2017-03-11_034120_9259_97024.grd /mnt/rasterTmp/r_tmp_2017-03-11_034120_9259_97024.gri /mnt/rasterTmp/r_tmp_2017-03-11_034130_9259_83990.grd /mnt/rasterTmp/r_tmp_2017-03-11_034130_9259_83990.gri /mnt/rasterTmp/r_tmp_2017-03-11_034141_9259_89638.grd /mnt/rasterTmp/r_tmp_2017-03-11_034141_9259_89638.gri /mnt/rasterTmp/r_tmp_2017-03-11_034154_9259_65443.grd /mnt/rasterTmp/r_tmp_2017-03-11_034154_9259_65443.gri /mnt/rasterTmp/r_tmp_2017-03-11_034207_9259_34953.grd /mnt/rasterTmp/r_tmp_2017-03-11_034207_9259_34953.gri /mnt/rasterTmp/r_tmp_2017-03-11_034221_9259_25736.grd /mnt/rasterTmp/r_tmp_2017-03-11_034221_9259_25736.gri /mnt/rasterTmp/r_tmp_2017-03-11_034234_9259_21704.grd /mnt/rasterTmp/r_tmp_2017-03-11_034234_9259_21704.gri /mnt/rasterTmp/r_tmp_2017-03-11_034243_9259_61277.grd /mnt/rasterTmp/r_tmp_2017-03-11_034243_9259_61277.gri /mnt/rasterTmp/r_tmp_2017-03-11_034252_9259_03184.grd /mnt/rasterTmp/r_tmp_2017-03-11_034252_9259_03184.gri /mnt/rasterTmp/r_tmp_2017-03-11_034304_9259_15557.grd /mnt/rasterTmp/r_tmp_2017-03-11_034304_9259_15557.gri /mnt/rasterTmp/r_tmp_2017-03-11_034316_9259_65792.grd /mnt/rasterTmp/r_tmp_2017-03-11_034316_9259_65792.gri /mnt/rasterTmp/r_tmp_2017-03-11_034335_9259_43884.grd /mnt/rasterTmp/r_tmp_2017-03-11_034335_9259_43884.gri /mnt/rasterTmp/r_tmp_2017-03-11_034343_9259_71021.grd /mnt/rasterTmp/r_tmp_2017-03-11_034343_9259_71021.gri /mnt/rasterTmp/r_tmp_2017-03-11_040645_9259_63210.grd /mnt/rasterTmp/r_tmp_2017-03-11_040645_9259_63210.gri /mnt/rasterTmp/r_tmp_2017-03-11_040706_9259_79931.grd /mnt/rasterTmp/r_tmp_2017-03-11_040706_9259_79931.gri /mnt/rasterTmp/r_tmp_2017-03-11_040728_9259_68169.grd /mnt/rasterTmp/r_tmp_2017-03-11_040728_9259_68169.gri /mnt/rasterTmp/r_tmp_2017-03-11_040747_9259_20257.grd /mnt/rasterTmp/r_tmp_2017-03-11_040747_9259_20257.gri /mnt/rasterTmp/r_tmp_2017-03-11_040758_9259_08820.grd /mnt/rasterTmp/r_tmp_2017-03-11_040758_9259_08820.gri /mnt/rasterTmp/r_tmp_2017-03-11_040807_9259_50530.grd /mnt/rasterTmp/r_tmp_2017-03-11_040807_9259_50530.gri /mnt/rasterTmp/r_tmp_2017-03-11_040819_9259_87776.grd /mnt/rasterTmp/r_tmp_2017-03-11_040819_9259_87776.gri /mnt/rasterTmp/r_tmp_2017-03-11_040828_9259_63495.grd /mnt/rasterTmp/r_tmp_2017-03-11_040828_9259_63495.gri /mnt/rasterTmp/r_tmp_2017-03-11_040840_9259_56432.grd /mnt/rasterTmp/r_tmp_2017-03-11_040840_9259_56432.gri /mnt/rasterTmp/r_tmp_2017-03-11_040849_9259_11055.grd /mnt/rasterTmp/r_tmp_2017-03-11_040849_9259_11055.gri /mnt/rasterTmp/r_tmp_2017-03-11_040858_9259_09206.grd /mnt/rasterTmp/r_tmp_2017-03-11_040858_9259_09206.gri /mnt/rasterTmp/r_tmp_2017-03-11_040907_9259_77081.grd /mnt/rasterTmp/r_tmp_2017-03-11_040907_9259_77081.gri /mnt/rasterTmp/r_tmp_2017-03-11_040914_9259_95252.grd /mnt/rasterTmp/r_tmp_2017-03-11_040914_9259_95252.gri /mnt/rasterTmp/r_tmp_2017-03-11_040922_9259_29274.grd /mnt/rasterTmp/r_tmp_2017-03-11_040922_9259_29274.gri /mnt/rasterTmp/r_tmp_2017-03-11_040929_9259_93233.grd /mnt/rasterTmp/r_tmp_2017-03-11_040929_9259_93233.gri /mnt/rasterTmp/r_tmp_2017-03-11_040944_9259_75883.grd /mnt/rasterTmp/r_tmp_2017-03-11_040944_9259_75883.gri /mnt/rasterTmp/r_tmp_2017-03-11_040957_9259_73103.grd /mnt/rasterTmp/r_tmp_2017-03-11_040957_9259_73103.gri /mnt/rasterTmp/r_tmp_2017-03-11_041018_9259_21460.grd /mnt/rasterTmp/r_tmp_2017-03-11_041018_9259_21460.gri /mnt/rasterTmp/r_tmp_2017-03-11_041025_9259_50870.grd /mnt/rasterTmp/r_tmp_2017-03-11_041025_9259_50870.gri /mnt/rasterTmp/r_tmp_2017-03-11_041032_9259_52494.grd /mnt/rasterTmp/r_tmp_2017-03-11_041032_9259_52494.gri /mnt/rasterTmp/r_tmp_2017-03-11_041040_9259_14625.grd /mnt/rasterTmp/r_tmp_2017-03-11_041040_9259_14625.gri /mnt/rasterTmp/r_tmp_2017-03-11_041053_9259_40063.grd /mnt/rasterTmp/r_tmp_2017-03-11_041053_9259_40063.gri /mnt/rasterTmp/r_tmp_2017-03-11_041105_9259_38702.grd /mnt/rasterTmp/r_tmp_2017-03-11_041105_9259_38702.gri /mnt/rasterTmp/r_tmp_2017-03-11_041127_9259_10357.grd /mnt/rasterTmp/r_tmp_2017-03-11_041127_9259_10357.gri /mnt/rasterTmp/r_tmp_2017-03-11_041134_9259_31560.grd /mnt/rasterTmp/r_tmp_2017-03-11_041134_9259_31560.gri /mnt/rasterTmp/r_tmp_2017-03-11_041141_9259_85683.grd /mnt/rasterTmp/r_tmp_2017-03-11_041141_9259_85683.gri /mnt/rasterTmp/r_tmp_2017-03-11_041151_9259_95117.grd /mnt/rasterTmp/r_tmp_2017-03-11_041151_9259_95117.gri /mnt/rasterTmp/r_tmp_2017-03-11_041158_9259_75775.grd /mnt/rasterTmp/r_tmp_2017-03-11_041158_9259_75775.gri /mnt/rasterTmp/r_tmp_2017-03-11_041209_9259_56736.grd /mnt/rasterTmp/r_tmp_2017-03-11_041209_9259_56736.gri /mnt/rasterTmp/r_tmp_2017-03-11_041216_9259_74635.grd /mnt/rasterTmp/r_tmp_2017-03-11_041216_9259_74635.gri /mnt/rasterTmp/r_tmp_2017-03-11_041223_9259_98272.grd /mnt/rasterTmp/r_tmp_2017-03-11_041223_9259_98272.gri /mnt/rasterTmp/r_tmp_2017-03-11_041230_9259_23323.grd /mnt/rasterTmp/r_tmp_2017-03-11_041230_9259_23323.gri /mnt/rasterTmp/r_tmp_2017-03-11_041241_9259_84730.grd /mnt/rasterTmp/r_tmp_2017-03-11_041241_9259_84730.gri /mnt/rasterTmp/r_tmp_2017-03-11_041250_9259_65116.grd /mnt/rasterTmp/r_tmp_2017-03-11_041250_9259_65116.gri /mnt/rasterTmp/r_tmp_2017-03-11_041301_9259_87096.grd /mnt/rasterTmp/r_tmp_2017-03-11_041301_9259_87096.gri /mnt/rasterTmp/r_tmp_2017-03-11_041308_9259_98150.grd /mnt/rasterTmp/r_tmp_2017-03-11_041308_9259_98150.gri /mnt/rasterTmp/r_tmp_2017-03-11_041319_9259_18809.grd /mnt/rasterTmp/r_tmp_2017-03-11_041319_9259_18809.gri /mnt/rasterTmp/r_tmp_2017-03-11_041326_9259_26554.grd /mnt/rasterTmp/r_tmp_2017-03-11_041326_9259_26554.gri /mnt/rasterTmp/r_tmp_2017-03-11_041332_9259_67926.grd /mnt/rasterTmp/r_tmp_2017-03-11_041332_9259_67926.gri /mnt/rasterTmp/r_tmp_2017-03-11_041339_9259_48408.grd /mnt/rasterTmp/r_tmp_2017-03-11_041339_9259_48408.gri /mnt/rasterTmp/r_tmp_2017-03-11_041346_9259_71333.grd /mnt/rasterTmp/r_tmp_2017-03-11_041346_9259_71333.gri /mnt/rasterTmp/r_tmp_2017-03-11_041358_9259_90406.grd /mnt/rasterTmp/r_tmp_2017-03-11_041358_9259_90406.gri /mnt/rasterTmp/r_tmp_2017-03-11_041407_9259_49006.grd /mnt/rasterTmp/r_tmp_2017-03-11_041407_9259_49006.gri /mnt/rasterTmp/r_tmp_2017-03-11_041417_9259_60855.grd /mnt/rasterTmp/r_tmp_2017-03-11_041417_9259_60855.gri /mnt/rasterTmp/r_tmp_2017-03-11_041426_9259_38500.grd /mnt/rasterTmp/r_tmp_2017-03-11_041426_9259_38500.gri /mnt/rasterTmp/r_tmp_2017-03-11_041433_9259_20672.grd /mnt/rasterTmp/r_tmp_2017-03-11_041433_9259_20672.gri /mnt/rasterTmp/r_tmp_2017-03-11_041443_9259_51925.grd /mnt/rasterTmp/r_tmp_2017-03-11_041443_9259_51925.gri /mnt/rasterTmp/r_tmp_2017-03-11_041452_9259_78815.grd /mnt/rasterTmp/r_tmp_2017-03-11_041452_9259_78815.gri /mnt/rasterTmp/r_tmp_2017-03-11_041507_9259_91599.grd /mnt/rasterTmp/r_tmp_2017-03-11_041507_9259_91599.gri /mnt/rasterTmp/r_tmp_2017-03-11_041513_9259_34565.grd /mnt/rasterTmp/r_tmp_2017-03-11_041513_9259_34565.gri /mnt/rasterTmp/r_tmp_2017-03-11_041520_9259_21627.grd /mnt/rasterTmp/r_tmp_2017-03-11_041520_9259_21627.gri /mnt/rasterTmp/r_tmp_2017-03-11_041528_9259_96916.grd /mnt/rasterTmp/r_tmp_2017-03-11_041528_9259_96916.gri /mnt/rasterTmp/r_tmp_2017-03-11_041535_9259_28338.grd /mnt/rasterTmp/r_tmp_2017-03-11_041535_9259_28338.gri /mnt/rasterTmp/r_tmp_2017-03-11_041544_9259_42568.grd /mnt/rasterTmp/r_tmp_2017-03-11_041544_9259_42568.gri /mnt/rasterTmp/r_tmp_2017-03-11_041556_9259_40049.grd /mnt/rasterTmp/r_tmp_2017-03-11_041556_9259_40049.gri /mnt/rasterTmp/r_tmp_2017-03-11_041605_9259_91116.grd /mnt/rasterTmp/r_tmp_2017-03-11_041605_9259_91116.gri /mnt/rasterTmp/r_tmp_2017-03-11_041613_9259_31337.grd /mnt/rasterTmp/r_tmp_2017-03-11_041613_9259_31337.gri /mnt/rasterTmp/r_tmp_2017-03-11_041624_9259_99950.grd /mnt/rasterTmp/r_tmp_2017-03-11_041624_9259_99950.gri /mnt/rasterTmp/r_tmp_2017-03-11_041635_9259_83055.grd /mnt/rasterTmp/r_tmp_2017-03-11_041635_9259_83055.gri /mnt/rasterTmp/r_tmp_2017-03-11_041704_9259_65940.grd /mnt/rasterTmp/r_tmp_2017-03-11_041704_9259_65940.gri /mnt/rasterTmp/r_tmp_2017-03-11_041721_9259_49048.grd /mnt/rasterTmp/r_tmp_2017-03-11_041721_9259_49048.gri /mnt/rasterTmp/r_tmp_2017-03-11_041729_9259_58819.grd /mnt/rasterTmp/r_tmp_2017-03-11_041729_9259_58819.gri /mnt/rasterTmp/r_tmp_2017-03-11_041745_9259_76416.grd /mnt/rasterTmp/r_tmp_2017-03-11_041745_9259_76416.gri /mnt/rasterTmp/r_tmp_2017-03-11_041801_9259_61320.grd /mnt/rasterTmp/r_tmp_2017-03-11_041801_9259_61320.gri /mnt/rasterTmp/r_tmp_2017-03-11_053152_9259_40368.grd /mnt/rasterTmp/r_tmp_2017-03-11_053152_9259_40368.gri /mnt/rasterTmp/r_tmp_2017-03-11_053351_9259_20317.grd /mnt/rasterTmp/r_tmp_2017-03-11_053351_9259_20317.gri /mnt/rasterTmp/r_tmp_2017-03-11_053418_9259_63006.grd /mnt/rasterTmp/r_tmp_2017-03-11_053418_9259_63006.gri
++ count=300
++ '[' 300 '!=' 0 ']'
++ sudo rm -r /mnt/rasterTmp/r_tmp_2017-03-11_030216_9259_54295.grd /mnt/rasterTmp/r_tmp_2017-03-11_030216_9259_54295.gri /mnt/rasterTmp/r_tmp_2017-03-11_030511_9259_69717.grd /mnt/rasterTmp/r_tmp_2017-03-11_030511_9259_69717.gri /mnt/rasterTmp/r_tmp_2017-03-11_030607_9259_07123.grd /mnt/rasterTmp/r_tmp_2017-03-11_030607_9259_07123.gri /mnt/rasterTmp/r_tmp_2017-03-11_030638_9259_75352.grd /mnt/rasterTmp/r_tmp_2017-03-11_030638_9259_75352.gri /mnt/rasterTmp/r_tmp_2017-03-11_032636_9259_77173.grd /mnt/rasterTmp/r_tmp_2017-03-11_032636_9259_77173.gri /mnt/rasterTmp/r_tmp_2017-03-11_032930_9259_85104.grd /mnt/rasterTmp/r_tmp_2017-03-11_032930_9259_85104.gri /mnt/rasterTmp/r_tmp_2017-03-11_032945_9259_07974.grd /mnt/rasterTmp/r_tmp_2017-03-11_032945_9259_07974.gri /mnt/rasterTmp/r_tmp_2017-03-11_032955_9259_33591.grd /mnt/rasterTmp/r_tmp_2017-03-11_032955_9259_33591.gri /mnt/rasterTmp/r_tmp_2017-03-11_033008_9259_54370.grd /mnt/rasterTmp/r_tmp_2017-03-11_033008_9259_54370.gri /mnt/rasterTmp/r_tmp_2017-03-11_033017_9259_96684.grd /mnt/rasterTmp/r_tmp_2017-03-11_033017_9259_96684.gri /mnt/rasterTmp/r_tmp_2017-03-11_033037_9259_80820.grd /mnt/rasterTmp/r_tmp_2017-03-11_033037_9259_80820.gri /mnt/rasterTmp/r_tmp_2017-03-11_033046_9259_94059.grd /mnt/rasterTmp/r_tmp_2017-03-11_033046_9259_94059.gri /mnt/rasterTmp/r_tmp_2017-03-11_033056_9259_12301.grd /mnt/rasterTmp/r_tmp_2017-03-11_033056_9259_12301.gri /mnt/rasterTmp/r_tmp_2017-03-11_033105_9259_41410.grd /mnt/rasterTmp/r_tmp_2017-03-11_033105_9259_41410.gri /mnt/rasterTmp/r_tmp_2017-03-11_033122_9259_90894.grd /mnt/rasterTmp/r_tmp_2017-03-11_033122_9259_90894.gri /mnt/rasterTmp/r_tmp_2017-03-11_033131_9259_08749.grd /mnt/rasterTmp/r_tmp_2017-03-11_033131_9259_08749.gri /mnt/rasterTmp/r_tmp_2017-03-11_033142_9259_23279.grd /mnt/rasterTmp/r_tmp_2017-03-11_033142_9259_23279.gri /mnt/rasterTmp/r_tmp_2017-03-11_033150_9259_38914.grd /mnt/rasterTmp/r_tmp_2017-03-11_033150_9259_38914.gri /mnt/rasterTmp/r_tmp_2017-03-11_033207_9259_12347.grd /mnt/rasterTmp/r_tmp_2017-03-11_033207_9259_12347.gri /mnt/rasterTmp/r_tmp_2017-03-11_033216_9259_56207.grd /mnt/rasterTmp/r_tmp_2017-03-11_033216_9259_56207.gri /mnt/rasterTmp/r_tmp_2017-03-11_033227_9259_09953.grd /mnt/rasterTmp/r_tmp_2017-03-11_033227_9259_09953.gri /mnt/rasterTmp/r_tmp_2017-03-11_033236_9259_61788.grd /mnt/rasterTmp/r_tmp_2017-03-11_033236_9259_61788.gri /mnt/rasterTmp/r_tmp_2017-03-11_033255_9259_70794.grd /mnt/rasterTmp/r_tmp_2017-03-11_033255_9259_70794.gri /mnt/rasterTmp/r_tmp_2017-03-11_033304_9259_19213.grd /mnt/rasterTmp/r_tmp_2017-03-11_033304_9259_19213.gri /mnt/rasterTmp/r_tmp_2017-03-11_033315_9259_70556.grd /mnt/rasterTmp/r_tmp_2017-03-11_033315_9259_70556.gri /mnt/rasterTmp/r_tmp_2017-03-11_033324_9259_39686.grd /mnt/rasterTmp/r_tmp_2017-03-11_033324_9259_39686.gri /mnt/rasterTmp/r_tmp_2017-03-11_033342_9259_31737.grd /mnt/rasterTmp/r_tmp_2017-03-11_033342_9259_31737.gri /mnt/rasterTmp/r_tmp_2017-03-11_033350_9259_73208.grd /mnt/rasterTmp/r_tmp_2017-03-11_033350_9259_73208.gri /mnt/rasterTmp/r_tmp_2017-03-11_033401_9259_61042.grd /mnt/rasterTmp/r_tmp_2017-03-11_033401_9259_61042.gri /mnt/rasterTmp/r_tmp_2017-03-11_033410_9259_98080.grd /mnt/rasterTmp/r_tmp_2017-03-11_033410_9259_98080.gri /mnt/rasterTmp/r_tmp_2017-03-11_033427_9259_07285.grd /mnt/rasterTmp/r_tmp_2017-03-11_033427_9259_07285.gri /mnt/rasterTmp/r_tmp_2017-03-11_033434_9259_57296.grd /mnt/rasterTmp/r_tmp_2017-03-11_033434_9259_57296.gri /mnt/rasterTmp/r_tmp_2017-03-11_033444_9259_18053.grd /mnt/rasterTmp/r_tmp_2017-03-11_033444_9259_18053.gri /mnt/rasterTmp/r_tmp_2017-03-11_033453_9259_71612.grd /mnt/rasterTmp/r_tmp_2017-03-11_033453_9259_71612.gri /mnt/rasterTmp/r_tmp_2017-03-11_033511_9259_27795.grd /mnt/rasterTmp/r_tmp_2017-03-11_033511_9259_27795.gri /mnt/rasterTmp/r_tmp_2017-03-11_033520_9259_38557.grd /mnt/rasterTmp/r_tmp_2017-03-11_033520_9259_38557.gri /mnt/rasterTmp/r_tmp_2017-03-11_033528_9259_41087.grd /mnt/rasterTmp/r_tmp_2017-03-11_033528_9259_41087.gri /mnt/rasterTmp/r_tmp_2017-03-11_033538_9259_53573.grd /mnt/rasterTmp/r_tmp_2017-03-11_033538_9259_53573.gri /mnt/rasterTmp/r_tmp_2017-03-11_033547_9259_78729.grd /mnt/rasterTmp/r_tmp_2017-03-11_033547_9259_78729.gri /mnt/rasterTmp/r_tmp_2017-03-11_033556_9259_75547.grd /mnt/rasterTmp/r_tmp_2017-03-11_033556_9259_75547.gri /mnt/rasterTmp/r_tmp_2017-03-11_033606_9259_14363.grd /mnt/rasterTmp/r_tmp_2017-03-11_033606_9259_14363.gri /mnt/rasterTmp/r_tmp_2017-03-11_033617_9259_08393.grd /mnt/rasterTmp/r_tmp_2017-03-11_033617_9259_08393.gri /mnt/rasterTmp/r_tmp_2017-03-11_033628_9259_27165.grd /mnt/rasterTmp/r_tmp_2017-03-11_033628_9259_27165.gri /mnt/rasterTmp/r_tmp_2017-03-11_033639_9259_77580.grd /mnt/rasterTmp/r_tmp_2017-03-11_033639_9259_77580.gri /mnt/rasterTmp/r_tmp_2017-03-11_033649_9259_54537.grd /mnt/rasterTmp/r_tmp_2017-03-11_033649_9259_54537.gri /mnt/rasterTmp/r_tmp_2017-03-11_033700_9259_43765.grd /mnt/rasterTmp/r_tmp_2017-03-11_033700_9259_43765.gri /mnt/rasterTmp/r_tmp_2017-03-11_033711_9259_88333.grd /mnt/rasterTmp/r_tmp_2017-03-11_033711_9259_88333.gri /mnt/rasterTmp/r_tmp_2017-03-11_033720_9259_32425.grd /mnt/rasterTmp/r_tmp_2017-03-11_033720_9259_32425.gri /mnt/rasterTmp/r_tmp_2017-03-11_033731_9259_46379.grd /mnt/rasterTmp/r_tmp_2017-03-11_033731_9259_46379.gri /mnt/rasterTmp/r_tmp_2017-03-11_033741_9259_20669.grd /mnt/rasterTmp/r_tmp_2017-03-11_033741_9259_20669.gri /mnt/rasterTmp/r_tmp_2017-03-11_033750_9259_76728.grd /mnt/rasterTmp/r_tmp_2017-03-11_033750_9259_76728.gri /mnt/rasterTmp/r_tmp_2017-03-11_033759_9259_81445.grd /mnt/rasterTmp/r_tmp_2017-03-11_033759_9259_81445.gri /mnt/rasterTmp/r_tmp_2017-03-11_033808_9259_58126.grd /mnt/rasterTmp/r_tmp_2017-03-11_033808_9259_58126.gri /mnt/rasterTmp/r_tmp_2017-03-11_033821_9259_30462.grd /mnt/rasterTmp/r_tmp_2017-03-11_033821_9259_30462.gri /mnt/rasterTmp/r_tmp_2017-03-11_033831_9259_10776.grd /mnt/rasterTmp/r_tmp_2017-03-11_033831_9259_10776.gri /mnt/rasterTmp/r_tmp_2017-03-11_033842_9259_78066.grd /mnt/rasterTmp/r_tmp_2017-03-11_033842_9259_78066.gri /mnt/rasterTmp/r_tmp_2017-03-11_033852_9259_18184.grd /mnt/rasterTmp/r_tmp_2017-03-11_033852_9259_18184.gri /mnt/rasterTmp/r_tmp_2017-03-11_033903_9259_18005.grd /mnt/rasterTmp/r_tmp_2017-03-11_033903_9259_18005.gri /mnt/rasterTmp/r_tmp_2017-03-11_033914_9259_11113.grd /mnt/rasterTmp/r_tmp_2017-03-11_033914_9259_11113.gri /mnt/rasterTmp/r_tmp_2017-03-11_033926_9259_78449.grd /mnt/rasterTmp/r_tmp_2017-03-11_033926_9259_78449.gri /mnt/rasterTmp/r_tmp_2017-03-11_033935_9259_32439.grd /mnt/rasterTmp/r_tmp_2017-03-11_033935_9259_32439.gri /mnt/rasterTmp/r_tmp_2017-03-11_033947_9259_99489.grd /mnt/rasterTmp/r_tmp_2017-03-11_033947_9259_99489.gri /mnt/rasterTmp/r_tmp_2017-03-11_033956_9259_56014.grd /mnt/rasterTmp/r_tmp_2017-03-11_033956_9259_56014.gri /mnt/rasterTmp/r_tmp_2017-03-11_034008_9259_46170.grd /mnt/rasterTmp/r_tmp_2017-03-11_034008_9259_46170.gri /mnt/rasterTmp/r_tmp_2017-03-11_034017_9259_04514.grd /mnt/rasterTmp/r_tmp_2017-03-11_034017_9259_04514.gri /mnt/rasterTmp/r_tmp_2017-03-11_034029_9259_83813.grd /mnt/rasterTmp/r_tmp_2017-03-11_034029_9259_83813.gri /mnt/rasterTmp/r_tmp_2017-03-11_034038_9259_28701.grd /mnt/rasterTmp/r_tmp_2017-03-11_034038_9259_28701.gri /mnt/rasterTmp/r_tmp_2017-03-11_034050_9259_92245.grd /mnt/rasterTmp/r_tmp_2017-03-11_034050_9259_92245.gri /mnt/rasterTmp/r_tmp_2017-03-11_034059_9259_05026.grd /mnt/rasterTmp/r_tmp_2017-03-11_034059_9259_05026.gri /mnt/rasterTmp/r_tmp_2017-03-11_034108_9259_21154.grd /mnt/rasterTmp/r_tmp_2017-03-11_034108_9259_21154.gri /mnt/rasterTmp/r_tmp_2017-03-11_034120_9259_97024.grd /mnt/rasterTmp/r_tmp_2017-03-11_034120_9259_97024.gri /mnt/rasterTmp/r_tmp_2017-03-11_034130_9259_83990.grd /mnt/rasterTmp/r_tmp_2017-03-11_034130_9259_83990.gri /mnt/rasterTmp/r_tmp_2017-03-11_034141_9259_89638.grd /mnt/rasterTmp/r_tmp_2017-03-11_034141_9259_89638.gri /mnt/rasterTmp/r_tmp_2017-03-11_034154_9259_65443.grd /mnt/rasterTmp/r_tmp_2017-03-11_034154_9259_65443.gri /mnt/rasterTmp/r_tmp_2017-03-11_034207_9259_34953.grd /mnt/rasterTmp/r_tmp_2017-03-11_034207_9259_34953.gri /mnt/rasterTmp/r_tmp_2017-03-11_034221_9259_25736.grd /mnt/rasterTmp/r_tmp_2017-03-11_034221_9259_25736.gri /mnt/rasterTmp/r_tmp_2017-03-11_034234_9259_21704.grd /mnt/rasterTmp/r_tmp_2017-03-11_034234_9259_21704.gri /mnt/rasterTmp/r_tmp_2017-03-11_034243_9259_61277.grd /mnt/rasterTmp/r_tmp_2017-03-11_034243_9259_61277.gri /mnt/rasterTmp/r_tmp_2017-03-11_034252_9259_03184.grd /mnt/rasterTmp/r_tmp_2017-03-11_034252_9259_03184.gri /mnt/rasterTmp/r_tmp_2017-03-11_034304_9259_15557.grd /mnt/rasterTmp/r_tmp_2017-03-11_034304_9259_15557.gri /mnt/rasterTmp/r_tmp_2017-03-11_034316_9259_65792.grd /mnt/rasterTmp/r_tmp_2017-03-11_034316_9259_65792.gri /mnt/rasterTmp/r_tmp_2017-03-11_034335_9259_43884.grd /mnt/rasterTmp/r_tmp_2017-03-11_034335_9259_43884.gri /mnt/rasterTmp/r_tmp_2017-03-11_034343_9259_71021.grd /mnt/rasterTmp/r_tmp_2017-03-11_034343_9259_71021.gri /mnt/rasterTmp/r_tmp_2017-03-11_040645_9259_63210.grd /mnt/rasterTmp/r_tmp_2017-03-11_040645_9259_63210.gri /mnt/rasterTmp/r_tmp_2017-03-11_040706_9259_79931.grd /mnt/rasterTmp/r_tmp_2017-03-11_040706_9259_79931.gri /mnt/rasterTmp/r_tmp_2017-03-11_040728_9259_68169.grd /mnt/rasterTmp/r_tmp_2017-03-11_040728_9259_68169.gri /mnt/rasterTmp/r_tmp_2017-03-11_040747_9259_20257.grd /mnt/rasterTmp/r_tmp_2017-03-11_040747_9259_20257.gri /mnt/rasterTmp/r_tmp_2017-03-11_040758_9259_08820.grd /mnt/rasterTmp/r_tmp_2017-03-11_040758_9259_08820.gri /mnt/rasterTmp/r_tmp_2017-03-11_040807_9259_50530.grd /mnt/rasterTmp/r_tmp_2017-03-11_040807_9259_50530.gri /mnt/rasterTmp/r_tmp_2017-03-11_040819_9259_87776.grd /mnt/rasterTmp/r_tmp_2017-03-11_040819_9259_87776.gri /mnt/rasterTmp/r_tmp_2017-03-11_040828_9259_63495.grd /mnt/rasterTmp/r_tmp_2017-03-11_040828_9259_63495.gri /mnt/rasterTmp/r_tmp_2017-03-11_040840_9259_56432.grd /mnt/rasterTmp/r_tmp_2017-03-11_040840_9259_56432.gri /mnt/rasterTmp/r_tmp_2017-03-11_040849_9259_11055.grd /mnt/rasterTmp/r_tmp_2017-03-11_040849_9259_11055.gri /mnt/rasterTmp/r_tmp_2017-03-11_040858_9259_09206.grd /mnt/rasterTmp/r_tmp_2017-03-11_040858_9259_09206.gri /mnt/rasterTmp/r_tmp_2017-03-11_040907_9259_77081.grd /mnt/rasterTmp/r_tmp_2017-03-11_040907_9259_77081.gri /mnt/rasterTmp/r_tmp_2017-03-11_040914_9259_95252.grd /mnt/rasterTmp/r_tmp_2017-03-11_040914_9259_95252.gri /mnt/rasterTmp/r_tmp_2017-03-11_040922_9259_29274.grd /mnt/rasterTmp/r_tmp_2017-03-11_040922_9259_29274.gri /mnt/rasterTmp/r_tmp_2017-03-11_040929_9259_93233.grd /mnt/rasterTmp/r_tmp_2017-03-11_040929_9259_93233.gri /mnt/rasterTmp/r_tmp_2017-03-11_040944_9259_75883.grd /mnt/rasterTmp/r_tmp_2017-03-11_040944_9259_75883.gri /mnt/rasterTmp/r_tmp_2017-03-11_040957_9259_73103.grd /mnt/rasterTmp/r_tmp_2017-03-11_040957_9259_73103.gri /mnt/rasterTmp/r_tmp_2017-03-11_041018_9259_21460.grd /mnt/rasterTmp/r_tmp_2017-03-11_041018_9259_21460.gri /mnt/rasterTmp/r_tmp_2017-03-11_041025_9259_50870.grd /mnt/rasterTmp/r_tmp_2017-03-11_041025_9259_50870.gri /mnt/rasterTmp/r_tmp_2017-03-11_041032_9259_52494.grd /mnt/rasterTmp/r_tmp_2017-03-11_041032_9259_52494.gri /mnt/rasterTmp/r_tmp_2017-03-11_041040_9259_14625.grd /mnt/rasterTmp/r_tmp_2017-03-11_041040_9259_14625.gri /mnt/rasterTmp/r_tmp_2017-03-11_041053_9259_40063.grd /mnt/rasterTmp/r_tmp_2017-03-11_041053_9259_40063.gri /mnt/rasterTmp/r_tmp_2017-03-11_041105_9259_38702.grd /mnt/rasterTmp/r_tmp_2017-03-11_041105_9259_38702.gri /mnt/rasterTmp/r_tmp_2017-03-11_041127_9259_10357.grd /mnt/rasterTmp/r_tmp_2017-03-11_041127_9259_10357.gri /mnt/rasterTmp/r_tmp_2017-03-11_041134_9259_31560.grd /mnt/rasterTmp/r_tmp_2017-03-11_041134_9259_31560.gri /mnt/rasterTmp/r_tmp_2017-03-11_041141_9259_85683.grd /mnt/rasterTmp/r_tmp_2017-03-11_041141_9259_85683.gri /mnt/rasterTmp/r_tmp_2017-03-11_041151_9259_95117.grd /mnt/rasterTmp/r_tmp_2017-03-11_041151_9259_95117.gri /mnt/rasterTmp/r_tmp_2017-03-11_041158_9259_75775.grd /mnt/rasterTmp/r_tmp_2017-03-11_041158_9259_75775.gri /mnt/rasterTmp/r_tmp_2017-03-11_041209_9259_56736.grd /mnt/rasterTmp/r_tmp_2017-03-11_041209_9259_56736.gri /mnt/rasterTmp/r_tmp_2017-03-11_041216_9259_74635.grd /mnt/rasterTmp/r_tmp_2017-03-11_041216_9259_74635.gri /mnt/rasterTmp/r_tmp_2017-03-11_041223_9259_98272.grd /mnt/rasterTmp/r_tmp_2017-03-11_041223_9259_98272.gri /mnt/rasterTmp/r_tmp_2017-03-11_041230_9259_23323.grd /mnt/rasterTmp/r_tmp_2017-03-11_041230_9259_23323.gri /mnt/rasterTmp/r_tmp_2017-03-11_041241_9259_84730.grd /mnt/rasterTmp/r_tmp_2017-03-11_041241_9259_84730.gri /mnt/rasterTmp/r_tmp_2017-03-11_041250_9259_65116.grd /mnt/rasterTmp/r_tmp_2017-03-11_041250_9259_65116.gri /mnt/rasterTmp/r_tmp_2017-03-11_041301_9259_87096.grd /mnt/rasterTmp/r_tmp_2017-03-11_041301_9259_87096.gri /mnt/rasterTmp/r_tmp_2017-03-11_041308_9259_98150.grd /mnt/rasterTmp/r_tmp_2017-03-11_041308_9259_98150.gri /mnt/rasterTmp/r_tmp_2017-03-11_041319_9259_18809.grd /mnt/rasterTmp/r_tmp_2017-03-11_041319_9259_18809.gri /mnt/rasterTmp/r_tmp_2017-03-11_041326_9259_26554.grd /mnt/rasterTmp/r_tmp_2017-03-11_041326_9259_26554.gri /mnt/rasterTmp/r_tmp_2017-03-11_041332_9259_67926.grd /mnt/rasterTmp/r_tmp_2017-03-11_041332_9259_67926.gri /mnt/rasterTmp/r_tmp_2017-03-11_041339_9259_48408.grd /mnt/rasterTmp/r_tmp_2017-03-11_041339_9259_48408.gri /mnt/rasterTmp/r_tmp_2017-03-11_041346_9259_71333.grd /mnt/rasterTmp/r_tmp_2017-03-11_041346_9259_71333.gri /mnt/rasterTmp/r_tmp_2017-03-11_041358_9259_90406.grd /mnt/rasterTmp/r_tmp_2017-03-11_041358_9259_90406.gri /mnt/rasterTmp/r_tmp_2017-03-11_041407_9259_49006.grd /mnt/rasterTmp/r_tmp_2017-03-11_041407_9259_49006.gri /mnt/rasterTmp/r_tmp_2017-03-11_041417_9259_60855.grd /mnt/rasterTmp/r_tmp_2017-03-11_041417_9259_60855.gri /mnt/rasterTmp/r_tmp_2017-03-11_041426_9259_38500.grd /mnt/rasterTmp/r_tmp_2017-03-11_041426_9259_38500.gri /mnt/rasterTmp/r_tmp_2017-03-11_041433_9259_20672.grd /mnt/rasterTmp/r_tmp_2017-03-11_041433_9259_20672.gri /mnt/rasterTmp/r_tmp_2017-03-11_041443_9259_51925.grd /mnt/rasterTmp/r_tmp_2017-03-11_041443_9259_51925.gri /mnt/rasterTmp/r_tmp_2017-03-11_041452_9259_78815.grd /mnt/rasterTmp/r_tmp_2017-03-11_041452_9259_78815.gri /mnt/rasterTmp/r_tmp_2017-03-11_041507_9259_91599.grd /mnt/rasterTmp/r_tmp_2017-03-11_041507_9259_91599.gri /mnt/rasterTmp/r_tmp_2017-03-11_041513_9259_34565.grd /mnt/rasterTmp/r_tmp_2017-03-11_041513_9259_34565.gri /mnt/rasterTmp/r_tmp_2017-03-11_041520_9259_21627.grd /mnt/rasterTmp/r_tmp_2017-03-11_041520_9259_21627.gri /mnt/rasterTmp/r_tmp_2017-03-11_041528_9259_96916.grd /mnt/rasterTmp/r_tmp_2017-03-11_041528_9259_96916.gri /mnt/rasterTmp/r_tmp_2017-03-11_041535_9259_28338.grd /mnt/rasterTmp/r_tmp_2017-03-11_041535_9259_28338.gri /mnt/rasterTmp/r_tmp_2017-03-11_041544_9259_42568.grd /mnt/rasterTmp/r_tmp_2017-03-11_041544_9259_42568.gri /mnt/rasterTmp/r_tmp_2017-03-11_041556_9259_40049.grd /mnt/rasterTmp/r_tmp_2017-03-11_041556_9259_40049.gri /mnt/rasterTmp/r_tmp_2017-03-11_041605_9259_91116.grd /mnt/rasterTmp/r_tmp_2017-03-11_041605_9259_91116.gri /mnt/rasterTmp/r_tmp_2017-03-11_041613_9259_31337.grd /mnt/rasterTmp/r_tmp_2017-03-11_041613_9259_31337.gri /mnt/rasterTmp/r_tmp_2017-03-11_041624_9259_99950.grd /mnt/rasterTmp/r_tmp_2017-03-11_041624_9259_99950.gri /mnt/rasterTmp/r_tmp_2017-03-11_041635_9259_83055.grd /mnt/rasterTmp/r_tmp_2017-03-11_041635_9259_83055.gri /mnt/rasterTmp/r_tmp_2017-03-11_041704_9259_65940.grd /mnt/rasterTmp/r_tmp_2017-03-11_041704_9259_65940.gri /mnt/rasterTmp/r_tmp_2017-03-11_041721_9259_49048.grd /mnt/rasterTmp/r_tmp_2017-03-11_041721_9259_49048.gri /mnt/rasterTmp/r_tmp_2017-03-11_041729_9259_58819.grd /mnt/rasterTmp/r_tmp_2017-03-11_041729_9259_58819.gri /mnt/rasterTmp/r_tmp_2017-03-11_041745_9259_76416.grd /mnt/rasterTmp/r_tmp_2017-03-11_041745_9259_76416.gri /mnt/rasterTmp/r_tmp_2017-03-11_041801_9259_61320.grd /mnt/rasterTmp/r_tmp_2017-03-11_041801_9259_61320.gri /mnt/rasterTmp/r_tmp_2017-03-11_053152_9259_40368.grd /mnt/rasterTmp/r_tmp_2017-03-11_053152_9259_40368.gri /mnt/rasterTmp/r_tmp_2017-03-11_053351_9259_20317.grd /mnt/rasterTmp/r_tmp_2017-03-11_053351_9259_20317.gri /mnt/rasterTmp/r_tmp_2017-03-11_053418_9259_63006.grd /mnt/rasterTmp/r_tmp_2017-03-11_053418_9259_63006.gri
+sudo: unable to resolve host fogbow19345
++ echo 'Starting CPU and Memory collect...'
++ sudo bash /tmp/sandbox/80e585a9-72eb-4888-b5cf-1b669ca89822/SEBAL/scripts/collect-cpu-usage.sh
++ checkProcessOutput
++ sudo tee /nfs/results//LT52170641986204CUB00/LT52170641986204CUB00_cpu_usage.txt
++ PROCESS_OUTPUT=0
++ '[' 0 -ne 0 ']'
++ executeRScript
++ sudo bash /tmp/sandbox/80e585a9-72eb-4888-b5cf-1b669ca89822/SEBAL/scripts/collect-memory-usage.sh
++ sudo tee /nfs/results//LT52170641986204CUB00/LT52170641986204CUB00_mem_usage.txt
+SEBAL/bin/run.sh: line 95: /dev/nul: Permission denied
+++ seq 2
++ for i in '`seq $MAX_TRIES`'
++ sudo bash /tmp/sandbox/80e585a9-72eb-4888-b5cf-1b669ca89822/SEBAL/scripts/executeRScript.sh /tmp/sandbox/80e585a9-72eb-4888-b5cf-1b669ca89822/SEBAL/workspace/R/AlgoritmoFinal-f1-v02122016.R /tmp/sandbox/80e585a9-72eb-4888-b5cf-1b669ca89822/SEBAL/workspace/R /mnt
+sudo: unable to resolve host fogbow19345
+sudo: unable to resolve host fogbow19345
+sudo: unable to resolve host fogbow19345
+sudo: unable to resolve host fogbow19345
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+Installing package into ‘/usr/local/lib/R/site-library’
+(as ‘lib’ is unspecified)
+trying URL 'http://nbcgib.uesc.br/mirrors/cran/src/contrib/snow_0.4-2.tar.gz'
+Content type 'application/x-gzip' length 22397 bytes (21 Kb)
+opened URL
+==================================================
+downloaded 21 Kb
+
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+* installing *source* package ‘snow’ ...
+** package ‘snow’ successfully unpacked and MD5 sums checked
+** R
+** inst
+** preparing package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** testing if installed package can be loaded
+* DONE (snow)
+Installing package into ‘/usr/local/lib/R/site-library’
+(as ‘lib’ is unspecified)
+trying URL 'http://nbcgib.uesc.br/mirrors/cran/src/contrib/R.utils_2.5.0.tar.gz'
+Content type 'application/x-gzip' length 389402 bytes (380 Kb)
+opened URL
+==================================================
+downloaded 380 Kb
+
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+* installing *source* package ‘R.utils’ ...
+** package ‘R.utils’ successfully unpacked and MD5 sums checked
+** R
+** inst
+** preparing package for lazy loading
+Warning in setGenericS3.default(name, export = exportGeneric, envir = envir,  :
+  Renamed the preexisting function warnings to warnings.default, which was defined in environment base.
+** help
+*** installing help indices
+** building package indices
+** testing if installed package can be loaded
+* DONE (R.utils)
+Loading required package: R.oo
+Loading required package: R.methodsS3
+R.methodsS3 v1.7.1 (2016-02-15) successfully loaded. See ?R.methodsS3 for help.
+R.oo v1.21.0 (2016-10-30) successfully loaded. See ?R.oo for help.
+
+Attaching package: ‘R.oo’
+
+The following objects are masked from ‘package:base’:
+
+    attach, detach, gc, load, save
+
+R.utils v2.5.0 (2016-11-07) successfully loaded. See ?R.utils for help.
+
+Attaching package: ‘R.utils’
+
+The following object is masked from ‘package:utils’:
+
+    timestamp
+
+The following objects are masked from ‘package:base’:
+
+    cat, commandArgs, getOption, inherits, isOpen, parse, warnings
+
+Loading required package: methods
+
+Attaching package: ‘methods’
+
+The following objects are masked from ‘package:R.oo’:
+
+    getClasses, getMethods
+
+Loading required package: sp
+
+Attaching package: ‘raster’
+
+The following objects are masked from ‘package:R.utils’:
+
+    extract, resample
+
+The following objects are masked from ‘package:R.oo’:
+
+    extend, trim
+
+rgdal: version: 1.1-10, (SVN revision 622)
+ Geospatial Data Abstraction Library extensions to R successfully loaded
+ Loaded GDAL runtime: GDAL 1.10.1, released 2013/08/26
+ Path to GDAL shared files: /usr/share/gdal/1.10
+ Loaded PROJ.4 runtime: Rel. 4.8.0, 6 March 2012, [PJ_VERSION: 480]
+ Path to PROJ.4 shared files: (autodetected)
+ Linking to sp version: 1.2-3 
+
+Attaching package: ‘rgdal’
+
+The following object is masked from ‘package:R.oo’:
+
+    getDescription
+
+Checking rgeos availability: TRUE
+Loading required namespace: parallel
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+Using cluster with 7 nodes
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+Using cluster with 7 nodes
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+Using cluster with 7 nodes
+Using cluster with 7 nodes
+Using cluster with 7 nodes
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
++ PROCESS_OUTPUT=0
++ echo executeRScript_process_output=0
++ '[' 0 -eq 0 ']'
++ echo 'NUMBER OF TRIES 1'
++ break
++ checkProcessOutput
++ PROCESS_OUTPUT=0
++ '[' 0 -ne 0 ']'
++ finally
++ exit 0
+sudo: unable to resolve host fogbow19345
+sudo: unable to resolve host fogbow19345
+sudo: unable to resolve host fogbow19345
+sudo: unable to resolve host fogbow19345
+sudo: unable to resolve host fogbow19345
+sudo: unable to resolve host fogbow19345
+sudo: unable to resolve host fogbow19345
+sudo: unable to resolve host fogbow19345
+sudo: unable to resolve host fogbow19345
+sudo: unable to resolve host fogbow19345

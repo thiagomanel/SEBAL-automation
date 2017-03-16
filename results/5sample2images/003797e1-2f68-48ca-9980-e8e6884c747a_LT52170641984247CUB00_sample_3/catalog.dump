@@ -1,0 +1,208 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: deploy_config; Type: TABLE; Schema: public; Owner: sebal; Tablespace: 
+--
+
+CREATE TABLE deploy_config (
+    nfs_ip character varying(100) NOT NULL,
+    nfs_port character varying(100) NOT NULL,
+    federation_member character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.deploy_config OWNER TO sebal;
+
+--
+-- Name: nasa_images; Type: TABLE; Schema: public; Owner: sebal; Tablespace: 
+--
+
+CREATE TABLE nasa_images (
+    image_name character varying(255) NOT NULL,
+    download_link character varying(255),
+    state character varying(100),
+    federation_member character varying(255),
+    priority integer,
+    station_id character varying(255),
+    sebal_version character varying(255),
+    sebal_tag character varying(255),
+    crawler_version character varying(255),
+    fetcher_version character varying(255),
+    blowout_version character varying(255),
+    fmask_version character varying(255),
+    ctime timestamp without time zone,
+    utime timestamp without time zone,
+    status character varying(255),
+    error_msg character varying(255)
+);
+
+
+ALTER TABLE public.nasa_images OWNER TO sebal;
+
+--
+-- Name: sebal_notify; Type: TABLE; Schema: public; Owner: sebal; Tablespace: 
+--
+
+CREATE TABLE sebal_notify (
+    job_id character varying(255) NOT NULL,
+    image_name character varying(255) NOT NULL,
+    user_email character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.sebal_notify OWNER TO sebal;
+
+--
+-- Name: sebal_users; Type: TABLE; Schema: public; Owner: sebal; Tablespace: 
+--
+
+CREATE TABLE sebal_users (
+    user_email character varying(255) NOT NULL,
+    user_name character varying(255),
+    user_password character varying(100),
+    active boolean,
+    user_notify boolean,
+    admin_role boolean
+);
+
+
+ALTER TABLE public.sebal_users OWNER TO sebal;
+
+--
+-- Name: states_timestamps; Type: TABLE; Schema: public; Owner: sebal; Tablespace: 
+--
+
+CREATE TABLE states_timestamps (
+    image_name character varying(255),
+    state character varying(100),
+    utime timestamp without time zone,
+    error_msg character varying(255)
+);
+
+
+ALTER TABLE public.states_timestamps OWNER TO sebal;
+
+--
+-- Data for Name: deploy_config; Type: TABLE DATA; Schema: public; Owner: sebal
+--
+
+COPY deploy_config (nfs_ip, nfs_port, federation_member) FROM stdin;
+13.82.239.47	2049	azure.experimento
+\.
+
+
+--
+-- Data for Name: nasa_images; Type: TABLE DATA; Schema: public; Owner: sebal
+--
+
+COPY nasa_images (image_name, download_link, state, federation_member, priority, station_id, sebal_version, sebal_tag, crawler_version, fetcher_version, blowout_version, fmask_version, ctime, utime, status, error_msg) FROM stdin;
+LT52170641986140CUB00	downloadLink	finished	azure.experimento	0	NE	https://github.com/ufcg-lsd/SEBAL.git	340ccca2b0cf14101c0449b038c792489ee2a0ef	3e2bd162f03d496d021818d23838a3140f313119	NE		NE	2017-03-12 13:59:03.77402	2017-03-12 16:34:00.828387	available	no_errors
+LT52170641984247CUB00	downloadLink	finished	azure.experimento	0	NE	https://github.com/ufcg-lsd/SEBAL.git	340ccca2b0cf14101c0449b038c792489ee2a0ef	3e2bd162f03d496d021818d23838a3140f313119	NE		NE	2017-03-12 13:59:03.865299	2017-03-12 16:46:21.103432	available	no_errors
+\.
+
+
+--
+-- Data for Name: sebal_notify; Type: TABLE DATA; Schema: public; Owner: sebal
+--
+
+COPY sebal_notify (job_id, image_name, user_email) FROM stdin;
+\.
+
+
+--
+-- Data for Name: sebal_users; Type: TABLE DATA; Schema: public; Owner: sebal
+--
+
+COPY sebal_users (user_email, user_name, user_password, active, user_notify, admin_role) FROM stdin;
+\.
+
+
+--
+-- Data for Name: states_timestamps; Type: TABLE DATA; Schema: public; Owner: sebal
+--
+
+COPY states_timestamps (image_name, state, utime, error_msg) FROM stdin;
+LT52170641986140CUB00	queued	2017-03-12 13:59:06.544015	\N
+LT52170641984247CUB00	queued	2017-03-12 13:59:06.665913	\N
+LT52170641984247CUB00	running	2017-03-12 13:59:16.135064	\N
+LT52170641986140CUB00	running	2017-03-12 13:59:16.149986	\N
+LT52170641986140CUB00	finished	2017-03-12 16:34:00.828387	\N
+LT52170641984247CUB00	finished	2017-03-12 16:46:21.103432	\N
+\.
+
+
+--
+-- Name: deploy_config_pkey; Type: CONSTRAINT; Schema: public; Owner: sebal; Tablespace: 
+--
+
+ALTER TABLE ONLY deploy_config
+    ADD CONSTRAINT deploy_config_pkey PRIMARY KEY (nfs_ip, nfs_port, federation_member);
+
+
+--
+-- Name: nasa_images_pkey; Type: CONSTRAINT; Schema: public; Owner: sebal; Tablespace: 
+--
+
+ALTER TABLE ONLY nasa_images
+    ADD CONSTRAINT nasa_images_pkey PRIMARY KEY (image_name);
+
+
+--
+-- Name: sebal_notify_pkey; Type: CONSTRAINT; Schema: public; Owner: sebal; Tablespace: 
+--
+
+ALTER TABLE ONLY sebal_notify
+    ADD CONSTRAINT sebal_notify_pkey PRIMARY KEY (job_id, image_name, user_email);
+
+
+--
+-- Name: sebal_users_pkey; Type: CONSTRAINT; Schema: public; Owner: sebal; Tablespace: 
+--
+
+ALTER TABLE ONLY sebal_users
+    ADD CONSTRAINT sebal_users_pkey PRIMARY KEY (user_email);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

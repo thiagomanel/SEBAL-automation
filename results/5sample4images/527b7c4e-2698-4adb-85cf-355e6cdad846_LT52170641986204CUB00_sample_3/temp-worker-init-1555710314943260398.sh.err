@@ -1,0 +1,62 @@
+sudo: unable to resolve host fogbow62496
+sudo: unable to resolve host fogbow62496
+sudo: unable to resolve host fogbow62496
+Cloning into 'SEBAL'...
+Note: checking out '340ccca2b0cf14101c0449b038c792489ee2a0ef'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b new_branch_name
+
+HEAD is now at 340ccca... Increasing timeouts for each R script block
++ LOG4J_FILE_PATH=/var/log/sebal/sebal.log
+++ pwd
++ SEBAL_DIR_PATH=/tmp/sandbox/b8d5fc67-1b95-4ffa-844f-d0532bad0d6a
++ TEMP_DIR_PATH=/mnt
++ SEBAL_SNAPSHOT_M2_PATH=/home/fogbow/.m2/repository/org/fogbowcloud/SEBAL/0.0.1-SNAPSHOT/
++ gettingSebalSnapshot
++ cd /tmp/sandbox/b8d5fc67-1b95-4ffa-844f-d0532bad0d6a/SEBAL
++ sudo tar -xvzf target.tar.gz
+sudo: unable to resolve host fogbow62496
++ rm target.tar.gz
++ sudo mkdir -p /home/fogbow/.m2/repository/org/fogbowcloud/SEBAL/0.0.1-SNAPSHOT/
+sudo: unable to resolve host fogbow62496
++ sudo cp /tmp/sandbox/b8d5fc67-1b95-4ffa-844f-d0532bad0d6a/SEBAL/target/SEBAL-0.0.1-SNAPSHOT.jar /home/fogbow/.m2/repository/org/fogbowcloud/SEBAL/0.0.1-SNAPSHOT/
+sudo: unable to resolve host fogbow62496
++ sudo mkdir -p /var/log/sebal/sebal.log
+sudo: unable to resolve host fogbow62496
++ cd ..
++ verifyRScript
++ echo 'Verifying dependencies for R script'
++ bash -x /tmp/sandbox/b8d5fc67-1b95-4ffa-844f-d0532bad0d6a/SEBAL/scripts/verify-dependencies.sh /tmp/sandbox/b8d5fc67-1b95-4ffa-844f-d0532bad0d6a/SEBAL/scripts
++ SEBAL_SCRIPTS_PATH=/tmp/sandbox/b8d5fc67-1b95-4ffa-844f-d0532bad0d6a/SEBAL/scripts
++ MISSING_DEPENDENCIES_FILE=missing_dependencies
++ Rscript /tmp/sandbox/b8d5fc67-1b95-4ffa-844f-d0532bad0d6a/SEBAL/scripts/check-R-dependency.R raster
++ PROCESS_OUTPUT=0
++ '[' 0 -ne 0 ']'
++ echo 'raster is installed'
++ Rscript /tmp/sandbox/b8d5fc67-1b95-4ffa-844f-d0532bad0d6a/SEBAL/scripts/check-R-dependency.R rgeos
++ PROCESS_OUTPUT=0
++ '[' 0 -ne 0 ']'
++ echo 'rgeos is installed'
++ Rscript /tmp/sandbox/b8d5fc67-1b95-4ffa-844f-d0532bad0d6a/SEBAL/scripts/check-R-dependency.R rgdal
++ PROCESS_OUTPUT=0
++ '[' 0 -ne 0 ']'
++ echo 'rgdal is installed'
++ Rscript /tmp/sandbox/b8d5fc67-1b95-4ffa-844f-d0532bad0d6a/SEBAL/scripts/check-R-dependency.R maptools
++ PROCESS_OUTPUT=0
++ '[' 0 -ne 0 ']'
++ echo 'maptools is installed'
++ Rscript /tmp/sandbox/b8d5fc67-1b95-4ffa-844f-d0532bad0d6a/SEBAL/scripts/check-R-dependency.R ncdf4
++ PROCESS_OUTPUT=0
++ '[' 0 -ne 0 ']'
++ echo 'ncdf4 is installed'
++ Rscript /tmp/sandbox/b8d5fc67-1b95-4ffa-844f-d0532bad0d6a/SEBAL/scripts/check-R-dependency.R sp
++ PROCESS_OUTPUT=0
++ '[' 0 -ne 0 ']'
++ echo 'sp is installed'

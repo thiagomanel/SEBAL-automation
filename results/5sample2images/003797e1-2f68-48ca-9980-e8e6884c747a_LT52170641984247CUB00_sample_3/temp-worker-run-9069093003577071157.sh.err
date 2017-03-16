@@ -1,0 +1,441 @@
++ IMAGE_NAME=LT52170641984247CUB00
++ IMAGES_DIR_PATH=/nfs/images/
++ RESULTS_DIR_PATH=/nfs/results/
++ OUTPUT_IMAGE_DIR=/nfs/results/LT52170641984247CUB00
++ IMAGE_MTL_PATH=/nfs/images/LT52170641984247CUB00/LT52170641984247CUB00_MTL.txt
++ IMAGE_MTL_FMASK_PATH=/nfs/images/LT52170641984247CUB00/LT52170641984247CUB00_MTLFmask
++ IMAGE_STATION_FILE_PATH=/nfs/results/LT52170641984247CUB00/LT52170641984247CUB00_station.csv
+++ pwd
++ SANDBOX=/tmp/sandbox/3cb19133-c019-4ae0-95ae-74ad20540051
++ CONF_FILE=sebal.conf
++ LIBRARY_PATH=/usr/local/lib
++ BOUNDING_BOX_PATH=example/boundingbox_vertices
++ TMP_DIR_PATH=/mnt
++ R_EXEC_DIR=
++ R_ALGORITHM_VERSION=AlgoritmoFinal-f1-v02122016.R
++ R_RASTER_TMP_DIR=/mnt/rasterTmp
++ MAX_TRIES=2
++ OUTPUT_IMAGE_DIR=/nfs/results//LT52170641984247CUB00
++ SCRIPTS_DIR=scripts
++ SEBAL_DIR_PATH=
++ LOG4J_PATH=
++ untarImageAndPrepareDirs
++ cd /nfs/images/
++ echo 'Image file name is LT52170641984247CUB00'
++ echo 'Untaring image LT52170641984247CUB00'
++ cd /nfs/images//LT52170641984247CUB00
++ sudo tar -xvzf LT52170641984247CUB00.tar.gz
+sudo: unable to resolve host fogbow35243
++ echo 'Creating image output directory'
++ sudo mkdir -p /nfs/results//LT52170641984247CUB00
+sudo: unable to resolve host fogbow35243
++ cd /tmp/sandbox/3cb19133-c019-4ae0-95ae-74ad20540051
++ checkProcessOutput
++ PROCESS_OUTPUT=0
++ '[' 0 -ne 0 ']'
++ preProcessImage
++ SEBAL_DIR_PATH=/tmp/sandbox/3cb19133-c019-4ae0-95ae-74ad20540051/SEBAL
++ R_EXEC_DIR=/tmp/sandbox/3cb19133-c019-4ae0-95ae-74ad20540051/SEBAL/workspace/R
++ LOG4J_PATH=/tmp/sandbox/3cb19133-c019-4ae0-95ae-74ad20540051/SEBAL/log4j.properties
++ cd /tmp/sandbox/3cb19133-c019-4ae0-95ae-74ad20540051/SEBAL
++ sudo java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=4000,suspend=n -Dlog4j.configuration=file:/tmp/sandbox/3cb19133-c019-4ae0-95ae-74ad20540051/SEBAL/log4j.properties -Djava.library.path=/usr/local/lib -cp 'target/SEBAL-0.0.1-SNAPSHOT.jar:target/lib/*' org.fogbowcloud.sebal.PreProcessMain /nfs/images// /nfs/images/LT52170641984247CUB00/LT52170641984247CUB00_MTL.txt /nfs/results// 0 0 9000 9000 1 1 /tmp/sandbox/3cb19133-c019-4ae0-95ae-74ad20540051/SEBAL/example/boundingbox_vertices /tmp/sandbox/3cb19133-c019-4ae0-95ae-74ad20540051/SEBAL/sebal.conf /nfs/images/LT52170641984247CUB00/LT52170641984247CUB00_MTLFmask
+sudo: unable to resolve host fogbow35243
+Mar 12, 2017 5:00:26 PM org.geotools.referencing.factory.epsg.ThreadedHsqlEpsgFactory createDataSource
+INFO: Building new data source for org.geotools.referencing.factory.epsg.ThreadedHsqlEpsgFactory
+Mar 12, 2017 5:00:26 PM org.geotools.referencing.factory.epsg.ThreadedHsqlEpsgFactory createBackingStore
+INFO: Building backing store for org.geotools.referencing.factory.epsg.ThreadedHsqlEpsgFactory
+Mar 12, 2017 5:00:26 PM org.geotools.referencing.factory.epsg.ThreadedHsqlEpsgFactory createBackingStore
+INFO: Creating cached EPSG database version 7.9.0. This operation may take a few minutes...
++ sudo chmod 777 /nfs/results/LT52170641984247CUB00/LT52170641984247CUB00_station.csv
+sudo: unable to resolve host fogbow35243
++ echo -e '\n'
++ cd ..
++ checkProcessOutput
++ PROCESS_OUTPUT=0
++ '[' 0 -ne 0 ']'
++ creatingDadosCSV
++ echo 'Creating dados.csv for image LT52170641984247CUB00'
++ cd /tmp/sandbox/3cb19133-c019-4ae0-95ae-74ad20540051/SEBAL/workspace/R
++ echo 'File images;MTL;File Station Weather;File Fmask;Path Output'
++ echo '/nfs/images//LT52170641984247CUB00;/nfs/images/LT52170641984247CUB00/LT52170641984247CUB00_MTL.txt;/nfs/results/LT52170641984247CUB00/LT52170641984247CUB00_station.csv;/nfs/images/LT52170641984247CUB00/LT52170641984247CUB00_MTLFmask;/nfs/results//LT52170641984247CUB00'
++ checkProcessOutput
++ PROCESS_OUTPUT=0
++ '[' 0 -ne 0 ']'
++ prepareEnvAndCollectUsage
++ '[' '!' -d /mnt/rasterTmp ']'
++ sudo mkdir /mnt/rasterTmp
+sudo: unable to resolve host fogbow35243
++ echo 'Starting CPU and Memory collect...'
++ sudo bash /tmp/sandbox/3cb19133-c019-4ae0-95ae-74ad20540051/SEBAL/scripts/collect-cpu-usage.sh
++ sudo tee /nfs/results//LT52170641984247CUB00/LT52170641984247CUB00_cpu_usage.txt
++ sudo bash /tmp/sandbox/3cb19133-c019-4ae0-95ae-74ad20540051/SEBAL/scripts/collect-memory-usage.sh
++ checkProcessOutput
++ PROCESS_OUTPUT=0
++ '[' 0 -ne 0 ']'
++ executeRScript
++ sudo tee /nfs/results//LT52170641984247CUB00/LT52170641984247CUB00_mem_usage.txt
+SEBAL/bin/run.sh: line 95: /dev/nul: Permission denied
+++ seq 2
++ for i in '`seq $MAX_TRIES`'
++ sudo bash /tmp/sandbox/3cb19133-c019-4ae0-95ae-74ad20540051/SEBAL/scripts/executeRScript.sh /tmp/sandbox/3cb19133-c019-4ae0-95ae-74ad20540051/SEBAL/workspace/R/AlgoritmoFinal-f1-v02122016.R /tmp/sandbox/3cb19133-c019-4ae0-95ae-74ad20540051/SEBAL/workspace/R /mnt
+sudo: unable to resolve host fogbow35243
+sudo: unable to resolve host fogbow35243
+sudo: unable to resolve host fogbow35243
+sudo: unable to resolve host fogbow35243
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+Installing package into ‘/usr/local/lib/R/site-library’
+(as ‘lib’ is unspecified)
+trying URL 'http://nbcgib.uesc.br/mirrors/cran/src/contrib/snow_0.4-2.tar.gz'
+Content type 'application/x-gzip' length 22397 bytes (21 Kb)
+opened URL
+==================================================
+downloaded 21 Kb
+
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+* installing *source* package ‘snow’ ...
+** package ‘snow’ successfully unpacked and MD5 sums checked
+** R
+** inst
+** preparing package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** testing if installed package can be loaded
+* DONE (snow)
+Installing package into ‘/usr/local/lib/R/site-library’
+(as ‘lib’ is unspecified)
+also installing the dependencies ‘R.oo’, ‘R.methodsS3’
+
+trying URL 'http://nbcgib.uesc.br/mirrors/cran/src/contrib/R.oo_1.21.0.tar.gz'
+Content type 'application/x-gzip' length 403410 bytes (393 Kb)
+opened URL
+==================================================
+downloaded 393 Kb
+
+trying URL 'http://nbcgib.uesc.br/mirrors/cran/src/contrib/R.methodsS3_1.7.1.tar.gz'
+Content type 'application/x-gzip' length 25731 bytes (25 Kb)
+opened URL
+==================================================
+downloaded 25 Kb
+
+trying URL 'http://nbcgib.uesc.br/mirrors/cran/src/contrib/R.utils_2.5.0.tar.gz'
+Content type 'application/x-gzip' length 389402 bytes (380 Kb)
+opened URL
+==================================================
+downloaded 380 Kb
+
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+* installing *source* package ‘R.methodsS3’ ...
+** package ‘R.methodsS3’ successfully unpacked and MD5 sums checked
+** R
+** inst
+** preparing package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** testing if installed package can be loaded
+* DONE (R.methodsS3)
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+* installing *source* package ‘R.oo’ ...
+** package ‘R.oo’ successfully unpacked and MD5 sums checked
+** R
+** inst
+** preparing package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded
+* DONE (R.oo)
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+* installing *source* package ‘R.utils’ ...
+** package ‘R.utils’ successfully unpacked and MD5 sums checked
+** R
+** inst
+** preparing package for lazy loading
+Warning in setGenericS3.default(name, export = exportGeneric, envir = envir,  :
+  Renamed the preexisting function warnings to warnings.default, which was defined in environment base.
+** help
+*** installing help indices
+** building package indices
+** testing if installed package can be loaded
+* DONE (R.utils)
+Loading required package: R.oo
+Loading required package: R.methodsS3
+R.methodsS3 v1.7.1 (2016-02-15) successfully loaded. See ?R.methodsS3 for help.
+R.oo v1.21.0 (2016-10-30) successfully loaded. See ?R.oo for help.
+
+Attaching package: ‘R.oo’
+
+The following objects are masked from ‘package:base’:
+
+    attach, detach, gc, load, save
+
+R.utils v2.5.0 (2016-11-07) successfully loaded. See ?R.utils for help.
+
+Attaching package: ‘R.utils’
+
+The following object is masked from ‘package:utils’:
+
+    timestamp
+
+The following objects are masked from ‘package:base’:
+
+    cat, commandArgs, getOption, inherits, isOpen, parse, warnings
+
+Loading required package: methods
+
+Attaching package: ‘methods’
+
+The following objects are masked from ‘package:R.oo’:
+
+    getClasses, getMethods
+
+Loading required package: sp
+
+Attaching package: ‘raster’
+
+The following objects are masked from ‘package:R.utils’:
+
+    extract, resample
+
+The following objects are masked from ‘package:R.oo’:
+
+    extend, trim
+
+rgdal: version: 1.1-10, (SVN revision 622)
+ Geospatial Data Abstraction Library extensions to R successfully loaded
+ Loaded GDAL runtime: GDAL 1.10.1, released 2013/08/26
+ Path to GDAL shared files: /usr/share/gdal/1.10
+ Loaded PROJ.4 runtime: Rel. 4.8.0, 6 March 2012, [PJ_VERSION: 480]
+ Path to PROJ.4 shared files: (autodetected)
+ Linking to sp version: 1.2-3 
+
+Attaching package: ‘rgdal’
+
+The following object is masked from ‘package:R.oo’:
+
+    getDescription
+
+Checking rgeos availability: TRUE
+Loading required namespace: parallel
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+Using cluster with 7 nodes
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+Using cluster with 7 nodes
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+Using cluster with 7 nodes
+Using cluster with 7 nodes
+Using cluster with 7 nodes
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
+During startup - Warning messages:
+1: Setting LC_TIME failed, using "C" 
+2: Setting LC_MONETARY failed, using "C" 
+3: Setting LC_PAPER failed, using "C" 
+4: Setting LC_MEASUREMENT failed, using "C" 
++ PROCESS_OUTPUT=0
++ echo executeRScript_process_output=0
++ '[' 0 -eq 0 ']'
++ echo 'NUMBER OF TRIES 1'
++ break
++ checkProcessOutput
++ PROCESS_OUTPUT=0
++ '[' 0 -ne 0 ']'
++ finally
++ exit 0
+sudo: unable to resolve host fogbow35243
+sudo: unable to resolve host fogbow35243
+sudo: unable to resolve host fogbow35243
+sudo: unable to resolve host fogbow35243
+sudo: unable to resolve host fogbow35243
+sudo: unable to resolve host fogbow35243
+sudo: unable to resolve host fogbow35243
+sudo: unable to resolve host fogbow35243
+sudo: unable to resolve host fogbow35243
+sudo: unable to resolve host fogbow35243
