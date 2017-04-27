@@ -30,23 +30,6 @@ function components {
     echo $site_conf | cut -d" " -s -f2-
 }
 
-function is_catalog_up {
-
-}
-
-function is_vm_up {
-    local ip=$1
-    if ! ping -c 5 $ip &> /dev/null
-    then
-        echo "Cannot contact VM via ip="$ip
-	exit 1
-    fi
-}
-
-function is_crawler_up {
-
-}
-
 functin start_component {
     local component=$1
     comp_name=`echo $component | cut -d":" -f1`
