@@ -7,8 +7,9 @@ if [[ $# -ne 1 ]]; then
  exit 1
 fi
 
-
-#DIRNAME=`dirname $0`
+mode=$1
+DIRNAME=`dirname $0`
+#source "$DIRNAME/sebal-sites.conf"
 #source "$DIRNAME/sebal-automation.conf"
 #source "$DIRNAME/infra.sh"
 #source "$DIRNAME/collect-log-dump-db.sh"
@@ -16,15 +17,64 @@ fi
 #source "$DIRNAME/stage-in.sh"
 #source "$DIRNAME/../scripts/collect-image-status"
 #source "$DIRNAME/image_util.sh"
-
 #EXECUTION_UUID=`uuidgen`
 #echo "Preparing execution ID: $EXECUTION_UUID"
 
-checkParams
+function sites {
+    cut -d" " -f1 $DIRNAME/sebal-sites.conf | grep -v "#"
+}
+
+function components {
+    local site=$1
+    site_conf=`grep $site $DIRNAME/sebal-sites.conf`
+    echo $site_conf | cut -d" " -s -f2-
+}
+
+function is_catalog_up {
+
+}
+
+function is_vm_up {
+    local ip=$1
+    if ! ping -c 5 $ip &> /dev/null
+    then
+        echo "Cannot contact VM via ip="$ip
+	exit 1
+    fi
+}
+
+function is_crawler_up {
+
+}
+
+functin start_component {
+    local component=$1
+    comp_name=`echo $component | cut -d":" -f1`
+    comp_address=`echo $component | cut -d":" -f2`
+    echo $site $component
+    case $comp_name in
+        crawler)
+	    ;;
+	archiver)
+	    ;;
+	catalog)
+	    ;;
+	*)
+	    ;;
+    esac
+}
 
 case $mode in
     start)
-	;;
+        for site in `sites $DIRNAME/sebal-sites.conf`
+	    do
+	        echo $site
+	        for component in `components $site`
+		do
+		    start_component $component
+		done
+	    done
+        ;;
     monitor)
 	;;
     stop)
