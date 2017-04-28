@@ -1,6 +1,6 @@
 # Global variables
 ####################
-## privat to key run ssh commands
+## private to key run ssh commands
 private_key_path=
 ## federation member to submit tasks
 federation_member=
@@ -25,6 +25,7 @@ sebal_tag=
 ## version of crawler to run
 #crawler_version=
 crawler_export_dir=
+#crawler_ip=
 
 #Scheduler
 #scheduler_ip=
@@ -55,4 +56,21 @@ crawler_export_dir=
 
 ## string to create pgpass file
 pgpass_string="$scheduler_ip:$scheduler_db_port:$sebal_db_name:$sebal_db_user:$sebal_db_password"
+
+## If true, will configure crawler
+#is_configure_crawler=true
+
+## public key fetch
+#public_key_fetch
+
+## git url
+#crawler_sebal_engine_url="https://github.com/fogbow/sebal-engine.git"
+## git url
+#crawler_manager_url="https://github.com/fogbow/fogbow-manager.git"
+## git url
+#crawler_blowout_url="https://github.com/fogbow/blowout"
+
+## Tag of the crawler dependecies
+#sebal_engine_tag_to_crawler=
+#blowout_tag_to_crawler=
 ####################

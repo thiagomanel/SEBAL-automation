@@ -1,16 +1,12 @@
 #!/bin/bash
 
-# TODO change to real settings.conf
-DIRNAME=`dirname $0`
-source "$DIRNAME/settings.conf"
-
 SEBAL_ENGINE_PROJET_NAME="sebal-engine"
 FOGBOW_MANAGER_PROJET_NAME="fogbow-manager"
 BLOWOUT_PROJET_NAME="blowout"
 
 SEBAL_CONF_FILE="sebal.conf.txt"
 FMASK_VARIABLES_FILE="fmask-variables.txt"
-DEFAULT_SSH_COMMAND_PREFIX="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $SETTINGS_CRAWLER_PORT -i $SETTINGS_PRIVATE_KEY  $SETTINGS_USERNAME_CRAWLER@$SETTINGS_CRAWLER_IP"
+DEFAULT_SSH_COMMAND_PREFIX="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $inner_crawler_port -i $private_key_path $crawler_user_name@$inner_crawler_ip"
 
 function show_cmd_response {
 	local cmd=$1
@@ -25,7 +21,7 @@ function mount_particion() {
 	local to_format=$1	
 	local dirname="/local/exports"
 	# TODO investigate if will be used only in openstack ?
-	local default_paticion_name="/dev/vdb"
+	default_paticion_name="/dev/vdb"
 	echo "Mounting paticion($default_paticion_name) in $dirname"
 
 	local cmd="sudo mkdir -p $dirname"
@@ -72,8 +68,8 @@ function put_fetch_key() {
 
 	# TODO check if there is the key in the authorizedd
 
-	local authorized_keys_path="/home/$SETTINGS_USERNAME_CRAWLER/.ssh/authorized_keys"
-	local public_key_fetch=$(cat $SETTINGS_PUBLIC_KEY_FETCH_FILE)
+	local authorized_keys_path="/home/$crawler_user_name/.ssh/authorized_keys"
+	local public_key_fetch=$(cat $public_key_fetch)
 	local cmd="echo $public_key_fetch >> $authorized_keys_path"
 	local response=$($DEFAULT_SSH_COMMAND_PREFIX ${cmd})
 	show_cmd_response "$cmd" "$response"
@@ -103,30 +99,30 @@ function set_fmask_variables() {
 function install_sebal_engine() {
 	echo "--------Start install sebal engine---------"
 
-	local home_path="/home/$SETTINGS_USERNAME_CRAWLER/"
+	local home_path="/home/$crawler_user_name/"
 
 	# git clone sebal engine
-	local cmd="git clone $SETTINGS_SEBAL_ENGINE_URL $home_path$SEBAL_ENGINE_PROJET_NAME"
+	local cmd="git clone $crawler_sebal_engine_url $home_path$SEBAL_ENGINE_PROJET_NAME"
 	local response=$($DEFAULT_SSH_COMMAND_PREFIX ${cmd})
 	show_cmd_response "$cmd" "$response"
 
 	# checkout
-	cmd="cd $home_path$SEBAL_ENGINE_PROJET_NAME && git checkout $SETTINGS_DEFAULT_SEBAL_ENGINE_TAG"
+	cmd="cd $home_path$SEBAL_ENGINE_PROJET_NAME && git checkout $sebal_engine_tag_to_crawler"
 	response=$($DEFAULT_SSH_COMMAND_PREFIX ${cmd})
 	show_cmd_response "$cmd" "$response"
 
 	# git clone manager
-	cmd="git clone $SETTINGS_FOGBOW_MANAGER_URL $home_path$FOGBOW_MANAGER_PROJET_NAME"
+	cmd="git clone $crawler_manager_url $home_path$FOGBOW_MANAGER_PROJET_NAME"
 	response=$($DEFAULT_SSH_COMMAND_PREFIX ${cmd})
 	show_cmd_response "$cmd" "$response"
 
 	# git clone blowout
-	cmd="git clone $SETTINGS_BLOWOUT_URL $home_path$BLOWOUT_PROJET_NAME"
+	cmd="git clone $crawler_blowout_url $home_path$BLOWOUT_PROJET_NAME"
 	response=$($DEFAULT_SSH_COMMAND_PREFIX ${cmd})
 	show_cmd_response "$cmd" "$response"
 
 	# checkout
-	cmd="cd $home_path$BLOWOUT_PROJET_NAME && git checkout $SETTINGS_DEFAULT_BLOWOUT_TAG"
+	cmd="cd $home_path$BLOWOUT_PROJET_NAME && git checkout $blowout_tag_to_crawler"
 	response=$($DEFAULT_SSH_COMMAND_PREFIX ${cmd})
 	show_cmd_response "$cmd" "$response"
 
@@ -159,9 +155,9 @@ function install_sebal_engine() {
 function start_crawler() {
 	echo "--------Start start crawler---------"
 
-	local path_sebal_engine="/home/$SETTINGS_USERNAME_CRAWLER/$SEBAL_ENGINE_PROJET_NAME"
+	local path_sebal_engine="/home/$crawler_user_name/$SEBAL_ENGINE_PROJET_NAME"
 
-	local cmd="cd $path_sebal_engine && sudo java -Dlog4j.configuration=file:$path_sebal_engine/config/log4j.properties -cp target/sebal-scheduler-0.0.1-SNAPSHOT.jar:target/lib/* org.fogbowcloud.sebal.engine.sebal.crawler.CrawlerMain $path_sebal_engine/config/sebal.conf $SETTINGS_SCHEDULER_DB_IP $SETTINGS_SCHEDULER_DB_PORT $SETTINGS_CRAWLER_IP $SETTINGS_CRAWLER_NFS_PORT $SETTINGS_FEDERATION_MEMBER_TO_CRAWLER &"
+	local cmd="cd $path_sebal_engine && sudo java -Dlog4j.configuration=file:$path_sebal_engine/config/log4j.properties -cp target/sebal-scheduler-0.0.1-SNAPSHOT.jar:target/lib/* org.fogbowcloud.sebal.engine.sebal.crawler.CrawlerMain $path_sebal_engine/config/sebal.conf $scheduler_ip $scheduler_port $inner_crawler_ip $crawler_nfs_port $federation_member &"
 	response=$($DEFAULT_SSH_COMMAND_PREFIX ${cmd})
 	show_cmd_response "$cmd" "$response"
 
@@ -173,7 +169,11 @@ function start_crawler() {
 function main() {
 	echo " ############# Start crawler implantation #############"
 
-	if [ "$SETTINGS_ONLY_START_CRAWLER" = true ] 
+	inner_crawler_ip=$1
+	inner_crawler_port=$2
+	default_paticion_name=$3
+
+	if [ "$is_configure_crawler" = true ] 
 		then
 			mount_particion true
 			install_dependecies
@@ -181,9 +181,7 @@ function main() {
 			set_fmask_variables
 			install_sebal_engine
 	fi
-	start_crawler
+	# start_crawler
 
 	echo " ############# End crawler implantation #############"
 }
-
-main
