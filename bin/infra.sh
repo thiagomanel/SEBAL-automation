@@ -53,3 +53,14 @@ function is_fetcher_up {
     activateFetcher
   fi
 }
+
+function run_command_crawler {
+  local cmd=$1
+  ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $crawler_port -i $private_key_path  $crawler_user_name@$crawler_ip ${cmd}
+  process_output=$?
+
+  if [ $process_output -ne 0 ]
+  then
+    echo "Remote command <" $cmd "> did not work"
+  fi
+}

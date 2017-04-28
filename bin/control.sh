@@ -3,21 +3,18 @@ echo "Starting script."
 
 # Checking params
 if [[ $# -ne 1 ]]; then
- echo "Usage:" $0 "mode [start,monitor,stop]"
+ echo "Usage:" $0 "mode [start,monitor,stop,crawler-allocate]"
  exit 1
 fi
 
 mode=$1
 DIRNAME=`dirname $0`
+source "$DIRNAME/saps.cconf"
 #source "$DIRNAME/sebal-sites.conf"
 #source "$DIRNAME/sebal-automation.conf"
 #source "$DIRNAME/infra.sh"
 #source "$DIRNAME/collect-log-dump-db.sh"
 #source "$DIRNAME/sebal_clean.sh"
-#source "$DIRNAME/stage-in.sh"
-#source "$DIRNAME/../scripts/collect-image-status"
-#source "$DIRNAME/image_util.sh"
-#EXECUTION_UUID=`uuidgen`
 #echo "Preparing execution ID: $EXECUTION_UUID"
 
 function sites {
@@ -30,7 +27,7 @@ function components {
     echo $site_conf | cut -d" " -s -f2-
 }
 
-functin start_component {
+function start_component {
     local component=$1
     comp_name=`echo $component | cut -d":" -f1`
     comp_address=`echo $component | cut -d":" -f2`
@@ -47,6 +44,27 @@ functin start_component {
     esac
 }
 
+function crawler {
+    local comp=$1
+    
+
+
+function crawler-allocate {
+    local site=$1
+    local comp=`components $site`
+
+    local path=$crawler_export_dir/fake-data
+    local cmd="fallocate -l 1g " $path
+    run_command_crawler $cmd
+}
+
+function crawler-deallocate {
+    local site=$1
+    local path=$crawler_export_dir/fake-data
+    local cmd="rm $path"
+    run_command_crawler $cmd
+}
+
 case $mode in
     start)
         for site in `sites $DIRNAME/sebal-sites.conf`
@@ -59,8 +77,13 @@ case $mode in
 	    done
         ;;
     monitor)
+	    #we need to get some state to check the experiment is ok. e.g free space on crawler
 	;;
     stop)
+	;;
+    crawler-allocate)
+	;;
+    crawler-deallocate)
 	;;
     *)
 	;;

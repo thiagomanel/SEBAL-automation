@@ -11,8 +11,6 @@ sebal_version=
 sebal_tag=
 
 # Crawler
-## IP of crawler VM
-#crawler_ip=
 ## SSH port of crawler VM
 #crawler_port=
 ## port of NFS running in the crawler
@@ -26,6 +24,7 @@ sebal_tag=
 #crawler_outputs_dir=
 ## version of crawler to run
 #crawler_version=
+crawler_export_dir=
 
 #Scheduler
 #scheduler_ip=
