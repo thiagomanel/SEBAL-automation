@@ -3,7 +3,7 @@ echo "Starting script."
 
 # Checking params
 if [[ $# -ne 1 ]]; then
- echo "Usage:" $0 "mode [start,monitor,stop,crawler-allocate]"
+ echo "Usage:" $0 "start | monitor | stop | crawler-allocate [site] | crawler-deallocate [site]"
  exit 1
 fi
 
@@ -16,6 +16,8 @@ source "$DIRNAME/saps.cconf"
 #source "$DIRNAME/collect-log-dump-db.sh"
 #source "$DIRNAME/sebal_clean.sh"
 #echo "Preparing execution ID: $EXECUTION_UUID"
+
+SIZE_FAKE_DATA_GB=1
 
 function sites {
     cut -d" " -f1 $DIRNAME/sebal-sites.conf | grep -v "#"
@@ -46,7 +48,7 @@ function start_component {
 
 function crawler {
     local comp=$1
-    
+}
 
 
 function crawler-allocate {
