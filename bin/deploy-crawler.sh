@@ -1,12 +1,15 @@
 #!/bin/bash
 
-SEBAL_ENGINE_PROJET_NAME="sebal-engine"
-FOGBOW_MANAGER_PROJET_NAME="fogbow-manager"
+DIRNAME=`dirname $0`
+source "$DIRNAME/saps.conf"
+
+SEBAL_ENGINE_PROJECT_NAME="sebal-engine"
+FOGBOW_MANAGER_PROJECT_NAME="fogbow-manager"
 BLOWOUT_PROJET_NAME="blowout"
 
 SEBAL_CONF_FILE="sebal.conf.txt"
 FMASK_VARIABLES_FILE="fmask-variables.txt"
-DEFAULT_SSH_COMMAND_PREFIX="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $inner_crawler_port -i $private_key_path $crawler_user_name@$inner_crawler_ip"
+#DEFAULT_SSH_COMMAND_PREFIX="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $inner_crawler_port -i $private_key_path $crawler_user_name@$inner_crawler_ip"
 
 function show_cmd_response {
     local cmd=$1
@@ -19,21 +22,21 @@ function mount_partition() {
     local dirname="/local/exports"
 
     # TODO investigate if will be used only in openstack ?
-    default_paticion_name="/dev/vdb"
-    echo "Mounting particion($default_paticion_name) in $dirname"
+    default_partition_name="/dev/vdb"
+    echo "Mounting particion($default_partition_name) in $dirname"
 
     local cmd="sudo mkdir -p $dirname"
     local response=$($DEFAULT_SSH_COMMAND_PREFIX ${cmd})
     show_cmd_response "$cmd" "$response"
 
     if [ "$to_format" = true ]; then
-	echo "Formating $default_paticion_name"
-	cmd="sudo mkfs.ext4 $default_paticion_name"
+	echo "Formating $default_partition_name"
+	cmd="sudo mkfs.ext4 $default_partition_name"
 	response=$($DEFAULT_SSH_COMMAND_PREFIX ${cmd})
 	show_cmd_response "$cmd" "$response"
     fi
 
-    cmd="sudo mount $default_paticion_name $dirname"
+    cmd="sudo mount $default_partition_name $dirname"
     response=$($DEFAULT_SSH_COMMAND_PREFIX ${cmd})
     show_cmd_response "$cmd" "$response"
 
@@ -96,47 +99,47 @@ function install_sebal_engine() {
     local home_path="/home/$crawler_user_name/"
 
     # git clone sebal engine
-    local cmd="git clone $crawler_sebal_engine_url $home_path$SEBAL_ENGINE_PROJET_NAME"
+    local cmd="git clone $crawler_sebal_engine_url $home_path/$SEBAL_ENGINE_PROJECT_NAME"
     local response=$($DEFAULT_SSH_COMMAND_PREFIX ${cmd})
     show_cmd_response "$cmd" "$response"
 
     # checkout
-    cmd="cd $home_path$SEBAL_ENGINE_PROJET_NAME && git checkout $sebal_engine_tag_to_crawler"
+    cmd="cd $home_path/$SEBAL_ENGINE_PROJECT_NAME && git checkout $sebal_engine_tag_to_crawler"
     response=$($DEFAULT_SSH_COMMAND_PREFIX ${cmd})
     show_cmd_response "$cmd" "$response"
 
     # git clone manager
-    cmd="git clone $crawler_manager_url $home_path$FOGBOW_MANAGER_PROJET_NAME"
+    cmd="git clone $crawler_manager_url $home_path/$FOGBOW_MANAGER_PROJECT_NAME"
     response=$($DEFAULT_SSH_COMMAND_PREFIX ${cmd})
     show_cmd_response "$cmd" "$response"
 
     # git clone blowout
-    cmd="git clone $crawler_blowout_url $home_path$BLOWOUT_PROJET_NAME"
+    cmd="git clone $crawler_blowout_url $home_path/$BLOWOUT_PROJET_NAME"
     response=$($DEFAULT_SSH_COMMAND_PREFIX ${cmd})
     show_cmd_response "$cmd" "$response"
 
     # checkout
-    cmd="cd $home_path$BLOWOUT_PROJET_NAME && git checkout $blowout_tag_to_crawler"
+    cmd="cd $home_path/$BLOWOUT_PROJET_NAME && git checkout $blowout_tag_to_crawler"
     response=$($DEFAULT_SSH_COMMAND_PREFIX ${cmd})
     show_cmd_response "$cmd" "$response"
 
     # mvn install manager
-    cmd="cd $home_path$FOGBOW_MANAGER_PROJET_NAME && mvn install -Dmaven.test.skip=true"
+    cmd="cd $home_path/$FOGBOW_MANAGER_PROJECT_NAME && mvn install -Dmaven.test.skip=true"
     response=`$DEFAULT_SSH_COMMAND_PREFIX ${cmd}`
     show_cmd_response "$cmd" "$response"
 
     # mvn install blowout
-    cmd="cd $home_path$BLOWOUT_PROJET_NAME && mvn install -Dmaven.test.skip=true"
+    cmd="cd $home_path/$BLOWOUT_PROJET_NAME && mvn install -Dmaven.test.skip=true"
     response=`$DEFAULT_SSH_COMMAND_PREFIX ${cmd}`
     show_cmd_response "$cmd" "$response"
 
     # mvn install sebal engine
-    cmd="cd $home_path$SEBAL_ENGINE_PROJET_NAME && mvn install -Dmaven.test.skip=true"
+    cmd="cd $home_path/$SEBAL_ENGINE_PROJECT_NAME && mvn install -Dmaven.test.skip=true"
     response=$($DEFAULT_SSH_COMMAND_PREFIX ${cmd})
     show_cmd_response "$cmd" "$response"
 
     local sebal_conf=$(cat $DIRNAME/$SEBAL_CONF_FILE)
-    local path_sebal_conf="$home_path$SEBAL_ENGINE_PROJET_NAME/$config/sebal.conf"
+    local path_sebal_conf="$home_path/$SEBAL_ENGINE_PROJECT_NAME/$config/sebal.conf"
     cmd="echo $sebal_conf > $path_sebal_conf"
     response=$($DEFAULT_SSH_COMMAND_PREFIX ${cmd})
     show_cmd_response "$cmd" "$response"
@@ -149,7 +152,7 @@ function install_sebal_engine() {
 function start_crawler() {
     echo "start crawler"
 
-    local path_sebal_engine="/home/$crawler_user_name/$SEBAL_ENGINE_PROJET_NAME"
+    local path_sebal_engine="/home/$crawler_user_name/$SEBAL_ENGINE_PROJECT_NAME"
 
     local cmd="cd $path_sebal_engine && sudo java -Dlog4j.configuration=file:$path_sebal_engine/config/log4j.properties -cp target/sebal-scheduler-0.0.1-SNAPSHOT.jar:target/lib/* org.fogbowcloud.sebal.engine.sebal.crawler.CrawlerMain $path_sebal_engine/config/sebal.conf $scheduler_ip $scheduler_port $inner_crawler_ip $crawler_nfs_port $federation_member &"
     response=$($DEFAULT_SSH_COMMAND_PREFIX ${cmd})
@@ -162,20 +165,19 @@ function start_crawler() {
 
 function main() {
 
-    echo "start crawler deploy"
-
     inner_crawler_ip=$1
     inner_crawler_port=$2
-    default_paticion_name=$3
+    default_partition_name=$3
 
-    if [ "$is_configure_crawler" = true ]
-    then
-	mount_particion true
-	install_dependecies
-	put_fetch_key
-	set_fmask_variables
-	install_sebal_engine
-    fi
+    DEFAULT_SSH_COMMAND_PREFIX="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i $private_key_path $crawler_user_name@$inner_crawler_ip"
+
+    mount_partition true
+    install_dependecies
+    put_fetch_key
+    set_fmask_variables
+    install_sebal_engine
 
     echo "end crawler deploy"
 }
+
+main $1 $2 $2
