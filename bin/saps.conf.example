@@ -73,4 +73,6 @@ pgpass_string="$scheduler_ip:$scheduler_db_port:$sebal_db_name:$sebal_db_user:$s
 ## Tag of the crawler dependecies
 #sebal_engine_tag_to_crawler=
 #blowout_tag_to_crawler=
+
+#sebal_export_path=/local/exports
 ####################
