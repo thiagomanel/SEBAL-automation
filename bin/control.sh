@@ -46,11 +46,6 @@ function start_component {
     esac
 }
 
-function crawler {
-    local comp=$1
-}
-
-
 function crawler-allocate {
     local site=$1
     local comp=`components $site`
