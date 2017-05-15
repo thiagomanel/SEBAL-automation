@@ -46,6 +46,25 @@ function start_component {
     esac
 }
 
+function monitor {
+  local site=$1
+  local period=$2
+  local comp=`components $site`
+
+  if [ ! -f $disk_usage_monitor_output_file ]
+  then
+    touch $disk_usage_monitor_output_file
+  fi
+  
+  while true
+  do
+    disk_usage=$(df -P $crawler_export_dir | awk 'NR==2 {print $5}')
+    date=$(date +"%H:%M:%S-%D")
+    echo "Site: $site | Crawler Volume Usage: $disk_usage | Date: $date" >> $disk_usage_monitor_output_file
+    sleep $period 
+  done
+}
+
 function crawler-allocate {
     local site=$1
     local comp=`components $site`
@@ -74,7 +93,10 @@ case $mode in
 	    done
         ;;
     monitor)
-	    #we need to get some state to check the experiment is ok. e.g free space on crawler
+	shift;
+	site=$1
+	period=$2
+	monitor $site $period
 	;;
     stop)
 	;;
