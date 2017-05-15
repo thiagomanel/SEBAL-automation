@@ -3,7 +3,7 @@ echo "Starting script."
 
 # Checking params
 if [[ $# -ne 1 ]]; then
- echo "Usage:" $0 "start | monitor | stop | crawler-allocate [site] | crawler-deallocate [site]"
+ echo "Usage:" $0 "start | monitor [site] [period] | stop | crawler-allocate [site] | crawler-deallocate [site]"
  exit 1
 fi
 
@@ -46,23 +46,24 @@ function start_component {
     esac
 }
 
-function monitor {
-  local site=$1
-  local period=$2
-  local comp=`components $site`
+function scp_to_crawler() {
+  local source_path=$1
+  local destiny_path=$2
+  scp -r -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -P $crawler_port -i $private_key_file $source_path $crawler_user_name@$crawler_ip:/$destiny_path
+}
 
-  if [ ! -f $disk_usage_monitor_output_file ]
-  then
-    touch $disk_usage_monitor_output_file
-  fi
-  
-  while true
-  do
-    disk_usage=$(df -P $crawler_export_dir | awk 'NR==2 {print $5}')
-    date=$(date +"%H:%M:%S-%D")
-    echo "Site: $site | Crawler Volume Usage: $disk_usage | Date: $date" >> $disk_usage_monitor_output_file
-    sleep $period 
-  done
+function run_command_crawler {
+  local remote_command=$1
+  ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $crawler_port -i $private_key_file  $crawler_user_name@$crawler_ip ${remote_command}
+}
+
+function monitor {
+  site=$1
+  period=$2
+
+  scp_to_crawler $local_scripts_path/monitor.sh $remote_scripts_path
+  remote_command="sudo sh $remote_scripts_path/monitor.sh $site $period"
+  run_command_crawler ${remote_command}
 }
 
 function crawler-allocate {
