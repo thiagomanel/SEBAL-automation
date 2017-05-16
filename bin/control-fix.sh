@@ -8,8 +8,8 @@ print_menu() {
   echo "  start"
   echo "  stop"
   echo "  monitor --site [site] --period [period]"
-  echo "  crawler-allocate --site [site]"
-  echo "  crawler-deallocate --site [site]"
+  echo "  crawler-allocate --site [site] --file [file] --size [size]"
+  echo "  crawler-deallocate --site [site] --file [file]"
   exit 1
 }
 
@@ -23,6 +23,14 @@ define_parameters() {
       --period)
 	shift;
         period=$1;
+	;;
+      --file)
+	shift;
+	file=$1
+	;;
+      --size)
+	shift;
+	size=$1
 	;;
     esac
     shift
@@ -79,11 +87,9 @@ do_start() {
 }
 
 do_monitor() {
+  define_parameters $@
   if [ ! $# -lt 4 ]
   then
-    site=$2
-    period=$4
-		
     scp_to_crawler $local_scripts_path/monitor.sh $remote_scripts_path
     remote_command="sudo sh $remote_scripts_path/monitor.sh $site $period"
     run_command_crawler "${remote_command}"
@@ -94,11 +100,9 @@ do_monitor() {
 }
 
 crawler_allocate() {
+  define_parameters $@
   if [ ! $# -lt 6 ]
   then
-    site=$2
-    size=$4
-    file=$6
     comp=`components $site`
 
     path=$crawler_export_dir/$file
@@ -111,11 +115,9 @@ crawler_allocate() {
 }
 
 crawler_deallocate() {
-  if [ ! $# -lt 6 ]
+  define_parameters $@
+  if [ ! $# -lt 4 ]
   then
-    site=$2
-    size=$4
-    file=$6
     comp=`components $site`
 
     path=$crawler_export_dir/$file
@@ -149,7 +151,7 @@ then
         ;;
         crawler-deallocate)
             shift
-            crawler-deallocate $@
+            crawler_deallocate $@
         ;;
         *)
             print_menu
