@@ -1,10 +1,6 @@
 #!/bin/bash
 DIRNAME=`dirname $0`
-
-FOGBOW_CLI_JAR=""
-MANAGER_IP=""
-MANAGER_PORT=""
-AUTH_TOKEN=""
+source "$DIRNAME/saps.conf"
 
 DEFAULT_CAPACITY_INSTANCES=5
 global_monitor_instances=true
@@ -12,7 +8,7 @@ global_monitor_instances=true
 function count_instances_of {
 	local federation_member=$1
 	local path_response_instance="/tmp/response_intance"
-	$(java -cp $FOGBOW_CLI_JAR org.fogbowcloud.cli.Main instance --get --url $MANAGER_IP:$MANAGER_PORT --auth-token $AUTH_TOKEN > $path_response_instance)
+	$(java -cp $fogbow_cli_jar org.fogbowcloud.cli.Main instance --get --url $manager_ip:$manager_port --auth-token $auth_token > $path_response_instance)
 
 	local count=$(cat $path_response_instance | grep $federation_member | wc -l)
 	$(rm $path_response_instance)

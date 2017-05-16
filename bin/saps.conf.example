@@ -1,7 +1,7 @@
 # Global variables
 ####################
 ## private to key run ssh commands
-private_key_path=
+private_key_file=
 ## federation member to submit tasks
 federation_member=
 
@@ -85,4 +85,8 @@ pgpass_string="$scheduler_ip:$scheduler_db_port:$sebal_db_name:$sebal_db_user:$s
 #blowout_tag_to_crawler=
 
 #sebal_export_path=/local/exports
+fogbow_cli_jar=
+manager_ip=
+manager_port=
+auth_token=
 ####################

@@ -10,7 +10,8 @@ print_menu() {
   echo "Commands are start, monitor, stop, crawler-allocate and crawler-deallocate"
   echo "  start"
   echo "  stop"
-  echo "  monitor --site [site] --period [period]"
+  echo "  monitor-instances"
+  echo "  monitor-disk --site [site] --period [period]"
   echo "  crawler-allocate --site [site] --file [file] --size [size]"
   echo "  crawler-deallocate --site [site] --file [file]"
   exit 1
@@ -96,17 +97,21 @@ do_start() {
   done
 }
 
-do_monitor() {
+do_monitor_disk() {
   define_parameters $@
   if [ ! $# -lt 4 ]
   then
-    scp_to_crawler $local_scripts_path/monitor.sh $remote_scripts_path
+    scp_to_crawler $local_scripts_path/monitor-disk.sh $remote_scripts_path
     remote_command="sudo sh $remote_scripts_path/monitor.sh $site $period"
     run_command_crawler $site "${remote_command}"
   else
     print_menu
     exit 1
   fi
+}
+
+do_monitor_instances() {
+  bash $local_scripts_path/monitor-instances.sh &
 }
 
 crawler_allocate() {
@@ -147,9 +152,13 @@ then
             shift
             do_start
         ;;
-        monitor)
+        monitor-disk)
             shift
-            do_monitor $@
+            do_monitor_disk $@
+        ;;
+	monitor-instances)
+            shift
+            do_monitor_instances $@
         ;;
 	stop)
 	    shift
