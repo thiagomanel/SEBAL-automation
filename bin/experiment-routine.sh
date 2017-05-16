@@ -49,6 +49,7 @@ crawler_activate_command="cd sebal-engine; bash bin/start-crawler &"
 run_command_crawler $SITE_UFSCAR $crawler_activate_command
 
 bash $SEBAL_AUTOMATION_CONTROL monitor $SITE_LSD $DEFAULT_MONITOR_PERIOD
+run_command_crawler $SITE_LSD $crawler_activate_command
 
 count=0
 remains_disk=true
@@ -60,7 +61,7 @@ do
 
   if [ $used_disk -lt 79 ]
   then
-    bash $SEBAL_AUTOMATION_CONTROL crawler-allocate $SITE_LSD $LSD_FAKE_FILE_SIZE $UFSCAR_FAKE_FILE_NAME"_"$count
+    bash $SEBAL_AUTOMATION_CONTROL crawler-allocate $SITE_LSD $LSD_FAKE_FILE_SIZE $LSD_FAKE_FILE_NAME"_"$count
     count=$((count + 1))
   else
     remains_disk=false
