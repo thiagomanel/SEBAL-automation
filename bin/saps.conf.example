@@ -26,6 +26,16 @@ sebal_tag=
 #crawler_version=
 crawler_export_dir=
 #crawler_ip=
+local_scripts_path=
+remote_scripts_path=
+
+ufscar_crawler_user_name=
+ufscar_crawler_ip=
+ufscar_crawler_port=
+
+lsd_crawler_user_name=
+lsd_crawler_ip=
+lsd_crawler_port=
 
 #Scheduler
 #scheduler_ip=
