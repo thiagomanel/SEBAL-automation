@@ -2,6 +2,9 @@
 DIRNAME=`dirname $0`
 source "$DIRNAME/saps.conf"
 
+SITE_UFSCAR=manager.naf.ufscar.br
+SITE_LSD=experimento.manager.naf.lsd.ufcg.edu.br
+
 print_menu() {
   echo "Usage: $0 COMMAND [OPTIONS]"
   echo "Commands are start, monitor, stop, crawler-allocate and crawler-deallocate"
@@ -44,8 +47,15 @@ function scp_to_crawler {
 }
 
 function run_command_crawler {
-  local remote_command=$1
-  ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $crawler_port -i $private_key_file  $crawler_user_name@$crawler_ip "${remote_command}"
+  local site=$1
+  local remote_command=$2
+
+  if [ $site == $SITE_UFSCAR ]
+  then
+    ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $ufscar_crawler_port -i $private_key_file  $ufscar_crawler_user_name@$ufscar_crawler_ip ${remote_command}
+  else
+    ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $lsd_crawler_port -i $private_key_file  $lsd_crawler_user_name@$lsd_crawler_ip ${remote_command}
+  fi
 }
 
 function sites {
@@ -92,7 +102,7 @@ do_monitor() {
   then
     scp_to_crawler $local_scripts_path/monitor.sh $remote_scripts_path
     remote_command="sudo sh $remote_scripts_path/monitor.sh $site $period"
-    run_command_crawler "${remote_command}"
+    run_command_crawler $site "${remote_command}"
   else
     print_menu
     exit 1
@@ -107,7 +117,7 @@ crawler_allocate() {
 
     path=$crawler_export_dir/$file
     cmd="sudo fallocate -l $size $path"
-    run_command_crawler "$cmd"
+    run_command_crawler $site "$cmd"
   else
     print_menu
     exit 1
@@ -122,7 +132,7 @@ crawler_deallocate() {
 
     path=$crawler_export_dir/$file
     cmd="sudo rm $path"
-    run_command_crawler "$cmd"
+    run_command_crawler $site "$cmd"
   else
     print_menu
     exit 1
