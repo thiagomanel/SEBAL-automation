@@ -11,7 +11,7 @@ print_menu() {
   echo "  start"
   echo "  stop"
   echo "  monitor-instances"
-  echo "  monitor-disk --site [site] --period [period]"
+  echo "  monitor --site [site] --period [period]"
   echo "  crawler-allocate --site [site] --file [file] --size [size]"
   echo "  crawler-deallocate --site [site] --file [file]"
   exit 1
@@ -42,9 +42,15 @@ define_parameters() {
 }
 
 function scp_to_crawler {
-  local source_path=$1
-  local destiny_path=$2
-  scp -r -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -P $crawler_port -i $private_key_file $source_path $crawler_user_name@$crawler_ip:$destiny_path
+  local site=$1
+  local source_path=$2
+  local destiny_path=$3
+  if [ $site == $SITE_UFSCAR ]
+  then
+    scp -r -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -P $ufscar_crawler_port -i $private_key_file $source_path $ufscar_crawler_user_name@$ufscar_crawler_ip:$destiny_path
+  else
+    scp -r -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -P $lsd_crawler_port -i $private_key_file $source_path $lsd_crawler_user_name@$lsd_crawler_ip:$destiny_path
+  fi
 }
 
 function run_command_crawler {
@@ -101,8 +107,8 @@ do_monitor_disk() {
   define_parameters $@
   if [ ! $# -lt 4 ]
   then
-    scp_to_crawler $local_scripts_path/monitor-disk.sh $remote_scripts_path
-    remote_command="sudo sh $remote_scripts_path/monitor.sh $site $period"
+    scp_to_crawler $site $local_scripts_path/monitor.sh $remote_scripts_path
+    remote_command="sudo sh $remote_scripts_path/monitor.sh $site $period $crawler_export_dir"
     run_command_crawler $site "${remote_command}"
   else
     print_menu
@@ -152,7 +158,7 @@ then
             shift
             do_start
         ;;
-        monitor-disk)
+        monitor)
             shift
             do_monitor_disk $@
         ;;

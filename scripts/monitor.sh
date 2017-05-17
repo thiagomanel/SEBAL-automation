@@ -1,6 +1,7 @@
 #!/bin/bash
 site=$1
 period=$2
+crawler_export_dir=$3
 
 disk_usage_monitor_output_file=/home/ubuntu/disk_usage
 
