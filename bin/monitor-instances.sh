@@ -27,9 +27,10 @@ function monitor_instances {
 	    do
 	      local count=$(count_instances_of $site)
 	      local instances_percent=$((($count * 100) / $DEFAULT_CAPACITY_INSTANCES))
-	      local date=$(date)
+	      local date=$(date +"%H:%M:%S-%D")
 	      local timestamp=$(date +%s)
-	      echo "Timestamp $timestamp - $date - Amount instances of $site : $count of $DEFAULT_CAPACITY_INSTANCES ($instances_percent %)" >> "monitor_instances_$uuid.log"
+#	      echo "Timestamp $timestamp - $date - Amount instances of $site : $count of $DEFAULT_CAPACITY_INSTANCES ($instances_percent %)" >> "monitor_instances_$uuid.log"
+	      echo "Site: $site | Amount instances: $count of $DEFAULT_CAPACITY_INSTANCES ($instances_percent %) | Date: $date | Timestamp: $timestamp" >> "monitor_instances_$uuid.log"
 	    done		
         sleep 10
 	done
