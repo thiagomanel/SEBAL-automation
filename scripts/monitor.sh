@@ -14,7 +14,8 @@ while true
 do
   disk_usage=$(df -P $crawler_export_dir | awk 'NR==2 {print $5}')
   date=$(date +"%H:%M:%S-%D")
-  echo "Site: $site | Crawler Volume Usage: $disk_usage | Date: $date" >> $disk_usage_monitor_output_file
+  timestamp=$(date +%s)
+  echo "Site: $site | Crawler Volume Usage: $disk_usage | Date: $date | Timestamp: $timestamp" >> $disk_usage_monitor_output_file
   sleep $period
 done
 
