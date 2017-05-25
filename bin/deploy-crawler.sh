@@ -45,15 +45,15 @@ function mount_partition() {
 
 function install_dependecies() {
     echo "install dependencies"
-    local cmd="sudo apt-get install git"
+    local cmd="sudo apt-get --assume-yes install git"
     local response=$($DEFAULT_SSH_COMMAND_PREFIX ${cmd})
     show_cmd_response "$cmd" "$response"
 
-    cmd="sudo apt-get install openjdk-7-jdk"
+    cmd="sudo apt-get --assume-yes install openjdk-7-jdk"
     response=$($DEFAULT_SSH_COMMAND_PREFIX ${cmd})
     show_cmd_response "$cmd" "$response"
 
-    cmd="sudo apt-get install maven"
+    cmd="sudo apt-get --assume-yes install maven"
     response=$($DEFAULT_SSH_COMMAND_PREFIX ${cmd})
     show_cmd_response "$cmd" "$response"
 
