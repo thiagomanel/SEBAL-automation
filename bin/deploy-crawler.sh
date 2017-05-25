@@ -74,6 +74,31 @@ function put_fetch_key() {
     echo "fetch key done"
 }
 
+function install_nfs {
+
+    echo "instal nfs"
+
+    local cmd="sudo apt-get install nfs-kernel-server"
+    local response=$($DEFAULT_SSH_COMMAND_PREFIX ${cmd})
+    show_cmd_response "$cmd" "$response"
+
+    cmd="sudo mkdir -p $sebal_export_path"
+    response=$($DEFAULT_SSH_COMMAND_PREFIX ${cmd})
+    show_cmd_response "$cmd" "$response"
+
+    local etc_exports_content="$sebal_export_path *(rw,insecure,no_subtree_check,async,no_root_squash)" 
+    cmd="sudo sh -c \"echo $etc_exports_content >> /etc/exports\""
+    response=$($DEFAULT_SSH_COMMAND_PREFIX ${cmd})
+    show_cmd_response "$cmd" "$response"
+
+    cmd="sudo service nfs-kernel-server restart"
+    response=$($DEFAULT_SSH_COMMAND_PREFIX ${cmd})
+    show_cmd_response "$cmd" "$response"
+
+    # TODO check
+    echo "instal nfs done"
+}
+
 function set_fmask_variables() {
 
     echo "set fmask variables"
@@ -144,6 +169,10 @@ function install_sebal_engine() {
     response=$($DEFAULT_SSH_COMMAND_PREFIX ${cmd})
     show_cmd_response "$cmd" "$response"
 
+    cmd="touch $home_path/$SEBAL_ENGINE_PROJECT_NAME/sebal-engine.version.$sebal_engine_tag_to_crawler"
+    response=$($DEFAULT_SSH_COMMAND_PREFIX ${cmd})
+    show_cmd_response "$cmd" "$response"
+
     # TODO check
 
     echo "install sebal engine done"
@@ -174,6 +203,7 @@ function main() {
     mount_partition true
     install_dependecies
     put_fetch_key
+    install_nfs
     set_fmask_variables
     install_sebal_engine
 

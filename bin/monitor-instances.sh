@@ -1,0 +1,43 @@
+#!/bin/bash
+DIRNAME=`dirname $0`
+source "$DIRNAME/saps.conf"
+
+DEFAULT_CAPACITY_INSTANCES=5
+global_monitor_instances=true
+
+function count_instances_of {
+	local federation_member=$1
+	local path_response_instance="/tmp/response_intance"
+	$(java -cp $fogbow_cli_jar org.fogbowcloud.cli.Main instance --get --url $manager_ip:$manager_port --auth-token $auth_token > $path_response_instance)
+
+	local count=$(cat $path_response_instance | grep $federation_member | wc -l)
+	$(rm $path_response_instance)
+	echo $count
+}
+
+function sites {
+  cut -d" " -f1 $DIRNAME/sebal-sites.conf | grep -v "#"
+}
+
+function monitor_instances {
+	echo "Stating monitor instances..."
+	local uuid=$(uuidgen)
+	while [ $global_monitor_instances ]; do
+	    for site in `sites $DIRNAME/sebal-sites.conf`
+	    do
+	      local count=$(count_instances_of $site)
+	      local instances_percent=$((($count * 100) / $DEFAULT_CAPACITY_INSTANCES))
+	      local date=$(date +"%H:%M:%S-%D")
+	      local timestamp=$(date +%s)
+#	      echo "Timestamp $timestamp - $date - Amount instances of $site : $count of $DEFAULT_CAPACITY_INSTANCES ($instances_percent %)" >> "monitor_instances_$uuid.log"
+	      echo "Site: $site | Amount instances: $count of $DEFAULT_CAPACITY_INSTANCES ($instances_percent %) | Date: $date | Timestamp: $timestamp" >> "monitor_instances_$uuid.log"
+	    done		
+        sleep 10
+	done
+}
+
+function stop_monitor_instances {
+	global_monitor_instances=false
+}
+
+monitor_instances
