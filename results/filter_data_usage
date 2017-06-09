@@ -1,0 +1,2 @@
+echo "site usage timestamp type" > $1.data
+cut -d" " -f2,7,13 $1 | awk '{ printf("%s %s %s %s\n", $1, $2, $3, "disk_usage"); }' >> $1.data
