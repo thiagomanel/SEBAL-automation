@@ -1,7 +1,7 @@
 # Global variables
 ####################
 ## private to key run ssh commands
-private_key_file=
+private_key_path=~/.ssh/cloud-ext.key
 ## federation member to submit tasks
 federation_member=
 

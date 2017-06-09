@@ -1,1 +1,0 @@
-Sample: 3 - Execution time in seconds: 10188

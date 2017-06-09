@@ -1,0 +1,18 @@
+echo "site usage timestamp type" > $1.data
+cut -d" " -f2,6,16 $1 | awk '{ printf("%s %s %s %s\n", $1, $2, $3, "VMs"); }' >> $1.data
+
+py_script="
+import sys
+
+for line in sys.stdin:
+    site, usage, timestamp, type = line.strip().split()
+    if site.strip() == \"experimento.manager.naf.lsd.ufcg.edu.br\":
+	fusage = (float(usage) / 20.0) * 100
+	print site, fusage, timestamp, type
+    elif site.strip() == \"manager.naf.ufscar.br\":
+	fusage = (float(usage) / 20.0) * 100
+	print site, fusage, timestamp, type
+"
+
+echo "site usage timestamp type" > $1.data.final
+python -c "$py_script" < $1.data >> $1.data.final
